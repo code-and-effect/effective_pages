@@ -1,0 +1,9 @@
+= semantic_form_for [:admin, @effective_page] do |f|
+  = f.inputs "Page" do
+    = f.input :title, :hint => "Give this page a title"
+    = f.input :meta_keywords, :hint => "Comma seperated keywords or tags related to this page content."
+    = f.input :meta_description, :hint => "A one or two sentence summary of this page. Appears on Google search results underneath the page title."
+    = f.input :slug, :hint => "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>This page is currently reachable via http://#{request.host}/<strong>#{f.object.slug}</strong>/".html_safe
+    = f.input :template
+
+  = f.actions :submit, :cancel

@@ -20,5 +20,10 @@ module Effective
 
     scope :drafts, -> { where(:published => false) }
     scope :published, -> { where(:published => true) }
+
+    def sections
+      self[:sections] || {}
+    end
+
   end
 end

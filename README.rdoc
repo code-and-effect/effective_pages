@@ -20,8 +20,7 @@ Migrate the database
 
 Mount the Engine for route
 
-  mount EffectivePages::Engine => '/'
-
+  mount EffectivePages::Engine => '/', :as => 'effective_pages'
 
 Add to your layout file(s)
 
