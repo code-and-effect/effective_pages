@@ -1,9 +1,11 @@
+require 'effective_pages/exceptions'
+
 module EffectivePages
   class Engine < ::Rails::Engine
     engine_name 'effective_pages'
 
     # Include Helpers to base application
-    initializer 'effective_assets.action_controller' do |app|
+    initializer 'effective_pages.action_controller' do |app|
       ActiveSupport.on_load :action_controller do
         helper EffectivePagesHelper
       end
@@ -13,6 +15,7 @@ module EffectivePages
     initializer "effective_pages.defaults", :before => :load_config_initializers do |app|
       EffectivePages.setup do |config|
         config.pages_table_name = :pages
+        config.templates_path = 'templates/'
       end
     end
 

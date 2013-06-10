@@ -1,0 +1,20 @@
+# This gets read in automatically and is accessible at
+# EffectivePages.config.templates
+
+template1:
+  layout: 'application'
+  description: 'This is the default template 1'
+  sections:
+    content_one:
+      label: 'Template1 Content Section One'
+    content_two:
+      label: 'Template1 Content Section Two'
+
+template2:
+  layout: 'application'
+  description: 'This is the default template 2'
+  sections:
+    content_one:
+      label: 'Template2 Content Section One'
+    content_two:
+      label: 'Template2 Content Section Two'

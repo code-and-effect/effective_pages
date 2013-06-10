@@ -20,9 +20,5 @@ module Effective
 
     scope :drafts, -> { where(:published => false) }
     scope :published, -> { where(:published => true) }
-
-    def template
-      return self[:template] || Page.available_templates.keys.first.to_s
-    end
   end
 end

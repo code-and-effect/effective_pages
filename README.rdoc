@@ -18,6 +18,10 @@ Migrate the database
 
   bundle exec rake db:migrate
 
+Mount the Engine for route
+
+  mount EffectivePages::Engine => '/'
+
 
 
 TESTING:
