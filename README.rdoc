@@ -23,6 +23,11 @@ Mount the Engine for route
   mount EffectivePages::Engine => '/'
 
 
+Add to your layout file(s)
+
+  = effective_page_header_tags
+
+
 
 TESTING:
 

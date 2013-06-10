@@ -1,5 +1,3 @@
-# https://gist.github.com/hiroshi/985457
-
 module Effective
   class PagesController < ApplicationController
     respond_to :html
@@ -10,14 +8,9 @@ module Effective
       #raise ActiveRecord::RecordNotFound unless @page.published?
 
       template = EffectivePages.templates[@page.template]
-      raise EffectivePages::TemplateNotFound.new(@page.template) unless (template and template.kind_of?(Hash))
+      raise EffectivePages::TemplateNotFound.new(@page.template) unless (template and template.kind_of?(HashWithIndifferentAccess))
 
-      # Set our header information
-      @page_title = @page.title
-      @meta_description = @page.meta_description
-      @meta_keywords = @page.meta_keywords
-
-      # Set our content areas
+      # Assign all content areas
       (template[:sections] || {}).each do |section, opts|
         content_for section, @page.sections[section] || opts[:placeholder].to_s
       end
@@ -27,14 +20,15 @@ module Effective
 
     private
 
+    # https://gist.github.com/hiroshi/985457
+    def content_for(section, content)
+      (@_content_for ||= {})[section] = content
+    end
+
     def view_context
       super.tap do |view|
         (@_content_for || {}).each { |name, content| view.content_for name, content }
       end
-    end
-
-    def content_for(section, content)
-      (@_content_for ||= {})[section.to_sym] = content
     end
   end
 end
