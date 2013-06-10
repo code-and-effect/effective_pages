@@ -1,3 +1,29 @@
 = EffectivePages
 
 This project rocks and uses MIT-LICENSE.
+
+To set up in your main project:
+
+Add to your Gemfile:
+
+  gem 'effective_pages', :path => "~/Sites/effective_pages"
+
+Run the installer
+
+  rails generate effective_pages:install
+
+  * This will install all required migrations.
+
+Migrate the database
+
+  bundle exec rake db:migrate
+
+
+
+TESTING:
+
+Don't put migrations into the dummy app
+
+effective_assets/ > bundle exec rake app:db:test:prepare
+effective_assets/ > bundle exec rake app:db:migrate
+effective_assets/ > guard

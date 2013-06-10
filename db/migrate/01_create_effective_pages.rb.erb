@@ -1,0 +1,25 @@
+class CreatePages < ActiveRecord::Migration
+  def self.up
+    create_table <%= @pages_table_name %> do |t|
+      t.string :title
+      t.string :meta_keywords
+      t.string :meta_description
+
+      t.string :template
+      t.text :sections
+
+      t.boolean :published, :default => false
+      t.string :slug
+
+      t.datetime :updated_at
+      t.datetime :created_at
+    end
+
+    add_index <%= @pages_table_name %>, :slug, :unique => true
+  end
+
+  def self.down
+    drop_table <%= @pages_table_name %>
+  end
+
+end
