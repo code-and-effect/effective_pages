@@ -35,3 +35,10 @@ Don't put migrations into the dummy app
 effective_assets/ > bundle exec rake app:db:test:prepare
 effective_assets/ > bundle exec rake app:db:migrate
 effective_assets/ > guard
+
+MERCURY:
+
+To update mercury2
+
+cd /app/assets/mercury
+git pull origin mercury2

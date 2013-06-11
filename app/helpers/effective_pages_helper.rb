@@ -8,4 +8,9 @@ module EffectivePagesHelper
       ].join("\n").html_safe
     end
   end
+
+  def mercury_edit_path(path = nil)
+    effective_pages.mercury_editor_path(path.nil? ? request.path.gsub(/^\/\/?(editor)?/, '') : path)
+  end
+
 end
