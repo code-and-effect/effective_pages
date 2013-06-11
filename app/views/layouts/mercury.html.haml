@@ -4,16 +4,15 @@
     %title= 'Edit: ' + @page.title
     %meta{:name => "viewport", :content => "width=device-width, maximum-scale=1.0, initial-scale=1.0"}
     = csrf_meta_tags
-    = javascript_include_tag 'jquery'
 
     :javascript
       mercuryPackages = {
         effective_pages: {
-          javascripts: 'mercury/jquery-1.7.js,mercury/mercury.min.js,mercury/mercury_dialogs.js',
-          stylesheets: 'mercury/mercury.bundle.css'
+          javascripts: 'jquery-1.7.js,mercury.min.js,mercury_dialogs.js',
+          stylesheets: 'mercury.bundle.css'
         }
       };
 
-    %script{:src => '/assets/mercury/mercury_loader.js?pack=effective_pages'}
+    %script{:src => '/assets/mercury/mercury_loader.js?pack=effective_pages&src=/assets/mercury'}
 
   %body
