@@ -8,7 +8,12 @@ module Effective
     def edit
       @requested_uri = params[:requested_uri]
       @page = Effective::Page.where(:slug => params[:requested_uri]).first
-      render :text => '', :layout => 'mercury'
+
+      if params[:mercury_frame]
+        redirect_to request.fullpath.gsub('edit/', '')
+      else
+        render :text => '', :layout => 'mercury'
+      end
     end
 
     def resource

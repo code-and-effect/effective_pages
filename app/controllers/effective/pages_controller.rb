@@ -18,6 +18,12 @@ module Effective
       render "#{EffectivePages::templates_path.chomp('/')}/#{@page.template}", :layout => (template[:layout] || :application)
     end
 
+    def update
+      @page = Effective::Page.where(:slug => params[:id]).first
+
+      render :text => '', :status => 200
+    end
+
     private
 
     # https://gist.github.com/hiroshi/985457
