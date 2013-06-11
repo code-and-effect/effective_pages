@@ -5,7 +5,6 @@ PATH
       coffee-rails
       formtastic
       haml
-      mercury-rails
       migrant
       psych
       rails
@@ -105,9 +104,6 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mercury-rails (0.9.0)
-      coffee-rails
-      railties (~> 3.2)
     method_source (0.8.1)
     migrant (1.4.1)
       faker
