@@ -10,7 +10,7 @@ module Effective
       @page = Effective::Page.where(:slug => params[:requested_uri]).first
 
       if params[:mercury_frame]
-        redirect_to request.fullpath.gsub('edit/', '')
+        redirect_to '/' + params[:requested_uri] + '?mercury_frame=true'
       else
         render :text => '', :layout => 'mercury'
       end

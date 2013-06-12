@@ -8,7 +8,7 @@ module Effective
       meta_description  :string, :validates => [:presence]
 
       template          :string, :validates => [:presence]
-      sections          :text
+      regions           :text
 
       published         :boolean, :default => true, :validates => [:boolean]
       slug              :string
@@ -16,13 +16,13 @@ module Effective
       timestamps
     end
 
-    serialize :sections, Hash
+    serialize :regions, Hash
 
     scope :drafts, -> { where(:published => false) }
     scope :published, -> { where(:published => true) }
 
-    def sections
-      self[:sections] || {}
+    def regions
+      self[:regions] || {}
     end
 
   end

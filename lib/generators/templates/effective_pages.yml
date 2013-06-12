@@ -4,7 +4,7 @@
 template1:
   layout: 'application'
   description: 'This is the default template 1'
-  sections:
+  regions:
     content_one:
       label: 'Template1 Content Section One'
     content_two:
@@ -13,7 +13,7 @@ template1:
 template2:
   layout: 'application'
   description: 'This is the default template 2'
-  sections:
+  regions:
     content_one:
       label: 'Template2 Content Section One'
     content_two:
