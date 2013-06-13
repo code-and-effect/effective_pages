@@ -13,10 +13,8 @@ module EffectivePages
 
     # Set up our default configuration options.
     initializer "effective_pages.defaults", :before => :load_config_initializers do |app|
-      EffectivePages.setup do |config|
-        config.pages_table_name = :pages
-        config.templates_path = 'templates/'
-      end
+      # Set up our defaults, as per our initializer template
+      eval File.read("#{config.root}/lib/generators/templates/effective_pages.rb")
     end
 
     # ActiveAdmin (optional)

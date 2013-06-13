@@ -1,10 +1,11 @@
 module Effective
   class PagesController < ApplicationController
+    skip_authorization_check if defined?(CanCan)
     respond_to :html
-    skip_authorization_check
 
     def show
       @page = Effective::Page.where(:slug => params[:id]).first
+      EffectivePages.authorized?(self, @page, :read)
 
       #raise ActiveRecord::RecordNotFound unless @page.published?
 
@@ -21,6 +22,7 @@ module Effective
 
     def update
       @page = Effective::Page.where(:slug => params[:requested_uri]).first
+      EffectivePages.authorized?(self, @page, :update)
 
       # Do the update.
       params[:content].each { |region, vals| @page.regions[region] = vals[:value] }

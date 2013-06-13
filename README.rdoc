@@ -27,6 +27,44 @@ Add to your layout file(s)
   = effective_page_header_tags
 
 
+Authorization
+
+  This can be handled by a Proc or a method
+
+  Proc:
+
+  in effective_pages.rb initializer
+
+  = config.authorization_method = Proc.new { |controller, resource, action| can?(action, resource || EffectivePages::Page) }
+
+  Method:
+
+  in effective_pages.rb initializer
+
+  = config.authorization_method = :can_edit_page?
+
+  and in application_controller.rb
+
+  def can_edit_page?(resource, action)
+    # self is the controller
+    true
+  end
+
+  If the method or proc returns false an ActiveResource::UnauthorizedAccess will be raised
+
+  Again in your application_controller.rb
+
+  rescue_from CanCan::AccessDenied, ActiveResource::UnauthorizedAccess do |exception|  # This is not the ActiveAdmin AccessDenied
+    respond_to do |format|
+      format.html { render 'static_pages/access_denied', :status => 403 }
+      format.any { render :text => 'Access Denied', :status => 403 }
+    end
+  end
+
+  This is intended to be a flow through to CanCan, so the following actions are used:
+  :read, :create, :update, :destroy, :manage
+
+
 
 TESTING:
 
