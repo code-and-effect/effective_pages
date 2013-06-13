@@ -10,14 +10,13 @@ module Effective
       #raise ActiveRecord::RecordNotFound unless @page.published?
 
       template = EffectivePages.templates[@page.template]
+      template_info = EffectivePages.templates_info[@page.template]
       raise EffectivePages::TemplateNotFound.new(@page.template) unless (template and template.kind_of?(HashWithIndifferentAccess))
 
       # Assign all content areas
-      (template[:regions] || {}).each do |region, opts|
-        content_for region, @page.regions[region]
-      end
+      (template[:regions] || {}).each { |region, _| content_for(region, @page.regions[region]) }
 
-      render "#{EffectivePages::templates_path.chomp('/')}/#{@page.template}", :layout => (template[:layout] || :application)
+      render "#{EffectivePages::templates_path.chomp('/')}/#{@page.template}", :layout => (template_info[:layout] || :application)
     end
 
     def update

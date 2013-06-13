@@ -28,4 +28,5 @@ module EffectivePagesHelper
     end
   end
 
+
 end

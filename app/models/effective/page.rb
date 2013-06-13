@@ -24,6 +24,5 @@ module Effective
     def regions
       self[:regions] || {}
     end
-
   end
 end

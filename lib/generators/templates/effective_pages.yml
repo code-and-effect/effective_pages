@@ -3,15 +3,21 @@
 
 template1:
   layout: 'application'
+  image: 'effective_pages/missing_template_image.png'
+  label: 'Template #1'
   description: 'This is the default template 1'
   regions:
     content_one:
-      label: 'Template1 Content Section One'
+      label: 'Content One'
+      description: 'More information for content_one'
     content_two:
-      label: 'Template1 Content Section Two'
+      label: 'Content Two'
+      description: 'More information for content_two'
 
 template2:
   layout: 'application'
+  image: 'effective_pages/missing_template_image.png'
+  label: 'Template #2'
   description: 'This is the default template 2'
   regions:
     content_one:
