@@ -8,7 +8,7 @@ class CreateEffectivePages < ActiveRecord::Migration
       t.string :template
       t.text :regions
 
-      t.boolean :published, :default => false
+      t.boolean :draft, :default => false
       t.string :slug
 
       t.datetime :updated_at

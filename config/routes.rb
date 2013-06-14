@@ -8,10 +8,12 @@ end
 EffectivePages::Engine.routes.draw do
 
   scope :module => 'effective' do
-    get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint
+    scope '/edit' do
+      get '(/*id)' => "mercury#edit", :as => :edit_effective_page
+      put '(/*id)' => 'pages#update', :as => :effective_page
+    end
 
-    get '/edit/(/*requested_uri)' => "mercury#edit", :as => :mercury_editor
-    put '/edit/(/*requested_uri)' => 'pages#update'
+    get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint, :as => :effective_page
 
     scope '/mercury' do
       get ':type/:resource' => "mercury#resource"

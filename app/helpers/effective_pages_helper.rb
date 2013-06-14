@@ -9,8 +9,8 @@ module EffectivePagesHelper
     end
   end
 
-  def mercury_edit_path(path = nil)
-    effective_pages.mercury_editor_path(path.nil? ? request.path.gsub(/^\/\/?(editor)?/, '') : path)
+  def application_root_to_effective_pages_slug
+    Rails.application.routes.routes.find { |r| r.name == 'root' and r.defaults[:controller] == 'Effective::Pages' and r.defaults[:action] == 'show' }.defaults[:id] rescue nil
   end
 
   def page_region(region, options = {})

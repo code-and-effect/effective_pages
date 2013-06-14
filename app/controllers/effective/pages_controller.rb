@@ -7,7 +7,7 @@ module Effective
       @page = Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, @page, :read)
 
-      #raise ActiveRecord::RecordNotFound unless @page.published?
+      (raise ActiveRecord::RecordNotFound if @page.draft?) unless params[:mercury_frame]
 
       template = EffectivePages.templates[@page.template]
       template_info = EffectivePages.templates_info[@page.template]
@@ -16,11 +16,11 @@ module Effective
       # Assign all content areas
       (template[:regions] || {}).each { |region, _| content_for(region, @page.regions[region]) }
 
-      render "#{EffectivePages::templates_path.chomp('/')}/#{@page.template}", :layout => ((template_info[:layout].to_s rescue nil) || 'application')
+      render "#{EffectivePages.templates_path.chomp('/')}/#{@page.template}", :layout => ((template_info[:layout].to_s rescue nil) || 'application')
     end
 
     def update
-      @page = Effective::Page.find(params[:requested_uri])
+      @page = Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, @page, :update)
 
       # Do the update.

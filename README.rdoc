@@ -19,8 +19,13 @@ Migrate the database
   bundle exec rake db:migrate
 
 Mount the Engine for route
-
   mount EffectivePages::Engine => '/', :as => 'effective_pages'
+
+  If you want the EffectivePages to also handle your root path
+
+  root :to => 'Effective::Pages#show', :id => 'home'
+
+  Make sure to create a page with the 'home' slug :)
 
 Add to your layout file(s)
 
@@ -72,7 +77,6 @@ Authorization
   :read, :create, :update, :destroy, :manage
 
 
-
 TESTING:
 
 Don't put migrations into the dummy app
@@ -80,10 +84,3 @@ Don't put migrations into the dummy app
 effective_assets/ > bundle exec rake app:db:test:prepare
 effective_assets/ > bundle exec rake app:db:migrate
 effective_assets/ > guard
-
-MERCURY:
-
-To update mercury2
-
-cd /app/assets/mercury
-git pull origin mercury2

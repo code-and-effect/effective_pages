@@ -8,11 +8,11 @@ module Effective
       title             :string, :validates => [:presence]
       meta_keywords     :string, :validates => [:presence]
       meta_description  :string, :validates => [:presence]
+      draft             :boolean, :default => false, :validates => [:boolean]
 
       template          :string, :validates => [:presence]
       regions           :text
 
-      published         :boolean, :default => true, :validates => [:boolean]
       slug              :string
 
       timestamps
@@ -20,8 +20,8 @@ module Effective
 
     serialize :regions, Hash
 
-    scope :drafts, -> { where(:published => false) }
-    scope :published, -> { where(:published => true) }
+    scope :drafts, -> { where(:draft => true) }
+    scope :published, -> { where(:draft => false) }
 
     def regions
       self[:regions] || {}

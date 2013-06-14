@@ -4,11 +4,11 @@ module Effective
     layout false
 
     def edit
-      @page = Effective::Page.find(params[:requested_uri])
+      @page = Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, @page, :update)
 
       if params[:mercury_frame]
-        redirect_to '/' + params[:requested_uri] + '?mercury_frame=true'
+        redirect_to effective_pages.effective_page_path(@page, :mercury_frame => true)
       else
         render :text => '', :layout => 'mercury'
       end
