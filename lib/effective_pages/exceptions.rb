@@ -7,7 +7,7 @@ module EffectivePages
     end
 
     def to_s
-      "Unable to find template '#{@template.to_s}'.  Make sure this template is defined in config/effective_pages.yml."
+      "Unable to locate template '#{@template.to_s}'.  Make sure a file with this name exists in your views/templates/ directory."
     end
   end
 end

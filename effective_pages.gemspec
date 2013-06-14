@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails"
+  s.add_dependency "effective_slugs"
   s.add_dependency "coffee-rails"
   s.add_dependency "formtastic"
   s.add_dependency "haml"

@@ -26,6 +26,13 @@ Add to your layout file(s)
 
   = effective_page_header_tags
 
+ActiveAdmin
+
+  Should just work if you have ActiveAdmin installed
+
+  But you have to add the custom JS:  effective_pages.js
+  And the custom stylesheet:  effective_pages.css
+
 
 Authorization
 

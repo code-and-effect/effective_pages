@@ -3,7 +3,8 @@
     = f.input :title, :hint => "Give this page a title"
     = f.input :meta_keywords, :hint => "Comma seperated keywords or tags related to this page content."
     = f.input :meta_description, :hint => "A one or two sentence summary of this page. Appears on Google search results underneath the page title."
-    = f.input :slug, :hint => "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>This page is currently reachable via http://#{request.host}/<strong>#{f.object.slug}</strong>/".html_safe
+    - if !f.object.new_record? or f.object.errors.include?(:slug)
+      = f.input :slug, :hint => "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>This page is currently reachable via http://#{request.host}/<strong>#{f.object.slug}</strong>/".html_safe
 
   = f.inputs 'Page Template', :id => 'page_templates' do
     %li
@@ -31,4 +32,8 @@
             %li none
 
 
-  = f.actions :submit, :cancel
+
+  = f.actions do
+    = f.action :submit
+    = f.action :submit, :button_html => { :value => 'Save and Edit Content' }
+    = f.action :cancel

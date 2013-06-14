@@ -20,6 +20,16 @@ if defined?(ActiveAdmin)
       span "The page with the slug 'home' will be used as the homepage.".html_safe
     end
 
+    controller do
+      def update
+        if params[:commit] == 'Save and Edit Content'
+          update! { |format| format.html { redirect_to '/edit/' + @effective_page.slug } }
+        else
+          update! { |format| format.html { redirect_to admin_effective_pages_path } }
+        end
+      end
+    end
+
     form :partial => "active_admin/form"
   end
 end

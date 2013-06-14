@@ -4,8 +4,7 @@ module Effective
     layout false
 
     def edit
-      @requested_uri = params[:requested_uri]
-      @page ||= Effective::Page.where(:slug => params[:requested_uri]).first
+      @page = Effective::Page.find(params[:requested_uri])
       EffectivePages.authorized?(self, @page, :update)
 
       if params[:mercury_frame]

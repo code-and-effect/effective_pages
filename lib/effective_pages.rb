@@ -30,6 +30,7 @@ module EffectivePages
     templates = HashWithIndifferentAccess.new()
 
     begin
+      # Reversing here so the app's templates folder has precedence.
       files = ApplicationController.view_paths.map { |path| Dir["#{path}/templates/**"] }.flatten.reverse
 
       files.each do |file|

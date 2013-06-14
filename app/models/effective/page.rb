@@ -1,5 +1,7 @@
 module Effective
   class Page < ActiveRecord::Base
+    acts_as_sluggable
+
     self.table_name = EffectivePages.pages_table_name.to_s
 
     structure do
