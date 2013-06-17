@@ -45,6 +45,6 @@ if defined?(ActiveAdmin)
       end
     end
 
-    form :partial => "active_admin/form"
+    form :partial => "active_admin/effective_pages/form"
   end
 end
