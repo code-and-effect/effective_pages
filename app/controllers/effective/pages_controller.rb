@@ -5,7 +5,7 @@ module Effective
 
     def show
       @page = Effective::Page.find(params[:id])
-      EffectivePages.authorized?(self, @page, :read)
+      EffectivePages.authorized?(self, :read, @page)
 
       (raise ActiveRecord::RecordNotFound if @page.draft?) unless params[:mercury_frame]
 
@@ -21,7 +21,7 @@ module Effective
 
     def update
       @page = Effective::Page.find(params[:id])
-      EffectivePages.authorized?(self, @page, :update)
+      EffectivePages.authorized?(self, :update, @page)
 
       # Do the update.
       params[:content].each { |region, vals| @page.regions[region] = vals[:value] }

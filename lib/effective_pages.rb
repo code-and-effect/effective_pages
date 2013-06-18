@@ -11,7 +11,7 @@ module EffectivePages
   end
 
   def self.authorized?(controller, resource, action)
-    raise ActiveResource::UnauthorizedAccess.new('') unless (controller || self).instance_exec(controller, resource, action, &EffectivePages.authorization_method)
+    raise ActiveResource::UnauthorizedAccess.new('') unless (controller || self).instance_exec(controller, action, resource, &EffectivePages.authorization_method)
     true
   end
 

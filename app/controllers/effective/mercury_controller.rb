@@ -5,7 +5,7 @@ module Effective
 
     def edit
       @page = Effective::Page.find(params[:id])
-      EffectivePages.authorized?(self, @page, :update)
+      EffectivePages.authorized?(self, :update, @page)
 
       if params[:mercury_frame]
         redirect_to effective_pages.effective_page_path(@page, :mercury_frame => true)

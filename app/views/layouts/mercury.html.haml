@@ -5,13 +5,22 @@
     %meta{:name => "viewport", :content => "width=device-width, maximum-scale=1.0, initial-scale=1.0"}
     = csrf_meta_tags
 
-    :javascript
-      mercuryPackages = {
-        effective_pages: {
-          javascripts: 'jquery-1.7.js,mercury.min.js,mercury_dialogs.js,effective_assets/mercury_effective_assets.js',
-          stylesheets: 'mercury.bundle.css'
-        }
-      };
+    - if defined?(EffectiveAssets)
+      :javascript
+        mercuryPackages = {
+          effective_pages: {
+            javascripts: 'jquery-1.7.js,mercury.min.js,mercury_dialogs.js,effective_assets/mercury_effective_assets.js',
+            stylesheets: 'mercury.bundle.css'
+          }
+        };
+    - else
+      :javascript
+        mercuryPackages = {
+          effective_pages: {
+            javascripts: 'jquery-1.7.js,mercury.min.js,mercury_dialogs.js',
+            stylesheets: 'mercury.bundle.css'
+          }
+        };
 
     %script{:src => '/assets/mercury/mercury_loader.js?pack=effective_pages&src=/assets/mercury'}
 
