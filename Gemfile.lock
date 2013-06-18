@@ -3,10 +3,24 @@ PATH
   specs:
     effective_pages (0.0.1)
       coffee-rails
+      effective_mercury
+      effective_slugs
       formtastic
       haml
       migrant
       psych
+      rails
+
+PATH
+  remote: ~/Sites/effective_mercury
+  specs:
+    effective_mercury (0.0.1)
+      rails
+
+PATH
+  remote: ~/Sites/effective_slugs
+  specs:
+    effective_slugs (0.0.1)
       rails
 
 GEM
@@ -193,7 +207,9 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  effective_mercury!
   effective_pages!
+  effective_slugs!
   factory_girl_rails
   guard
   guard-livereload

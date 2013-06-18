@@ -4,7 +4,7 @@ module Effective
     respond_to :html
 
     def show
-      @page = Effective::Page.find(params[:id])
+      @page ||= Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, :read, @page)
 
       (raise ActiveRecord::RecordNotFound if @page.draft?) unless params[:mercury_frame]
@@ -17,6 +17,13 @@ module Effective
       (template[:regions] || {}).each { |region, _| content_for(region, @page.regions[region]) }
 
       render "#{EffectivePages.templates_path.chomp('/')}/#{@page.template}", :layout => ((template_info[:layout].to_s rescue nil) || 'application')
+    end
+
+    def edit
+      @page = Effective::Page.find(params[:id])
+      EffectivePages.authorized?(self, :update, @page)
+
+      params[:mercury_frame] ? show : render(:text => '', :layout => 'effective_mercury')
     end
 
     def update
