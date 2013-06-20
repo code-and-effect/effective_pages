@@ -17,5 +17,4 @@ module EffectivePagesHelper
     mercury_region(region, options)
   end
 
-
 end
