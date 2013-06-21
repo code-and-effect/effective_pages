@@ -30,17 +30,25 @@ if defined?(ActiveAdmin)
     controller do
       def create
         if params[:commit] == 'Save and Edit Content'
-          create! { effective_pages.edit_effective_page_path(@effective_page) }
+          create! do |format|
+            format.html { redirect_to effective_pages.edit_effective_page_path(@effective_page) }
+          end
         else
-          create! { admin_effective_pages_path }
+          create! do |format|
+            format.html { admin_effective_pages_path }
+          end
         end
       end
 
       def update
         if params[:commit] == 'Save and Edit Content'
-          update! { effective_pages.edit_effective_page_path(@effective_page) }
+          update! do |format|
+            format.html { redirect_to effective_pages.edit_effective_page_path(@effective_page) }
+          end
         else
-          update! { admin_effective_pages_path }
+          update! do |format|
+            format.html { admin_effective_pages_path }
+          end
         end
       end
     end
