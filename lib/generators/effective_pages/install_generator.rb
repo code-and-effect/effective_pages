@@ -28,6 +28,14 @@ module EffectivePages
         migration_template '../../../db/migrate/01_create_effective_pages.rb.erb', 'db/migrate/create_effective_pages.rb'
       end
 
+      def copy_example_template
+        template "example.html.haml", "app/views/templates/example.html.haml"
+      end
+
+      def setup_routes
+        inject_into_file "config/routes.rb", "\n  mount EffectivePages::Engine => '/', :as => 'effective_pages'", :after => /root (:?)to.*/
+      end
+
       def show_readme
         readme "README" if behavior == :invoke
       end

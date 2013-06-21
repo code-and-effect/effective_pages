@@ -1,26 +1,15 @@
 # This gets read in automatically and is accessible at
 # EffectivePages.config.templates
 
-template1:
+example:
   layout: 'application'
   image: 'effective_pages/missing_template_image.png'
-  label: 'Template #1'
-  description: 'This is the default template 1'
+  label: 'Example Template'
+  description: 'This is the effective example template 1'
   regions:
-    content_one:
-      label: 'Content One'
-      description: 'More information for content_one'
-    content_two:
-      label: 'Content Two'
-      description: 'More information for content_two'
-
-template2:
-  layout: 'application'
-  image: 'effective_pages/missing_template_image.png'
-  label: 'Template #2'
-  description: 'This is the default template 2'
-  regions:
-    content_one:
-      label: 'Template2 Content Section One'
-    content_two:
-      label: 'Template2 Content Section Two'
+    title:
+      label: 'Title Text'
+      description: 'This text is displayed in an H1'
+    content:
+      label: 'Main Content'
+      description: 'This text is displayed in a P'

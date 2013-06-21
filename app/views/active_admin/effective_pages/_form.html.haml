@@ -9,6 +9,9 @@
     - if !f.object.new_record? or (f.object.slug.present? and f.object.errors.include?(:slug))
       = f.input :slug, :hint => "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + effective_pages.effective_page_url(f.object).gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>')) rescue ''}".html_safe
 
+  - if defined?(EffectiveRoles) and f.object.respond_to?(:roles)
+    = effective_roles_fields(f)
+
   = f.inputs 'Page Template', :id => 'page_templates' do
     %li
       %fieldset.choices

@@ -1,6 +1,6 @@
 if defined?(ActiveAdmin)
   ActiveAdmin.register Effective::Page do
-    menu :label => "Pages", :if => proc { EffectivePages.authorized?(controller, :manage, Effective::Page) rescue false }
+    menu :label => "Pages", :if => proc { EffectivePages.authorized?(controller, :manage, Effective::Page.new()) rescue false }
 
     filter :title
     filter :created_at

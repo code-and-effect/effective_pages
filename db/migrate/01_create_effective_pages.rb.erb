@@ -5,11 +5,15 @@ class CreateEffectivePages < ActiveRecord::Migration
       t.string :meta_keywords
       t.string :meta_description
 
+      t.boolean :draft, :default => false
+
       t.string :template
       t.text :regions
 
-      t.boolean :draft, :default => false
       t.string :slug
+    <% if defined?(EffectiveRoles) %>
+      <%= 't.integer :roles_mask, :default => 0' %>
+    <% end %>
 
       t.datetime :updated_at
       t.datetime :created_at

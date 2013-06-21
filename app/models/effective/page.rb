@@ -1,6 +1,8 @@
 module Effective
   class Page < ActiveRecord::Base
     acts_as_sluggable
+    acts_as_role_restricted if defined?(EffectiveRoles)
+
 
     self.table_name = EffectivePages.pages_table_name.to_s
 

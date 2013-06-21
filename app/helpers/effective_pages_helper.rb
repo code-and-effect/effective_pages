@@ -1,12 +1,12 @@
 module EffectivePagesHelper
-  def effective_page_header_tags
-    if @page
-      [
-        content_tag(:title, @page.title),
-        "<meta content='#{@page.meta_description}' name='description' />",
-        "<meta content='#{@page.meta_keywords}' name='keywords' />"
-      ].join("\n").html_safe
-    end
+  def effective_page_header_tags(options = {})
+    @page ||= nil
+
+    [
+      content_tag(:title, options[:title] || @page.try(:title)),
+      "<meta content='#{options[:meta_description] || @page.try(:meta_description)}' name='description' />",
+      "<meta content='#{options[:meta_keywords] || @page.try(:meta_keywords)}' name='keywords' />"
+    ].join("\n").html_safe
   end
 
   def application_root_to_effective_pages_slug
@@ -14,7 +14,11 @@ module EffectivePagesHelper
   end
 
   def page_region(region, options = {})
-    mercury_region(region, options)
+    if block_given?
+      mercury_region(region, options) { yield }
+    else
+      mercury_region(region, options)
+    end
   end
 
 end
