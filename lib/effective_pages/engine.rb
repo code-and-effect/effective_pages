@@ -1,5 +1,8 @@
 require 'effective_pages/exceptions'
 
+require 'effective_slugs'
+require 'effective_mercury'
+
 module EffectivePages
   class Engine < ::Rails::Engine
     engine_name 'effective_pages'
