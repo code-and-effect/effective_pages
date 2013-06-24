@@ -20,9 +20,7 @@ module EffectivePages
     # ActiveAdmin (optional)
     # This prepends the load path so someone can override the assets.rb if they want.
     initializer 'effective_pages.active_admin' do
-      if defined?(ActiveAdmin)
-        ActiveAdmin.application.load_paths.unshift Dir["#{config.root}/active_admin"]
-      end
+      ActiveAdmin.application.load_paths.unshift Dir["#{config.root}/active_admin"]
     end
 
   end
