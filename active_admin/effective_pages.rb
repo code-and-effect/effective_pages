@@ -35,7 +35,7 @@ if defined?(ActiveAdmin)
           end
         else
           create! do |format|
-            format.html { admin_effective_pages_path }
+            format.html { redirect_to admin_effective_pages_path }
           end
         end
       end
@@ -47,7 +47,7 @@ if defined?(ActiveAdmin)
           end
         else
           update! do |format|
-            format.html { admin_effective_pages_path }
+            format.html { redirect_to admin_effective_pages_path }
           end
         end
       end

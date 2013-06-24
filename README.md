@@ -1,5 +1,7 @@
 # Effective Pages
 
+A drop-in CMS solution for dynamically creating pages based off pre-defined templates.  Create templates ahead of time (think one_column, two_column..) with defined editable content regions.  Users can create content pages, choose a template, and use the fullscreen in-place editor to set their content.
+
 A full solution for creating, updating and templating content pages in your Rails application.
 
 Write templates that define content regions.
