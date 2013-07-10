@@ -1,7 +1,7 @@
 class EffectivePagesRoutingConstraint
   def self.matches?(request)
-    slug = request.path_parameters[:id] || '/'
-    Effective::Page.where(:slug => slug).first.present?
+    id = request.path_parameters[:id] || '/'
+    Effective::Page.find(id).present? rescue false
   end
 end
 

@@ -3,7 +3,6 @@ module Effective
     acts_as_sluggable
     acts_as_role_restricted if defined?(EffectiveRoles)
 
-
     self.table_name = EffectivePages.pages_table_name.to_s
 
     structure do
@@ -14,6 +13,7 @@ module Effective
 
       template          :string, :validates => [:presence]
       regions           :text
+      snippets          :text
 
       slug              :string
 
@@ -21,12 +21,17 @@ module Effective
     end
 
     serialize :regions, Hash
+    serialize :snippets, Hash
 
     scope :drafts, -> { where(:draft => true) }
     scope :published, -> { where(:draft => false) }
 
     def regions
       self[:regions] || {}
+    end
+
+    def snippets
+      self[:snippets] || {}
     end
   end
 end

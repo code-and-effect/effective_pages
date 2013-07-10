@@ -20,24 +20,40 @@ module Effective
     end
 
     def edit
-      @page = Effective::Page.find(params[:id])
+      @page ||= Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, :update, @page)
 
-      params[:mercury_frame] ? show : render(:text => '', :layout => 'effective_mercury')
+      if params[:mercury_frame]
+        show
+      elsif @page.snippets.present?
+        render(:file => 'effective/mercury/_load_snippets', :layout => 'effective_mercury')
+      else
+        render(:text => '', :layout => 'effective_mercury')
+      end
     end
 
     def update
-      @page = Effective::Page.find(params[:id])
+      @page ||= Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, :update, @page)
 
       # Do the update.
-      params[:content].each { |region, vals| @page.regions[region] = vals[:value] }
+      params[:content].each do |region, vals|
+        @page.regions[region] = vals[:value]
+        (vals[:snippets] || []).each { |snippet, vals| @page.snippets[snippet] = vals }
+      end
 
       if @page.save
         render :text => '', :status => 200
       else
         render :text => '', :status => :unprocessable_entity
       end
+    end
+
+    def submit
+      @page ||= Effective::Page.find(params[:id])
+      EffectivePages.authorized?(self, :read, @page)
+
+      show
     end
 
     private

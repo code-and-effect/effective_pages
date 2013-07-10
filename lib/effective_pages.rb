@@ -5,6 +5,7 @@ module EffectivePages
   mattr_accessor :pages_table_name
   mattr_accessor :templates_path
   mattr_accessor :authorization_method
+  mattr_accessor :before_filter
 
   def self.setup
     yield self

@@ -9,6 +9,7 @@ class CreateEffectivePages < ActiveRecord::Migration
 
       t.string :template
       t.text :regions
+      t.text :snippets
 
       t.string :slug
     <% if defined?(EffectiveRoles) %>

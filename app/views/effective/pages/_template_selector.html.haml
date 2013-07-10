@@ -1,0 +1,27 @@
+= f.inputs 'Page Template', :id => 'page_templates' do
+  %li
+    %fieldset.choices
+      %label.label Template*
+      %ol.choices-group
+        - EffectivePages.templates.each do |template, _|
+          - info = EffectivePages.templates_info[template] || {}
+          %li.template{'data-template' => template, :title => info[:label] || template, :class => ('active' if f.object.template == template) }
+            %label
+              = radio_button(:effective_page, :template, template)
+              = image_tag(info[:image] || 'effective_pages/missing_template_image.png', :alt => template)
+
+    - if f.object.errors[:template].present?
+      %p.inline-errors= f.object.errors[:template].first
+
+  - EffectivePages.templates.each do |template, vals|
+    - info = EffectivePages.templates_info[template] || {}
+    %li.template-info{'data-template' => template, :class => ('active' if f.object.template == template)}
+      %label.label= info[:label] || template
+      %p= info[:description]
+      %br
+      %p Content Regions:
+      %ul
+        - vals[:regions].keys.each do |region|
+          %li= "#{info[:regions][region][:label] rescue region}#{(': ' + info[:regions][region][:description]) rescue ''}"
+        - if vals[:regions].keys.length == 0
+          %li none

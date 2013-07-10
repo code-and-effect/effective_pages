@@ -7,4 +7,7 @@ EffectivePages.setup do |config|
   # Use CanCan: can?(action, resource)
   # Use effective_roles:  resource.roles_match_with?(current_user)
   config.authorization_method = Proc.new { |controller, action, resource| true }
+
+  #config.before_filter = :some_before_filter
+  #config.before_filter = [:some_before_filter1, :some_before_filter2]
 end
