@@ -4,7 +4,7 @@ module EffectiveRegionsHelper
       mercury_region(region, options) { yield }
     else
       mercury_region(region, options)
-    end)
+    end || '')
 
     snippets = html.scan(/\[snippet_\d+\/\d+\]/).flatten  # Find [snippet_1/1]
     snippets.each { |snippet| html.gsub!(snippet, snippet_content(snippet, @page, snippet_options))}

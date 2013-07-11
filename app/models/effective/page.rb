@@ -33,5 +33,20 @@ module Effective
     def snippets
       self[:snippets] || {}
     end
+
+    def form
+      @form ||= Effective::PageForm.new(snippet_objects)
+    end
+
+    def snippet_objects
+      snippets.map do |k, snippet|
+        klass = "Effective::Snippets::#{snippet[:name].try(:classify)}".safe_constantize
+        klass ? klass.new(snippet[:options]) : nil
+      end.compact
+    end
   end
 end
+
+
+
+

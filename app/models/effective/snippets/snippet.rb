@@ -8,7 +8,10 @@ module Effective
       attr_accessor :attributes
       attr_accessor :options
 
-      def initialize(attributes, options = {})
+      attribute :required, Boolean
+      attribute :value, String
+
+      def initialize(attributes = {}, options = {})
         @attributes ||= attributes
         @options ||= options
 

@@ -37,6 +37,9 @@ module Effective
       EffectivePages.authorized?(self, :update, @page)
 
       # Do the update.
+      @page.regions = {} # Ensures there's no old regions or snippets kicking around. Only current valid ones.
+      @page.snippets = {}
+
       params[:content].each do |region, vals|
         @page.regions[region] = vals[:value]
         (vals[:snippets] || []).each { |snippet, vals| @page.snippets[snippet] = vals }
@@ -52,6 +55,14 @@ module Effective
     def submit
       @page ||= Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, :read, @page)
+
+      if @page.form.update_attributes(params)
+        flash[:success] = 'Successfully Saved'
+        Rails.logger.info "SUCCESSFULLY SAVED!"
+      else
+        Rails.logger.info "ERRORS WHILE SAVING! #{@page.form.errors.inspect}"
+        flash[:error] = 'Errors encountered when saving'
+      end
 
       show
     end
