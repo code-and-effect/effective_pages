@@ -7,10 +7,9 @@ module EffectiveRegionsHelper
     end || '')
 
     snippets = html.scan(/\[snippet_\d+\/\d+\]/).flatten  # Find [snippet_1/1]
-    snippets.each { |snippet| html.gsub!(snippet, snippet_content(snippet, @page, snippet_options))}
+    snippets.each { |snippet| html.gsub!(snippet, snippet_content(snippet, @page, snippet_options)) }
     html.html_safe
   end
-
 
   def simple_page_region(region, options = {})
     options.merge!(:type => :simple)

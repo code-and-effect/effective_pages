@@ -41,7 +41,7 @@ module Effective
       @page.snippets = {}
 
       params[:content].each do |region, vals|
-        @page.regions[region] = vals[:value]
+        @page.regions[region] = cleanup(vals[:value])
         (vals[:snippets] || []).each { |snippet, vals| @page.snippets[snippet] = vals }
       end
 
@@ -79,5 +79,23 @@ module Effective
         (@_content_for || {}).each { |name, content| view.content_for name.to_sym, content.try(:html_safe) }
       end
     end
+
+    def cleanup(str)
+      if str
+        # Remove the following markup
+        #<div data-snippet="snippet_0" class="text_field_tag-snippet">[snippet_0/1]</div>
+        # And replace with [snippet_0/1]
+        # So we don't have a wrapping div in our final content
+        str.scan(/(<div.+?>)(\[snippet_\d+\/\d+\])(<\/div>)/).each do |match|
+          str.gsub!(match.join(), match[1]) if match.length == 3
+        end
+
+        str.gsub!("\n", '')
+        str.chomp!('<br>') # Mercury editor likes to put in extra BRs
+        str.strip!
+        str
+      end
+    end
+
   end
 end
