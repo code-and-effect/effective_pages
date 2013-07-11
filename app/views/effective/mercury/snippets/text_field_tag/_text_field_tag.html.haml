@@ -1,4 +1,4 @@
-- if defined?(form)
-  = form.input text_field_tag.name, :as => :string, :input_html => {:maxlength => text_field_tag.maxlength, :placeholder => text_field_tag.placeholder, :class => text_field_tag.html_class}
-- else
-  = text_field_tag(text_field_tag.name, nil, :maxlength => text_field_tag.maxlength, :placeholder => text_field_tag.placeholder, :class => text_field_tag.html_class)
+- form ||= nil
+- semantic_form_for 'effective_page', :url => '/' do |f| form = f end unless form
+
+= form.input text_field_tag.name, :as => :string, :required => text_field_tag.required || false, :input_html => {:maxlength => text_field_tag.maxlength, :placeholder => text_field_tag.placeholder, :class => text_field_tag.html_class}

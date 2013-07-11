@@ -24,8 +24,16 @@ module Effective
         self.class.view.render :partial => partial_path, :locals => {demodulized_class_name => self}.merge(options)
       end
 
+      def required?
+        self[:required] || false
+      end
+
       def self.view
-        @view ||= ActionView::Base.new(ActionController::Base.view_paths, {})
+        unless @view
+          @view = ActionView::Base.new(ActionController::Base.view_paths, {})
+          @view.instance_exec { def protect_against_forgery? ; false; end }
+        end
+        @view
       end
 
       def self.view=(view)
