@@ -2,11 +2,8 @@
   .filter
     %input{:class => 'filter focusable', :type => 'text'}
   %ul
-    %li{'data-filter' => 'form, field, text, text_field, text_field_tag'}
-      %img{:src => '/assets/effective_mercury/default-snippet.png', :alt => 'Text Field', 'data-snippet' => 'text_field_tag', }
-      %h4 Text Field Tag
-      .description A form text field
-    %li{'data-filter' => 'example, snippet, favorite, beer'}
-      %img{:src => '/assets/effective_mercury/default-snippet.png', :alt => 'Snippet Name', 'data-snippet' => 'example', }
-      %h4 Snippet Name Seven
-      .description A one or two line long description of what this snippet does.
+    - EffectivePages.read_snippets.each do |snippet|
+      %li{'data-filter' => snippet.snippet_filter || snippet.demodulized_class_name}
+        %img{:src => snippet.snippet_image || '/assets/effective_mercury/default-snippet.png', :alt => snippet.snippet_name, 'data-snippet' => snippet.demodulized_class_name }
+        %h4= snippet.snippet_name
+        .description= snippet.snippet_description || 'No Description'

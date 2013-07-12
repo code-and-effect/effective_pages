@@ -24,6 +24,10 @@ module EffectivePages
     Rails.env.development? ? read_templates_info : (@@templates_info ||= read_templates_info)
   end
 
+  def self.snippets
+    Rails.env.development? ? read_snippets : (@@snippets ||= read_snippets)
+  end
+
   private
 
   def self.read_templates
@@ -56,4 +60,23 @@ module EffectivePages
     end
   end
 
+  def self.read_snippets
+    snippets = []
+
+    begin
+      # Reversing here so the app's templates folder has precedence.
+      files = ApplicationController.view_paths.map { |path| Dir["#{path}/effective/mercury/snippets/**"] }.flatten.reverse
+
+      files.each do |file|
+        snippet = File.basename(file)
+        if (klass = "Effective::Snippets::#{snippet.try(:classify)}".safe_constantize)
+          snippets << klass unless snippets.include?(klass)
+        end
+      end
+
+      snippets
+    rescue => e
+      []
+    end
+  end
 end

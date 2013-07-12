@@ -35,7 +35,7 @@ module Effective
     end
 
     def form
-      @form ||= Effective::PageForm.new(snippet_objects)
+      @page_form ||= Effective::PageForm.new(snippet_objects)
     end
 
     def snippet_objects

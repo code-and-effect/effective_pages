@@ -19,32 +19,48 @@ module Effective
       end
 
       def render
-        partial_path = "/effective/mercury/snippets/#{demodulized_class_name}/#{demodulized_class_name}"
-
-        self.class.view.render :partial => partial_path, :locals => {demodulized_class_name => self}.merge(options)
+        partial_path = "/effective/mercury/snippets/#{self.class.demodulized_class_name}/#{self.class.demodulized_class_name}"
+        self.class.view.render :partial => partial_path, :locals => {self.class.demodulized_class_name => self}.merge(options)
       end
 
       def required?
         self[:required] || false
       end
 
-      def self.view
-        unless @view
-          @view = ActionView::Base.new(ActionController::Base.view_paths, {})
-          @view.instance_exec { def protect_against_forgery? ; false; end }
+      class << self
+        def view
+          unless @view
+            @view = ActionView::Base.new(ActionController::Base.view_paths, {})
+            @view.instance_exec { def protect_against_forgery? ; false; end }
+          end
+          @view
         end
-        @view
+
+        def view=(view)
+          @view = view
+        end
+
+        # These are for the Snippet List panel in effective_mercury
+        def snippet_name
+          self.name.demodulize
+        end
+
+        def snippet_description
+          snippet_name
+        end
+
+        def snippet_image
+        end
+
+        def snippet_filter
+          snippet_name
+        end
+
+        def demodulized_class_name
+          @demodulized_class_name ||= self.name.demodulize.underscore.to_sym
+        end
       end
 
-      def self.view=(view)
-        @view = view
-      end
-
-      protected
-
-      def demodulized_class_name
-        @demodulized_class_name ||= self.class.name.demodulize.underscore.to_sym
-      end
     end
   end
 end

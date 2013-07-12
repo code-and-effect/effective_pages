@@ -9,7 +9,6 @@ module Effective
       def value_type
         String
       end
-
     end
   end
 end
