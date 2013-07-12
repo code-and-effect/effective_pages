@@ -6,29 +6,19 @@ module EffectiveRegionsHelper
       mercury_region(region, options)
     end || '')
 
-    snippets = html.scan(/\[snippet_\d+\/\d+\]/).flatten  # Find [snippet_1/1]
+    snippets = html.scan(/\[snippet_\d+\/\d+\]/).flatten  # Find [snippet_1/1] and insert snippet content
     snippets.each { |snippet| html.gsub!(snippet, snippet_content(snippet, @page, snippet_options)) }
     html.html_safe
   end
 
-  def simple_page_region(region, options = {})
+  def simple_page_region(region, options = {}, snippet_options = {})
     options.merge!(:type => :simple)
-
-    if block_given?
-      mercury_region(region, options) { yield }
-    else
-      mercury_region(region, options)
-    end
+    block_given? ? page_region(region, options) { yield } : page_region(region, options)
   end
 
-  def snippet_page_region(region, options = {})
+  def snippet_page_region(region, options = {}, snippet_options = {})
     options.merge!(:type => :snippets)
-
-    if block_given?
-      mercury_region(region, options) { yield }
-    else
-      mercury_region(region, options)
-    end
+    block_given? ? page_region(region, options, snippet_options) { yield } : page_region(region, options, snippet_options)
   end
 
   private

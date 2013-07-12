@@ -2,8 +2,7 @@ module EffectivePagesHelper
   def effective_page_header_tags(options = {})
     @page ||= nil
 
-    [
-      content_tag(:title, options[:title] || @page.try(:title)),
+    [ content_tag(:title, options[:title] || @page.try(:title)),
       "<meta content='#{options[:meta_description] || @page.try(:meta_description)}' name='description' />",
       "<meta content='#{options[:meta_keywords] || @page.try(:meta_keywords)}' name='keywords' />"
     ].join("\n").html_safe
