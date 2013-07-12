@@ -56,12 +56,11 @@ module Effective
       @page ||= Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, :read, @page)
 
-      if @page.form.update_attributes(params)
+      if @page.form.update_attributes(params[:effective_page_form])
         flash[:success] = 'Successfully Saved'
         Rails.logger.info "SUCCESSFULLY SAVED!"
       else
-        Rails.logger.info "ERRORS WHILE SAVING! #{@page.form.errors.inspect}"
-        flash[:error] = 'Errors encountered when saving'
+        flash.now[:error] = 'Errors encountered when saving'
       end
 
       show

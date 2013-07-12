@@ -19,7 +19,7 @@ module Effective
       end
 
       def render
-        partial_path = "/effective/mercury/snippets/#{self.class.demodulized_class_name}/#{self.class.demodulized_class_name}"
+        partial_path = "/effective/snippets/#{self.class.demodulized_class_name}/#{self.class.demodulized_class_name}"
         self.class.view.render :partial => partial_path, :locals => {self.class.demodulized_class_name => self}.merge(options)
       end
 
@@ -40,13 +40,16 @@ module Effective
           @view = view
         end
 
+        def demodulized_class_name
+          @demodulized_class_name ||= self.name.demodulize.underscore.to_sym
+        end
+
         # These are for the Snippet List panel in effective_mercury
         def snippet_name
           self.name.demodulize
         end
 
         def snippet_description
-          snippet_name
         end
 
         def snippet_image
@@ -55,12 +58,7 @@ module Effective
         def snippet_filter
           snippet_name
         end
-
-        def demodulized_class_name
-          @demodulized_class_name ||= self.name.demodulize.underscore.to_sym
-        end
       end
-
     end
   end
 end

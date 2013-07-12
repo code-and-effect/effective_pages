@@ -65,7 +65,7 @@ module EffectivePages
 
     begin
       # Reversing here so the app's templates folder has precedence.
-      files = ApplicationController.view_paths.map { |path| Dir["#{path}/effective/mercury/snippets/**"] }.flatten.reverse
+      files = ApplicationController.view_paths.map { |path| Dir["#{path}/effective/snippets/**"] }.flatten.reverse
 
       files.each do |file|
         snippet = File.basename(file)
