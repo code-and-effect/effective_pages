@@ -27,6 +27,8 @@ module Effective
     end
 
     def update_attributes(atts)
+      return true unless atts
+
       self.attributes = atts
       save
     end
