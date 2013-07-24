@@ -18,9 +18,16 @@ module Effective
         @attributes.each { |k, v| self.send("#{k}=", v) if respond_to?("#{k}=") }
       end
 
-      def render
+      # These are render options. For a controller to call render on.
+      def render_params
         partial_path = "/effective/snippets/#{self.class.demodulized_class_name}/#{self.class.demodulized_class_name}"
-        self.class.view.render :partial => partial_path, :locals => {self.class.demodulized_class_name => self}.merge(options)
+        {:partial => partial_path, :locals => {self.class.demodulized_class_name => self}.merge(options)}
+      end
+
+      def page_form(controller)
+        form = nil
+        controller.view_context.semantic_form_for 'effective_page', :url => '/', :action => :show do |f| form = f end
+        form
       end
 
       def required?
@@ -28,18 +35,6 @@ module Effective
       end
 
       class << self
-        def view
-          unless @view
-            @view = ActionView::Base.new(ActionController::Base.view_paths, {})
-            @view.instance_exec { def protect_against_forgery? ; false; end }
-          end
-          @view
-        end
-
-        def view=(view)
-          @view = view
-        end
-
         def demodulized_class_name
           @demodulized_class_name ||= self.name.demodulize.underscore.to_sym
         end
