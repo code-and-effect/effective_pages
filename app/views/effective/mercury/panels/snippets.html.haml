@@ -2,7 +2,7 @@
   .filter
     %input{:class => 'filter focusable', :type => 'text'}
   %ul
-    - EffectivePages.read_snippets.each do |snippet|
+    - EffectivePages.snippets.each do |snippet|
       %li{'data-filter' => snippet.snippet_filter || snippet.demodulized_class_name}
         %img{:src => snippet.snippet_image || '/assets/effective_mercury/default-snippet.png', :alt => snippet.snippet_name, 'data-snippet' => snippet.demodulized_class_name }
         %h4= snippet.snippet_name
