@@ -26,12 +26,16 @@ module Effective
 
       def page_form(controller)
         form = nil
-        controller.view_context.semantic_form_for 'effective_page', :url => '/', :action => :show do |f| form = f end
+        controller.view_context.simple_form_for Effective::PageForm.new([self]), :url => '/', :action => :show do |f| form = f end
         form
       end
 
       def required?
         self[:required] || false
+      end
+
+      def required_html_class
+        required? ? 'required' : 'optional'
       end
 
       class << self
