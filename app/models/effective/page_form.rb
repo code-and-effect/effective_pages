@@ -14,7 +14,7 @@ module Effective
       # These shouldn't be on the PageForm class.
       self.class.reset_callbacks(:validate)
 
-      snippet_objects.each do |obj|
+      (snippet_objects || []).each do |obj|
         name = obj.name.to_sym
 
         self.class.instance_eval { attribute name, obj.value_type }
