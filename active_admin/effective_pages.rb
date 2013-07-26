@@ -51,6 +51,11 @@ if defined?(ActiveAdmin)
           end
         end
       end
+
+      def resource_params
+        return [] if request.get?
+        [params.require(:effective_page).permit!]
+      end
     end
 
     form :partial => "active_admin/effective_pages/form"

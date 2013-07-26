@@ -40,7 +40,7 @@ module Effective
       @page.regions = {} # Ensures there's no old regions or snippets kicking around. Only current valid ones.
       @page.snippets = {}
 
-      params[:content].each do |region, vals|
+      params.require(:content).permit!().each do |region, vals| # Strong Parameters
         @page.regions[region] = cleanup(vals[:value])
         (vals[:snippets] || []).each { |snippet, vals| @page.snippets[snippet] = vals }
       end
@@ -56,14 +56,16 @@ module Effective
       @page ||= Effective::Page.find(params[:id])
       EffectivePages.authorized?(self, :read, @page)
 
-      if @page.form.update_attributes(params[:effective_page_form])
+      if @page.form.update_attributes(params.require(:effective_page_form).permit!())
         flash[:success] = 'Successfully Saved'
         Rails.logger.info "SUCCESSFULLY SAVED!"
+
+        # We expect an after_filter / around_filter to do the rest.
       else
         flash.now[:error] = 'Errors encountered when saving'
+        Rails.logger.info "ENCOUNTERED ERRORS!"
+        show
       end
-
-      show
     end
 
     private
