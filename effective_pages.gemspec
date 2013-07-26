@@ -23,15 +23,20 @@ Gem::Specification.new do |s|
   s.add_dependency "formtastic"
   s.add_dependency "haml"
   s.add_dependency "migrant"
+  s.add_dependency "strong_parameters"
   s.add_dependency "virtus"
+
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "psych"
 
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "shoulda-matchers"
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "psych"
+  s.add_development_dependency "capybara"
+  s.add_development_dependency "poltergeist"
 
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"
   s.add_development_dependency "guard-livereload"
+
 end
