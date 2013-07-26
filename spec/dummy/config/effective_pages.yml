@@ -1,0 +1,15 @@
+# This gets read in automatically and is accessible at
+# EffectivePages.config.templates
+
+example:
+  layout: 'application'
+  image: 'effective_pages/missing_template_image.png'
+  label: 'Example Template'
+  description: 'This is the effective example template 1'
+  regions:
+    title:
+      label: 'Title Text'
+      description: 'This text is displayed in an H1'
+    content:
+      label: 'Main Content'
+      description: 'This text is displayed in a P'

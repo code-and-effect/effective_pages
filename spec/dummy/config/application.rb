@@ -9,7 +9,8 @@ require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
 Bundler.require(*Rails.groups)
-require "effective_assets"
+require 'strong_parameters'
+require "effective_pages"
 
 module Dummy
   class Application < Rails::Application

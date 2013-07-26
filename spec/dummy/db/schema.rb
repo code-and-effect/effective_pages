@@ -13,22 +13,20 @@
 
 ActiveRecord::Schema.define(:version => 1) do
 
-  create_table "addresses", :force => true do |t|
-    t.string   "addressable_type"
-    t.integer  "addressable_id"
-    t.string   "category",         :limit => 64
-    t.string   "full_name"
-    t.string   "address1"
-    t.string   "address2"
-    t.string   "city"
-    t.string   "state_code"
-    t.string   "country_code"
-    t.string   "postal_code"
+  create_table "pages", :force => true do |t|
+    t.string   "title"
+    t.string   "meta_keywords"
+    t.string   "meta_description"
+    t.boolean  "draft",            :default => false
+    t.string   "template"
+    t.text     "regions"
+    t.text     "snippets"
+    t.string   "slug"
+    t.integer  "roles_mask"
     t.datetime "updated_at"
     t.datetime "created_at"
   end
 
-  add_index "addresses", ["addressable_id"], :name => "index_addresses_on_addressable_id"
-  add_index "addresses", ["addressable_type", "addressable_id"], :name => "index_addresses_on_addressable_type_and_addressable_id"
+  add_index "pages", ["slug"], :name => "index_pages_on_slug", :unique => true
 
 end
