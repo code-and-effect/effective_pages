@@ -1,5 +1,7 @@
 module Effective
   class Page < ActiveRecord::Base
+    include ActiveModel::ForbiddenAttributesProtection
+
     acts_as_sluggable
     acts_as_role_restricted if defined?(EffectiveRoles)
 
@@ -9,12 +11,13 @@ module Effective
       title             :string, :validates => [:presence]
       meta_keywords     :string, :validates => [:presence]
       meta_description  :string, :validates => [:presence]
-      draft             :boolean, :default => false, :validates => [:boolean]
+      draft             :boolean, :default => false
 
       template          :string, :validates => [:presence]
       regions           :text
       snippets          :text
 
+      roles_mask        :integer
       slug              :string
 
       timestamps
@@ -27,15 +30,23 @@ module Effective
     scope :published, -> { where(:draft => false) }
 
     def regions
-      self[:regions] || {}
+      self[:regions] || HashWithIndifferentAccess.new()
     end
 
     def snippets
-      self[:snippets] || {}
+      self[:snippets] || HashWithIndifferentAccess.new()
     end
 
-    def form
-      @page_form ||= Effective::PageForm.new(snippet_objects)
+    def form(obj = nil)
+      (@page_form ||= Effective::PageForm.new(snippet_objects)).tap do |form|
+        attributes = {}
+
+        if obj.kind_of?(Hash)
+          attributes = obj[:effective_page_form] || obj
+        end
+
+        form.attributes = attributes
+      end
     end
 
     def snippet_objects

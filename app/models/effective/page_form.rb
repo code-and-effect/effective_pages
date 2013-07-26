@@ -34,14 +34,18 @@ module Effective
     end
 
     def save
-      return false if self.respond_to?(:before_validation) and before_validation == false
+      return (@saved = false) if self.respond_to?(:before_validation) and before_validation == false
 
       begin
-        valid?
+        @saved = valid?
       rescue => e
         Rails.logger.info e.to_s
-        false
+        @saved = false
       end
+    end
+
+    def saved?
+      @saved.present?
     end
   end
 end
