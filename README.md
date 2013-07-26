@@ -190,6 +190,17 @@ into the 'head' section of your layout (application layout, or otherwise) to han
 
 Uses effective_assets to handle inserting uploaded assets.
 
+### Testing
+```ruby
+effective_pages\spec\dummy > bundle exec rails generate effective_page:install
+
+effective_pages > bundle exec rake app:db:migrate
+effective_pages > bundle exec rake app:db:test:prepare
+
+effective_pages > guard
+guard> * press enter *
+````
+
 
 ## License
 
