@@ -7,6 +7,8 @@ module EffectivePages
   class Engine < ::Rails::Engine
     engine_name 'effective_pages'
 
+    config.autoload_paths += Dir["#{config.root}/app/controllers/concerns"]
+
     # Include Helpers to base application
     initializer 'effective_pages.action_controller' do |app|
       ActiveSupport.on_load :action_controller do
@@ -19,6 +21,13 @@ module EffectivePages
     initializer "effective_pages.defaults", :before => :load_config_initializers do |app|
       # Set up our defaults, as per our initializer template
       eval File.read("#{config.root}/lib/generators/templates/effective_pages.rb")
+    end
+
+    # Include acts_as_addressable concern and allow any ActiveRecord object to call it
+    initializer 'effective_roles.action_controller' do |app|
+      ActiveSupport.on_load :action_controller do
+        ActionController::Base.extend(ActsAsEffectiveResourceController::ActionController)
+      end
     end
 
     initializer "effective_pages.before_filters", :after => :load_config_initializers do |app|
