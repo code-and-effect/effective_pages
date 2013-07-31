@@ -28,24 +28,19 @@ module Effective
 
     def update_attributes(atts)
       return true unless atts
-
-      self.attributes = atts
+      atts.each { |k, v| self.send("#{k}=", v) }
       save
     end
 
     def save
-      return (@saved = false) if self.respond_to?(:before_validation) and before_validation == false
+      return false if self.respond_to?(:before_validation) and before_validation == false
 
       begin
-        @saved = valid?
+        valid?
       rescue => e
         Rails.logger.info e.to_s
-        @saved = false
+        false
       end
-    end
-
-    def saved?
-      @saved.present?
     end
   end
 end

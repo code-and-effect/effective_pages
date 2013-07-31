@@ -48,14 +48,12 @@ module Effective::ResourceController::Actions
   end
 
   def submit(options = {}, &block)
-    object = resource
     EffectivePages.authorized?(self, :read, resource)
+    object = resource.form
 
-    if object.form.update_attributes(params[:effective_page_form])
-      #options[:location] ||= smart_resource_url
-    end
+    object.update_attributes(params[:effective_page_form])
 
-    respond_with_dual_blocks(object.form, options, &block)
+    respond_with_dual_blocks(object, options, &block)
   end
   alias :submit! :submit
 
