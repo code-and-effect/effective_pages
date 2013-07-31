@@ -1,70 +1,63 @@
 module Effective::ResourceController::Actions
 
-  def show
-    @page ||= Effective::Page.find(params[:id])
-    EffectivePages.authorized?(self, :read, @page)
+  def show(options = {}, &block)
+    EffectivePages.authorized?(self, :read, resource)
 
-    (raise ActiveRecord::RecordNotFound if @page.draft?) unless params[:mercury_frame]
+    (raise ActiveRecord::RecordNotFound if (resource.draft? rescue false)) unless params[:mercury_frame]
 
-    template = EffectivePages.templates[@page.template]
-    template_info = EffectivePages.templates_info[@page.template]
-    raise EffectivePages::TemplateNotFound.new(@page.template) unless template.kind_of?(HashWithIndifferentAccess)
+    template = EffectivePages.templates[resource.template]
+    template_info = EffectivePages.templates_info[resource.template]
+    raise EffectivePages::TemplateNotFound.new(resource.template) unless template.kind_of?(HashWithIndifferentAccess)
 
     # Assign all content areas
-    (template[:regions] || {}).each { |region, _| content_for(region, @page.regions[region]) }
+    (template[:regions] || {}).each { |region, _| content_for(region, resource.regions[region]) }
 
-    render "#{EffectivePages.templates_path.chomp('/')}/#{@page.template}", :layout => ((template_info[:layout].to_s rescue nil) || 'application')
+    render "#{EffectivePages.templates_path.chomp('/')}/#{resource.template}", :layout => ((template_info[:layout].to_s rescue nil) || 'application')
   end
+  alias :show! :show
 
-  def edit
-    @page ||= Effective::Page.find(params[:id])
-    EffectivePages.authorized?(self, :update, @page)
+  def edit(options = {}, &block)
+    EffectivePages.authorized?(self, :update, resource)
 
     if params[:mercury_frame]
       show
-    elsif @page.snippets.present?
+    elsif resource.snippets.present?
       render(:file => 'effective/mercury/_load_snippets', :layout => 'effective_mercury')
     else
       render(:text => '', :layout => 'effective_mercury')
     end
   end
 
-  def update
-    @page ||= Effective::Page.find(params[:id])
-    EffectivePages.authorized?(self, :update, @page)
+  def update(options = {}, &block)
+    EffectivePages.authorized?(self, :update, resource)
 
     # Do the update.
-    @page.regions = {} # Ensures there's no old regions or snippets kicking around. Only current valid ones.
-    @page.snippets = {}
+    resource.regions = {} # Ensures there's no old regions or snippets kicking around. Only current valid ones.
+    resource.snippets = {}
 
     params.require(:content).permit!().each do |region, vals| # Strong Parameters
-      @page.regions[region] = cleanup(vals[:value])
-      (vals[:snippets] || []).each { |snippet, vals| @page.snippets[snippet] = vals }
+      resource.regions[region] = cleanup(vals[:value])
+      (vals[:snippets] || []).each { |snippet, vals| resource.snippets[snippet] = vals }
     end
 
-    if @page.save
+    if resource.save
       render :text => '', :status => 200
     else
       render :text => '', :status => :unprocessable_entity
     end
   end
 
-  def submit
-    @page ||= Effective::Page.find(params[:id])
-    EffectivePages.authorized?(self, :read, @page)
+  def submit(options = {}, &block)
+    object = resource
+    EffectivePages.authorized?(self, :read, resource)
 
-    if @page.form.update_attributes(params[:effective_page_form])
-      flash[:success] = 'Successfully Saved'
-
-      # Hacky mcHack hack :()
-      (self).instance_exec(self, @page, &on_successful_submit)
-      # We expect an after_filter / around_filter to do the rest.
-    else
-      flash.now[:error] = 'Errors encountered when saving'
-      Rails.logger.info "ENCOUNTERED ERRORS!"
-      show
+    if object.form.update_attributes(params[:effective_page_form])
+      #options[:location] ||= smart_resource_url
     end
+
+    respond_with_dual_blocks(object.form, options, &block)
   end
+  alias :submit! :submit
 
   private
 
