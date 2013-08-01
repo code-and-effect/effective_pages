@@ -38,7 +38,7 @@ module Effective
     end
 
     def form(obj = nil)
-      (@page_form ||= Effective::PageForm.new(snippet_objects)).tap do |form|
+      @page_form ||= Effective::PageForm.new(snippet_objects).tap do |form|
         attributes = {}
 
         if obj.kind_of?(Hash)
