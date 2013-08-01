@@ -30,6 +30,10 @@ module Effective
         form
       end
 
+      def value_type
+        String
+      end
+
       def required?
         self[:required] || false
       end

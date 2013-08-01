@@ -1,6 +1,7 @@
 module Effective
   module Snippets
     class TextFieldTag < Snippet
+      attribute :label, String
       attribute :maxlength, Integer
       attribute :placeholder, String
       attribute :html_class, String

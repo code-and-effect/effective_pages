@@ -5,6 +5,11 @@
         = label_tag 'options_name', 'Name', :class => 'string optional control-label'
         .controls
           = text_field_tag 'options[name]', @options[:name], :maxlength => 255, :class => 'span6 string optional'
+          %p * May not contain spaces
+      .control-group.string.optional
+        = label_tag 'options_label', 'Label', :class => 'string optional control-label'
+        .controls
+          = text_field_tag 'options[label]', @options[:label], :maxlength => 255, :class => 'span6 string optional'
       .control-group.string.optional
         = label_tag 'options_required', 'Required', :class => 'string optional control-label'
         .controls
@@ -26,4 +31,3 @@
 
   .mercury-display-controls.form-actions
     %input.btn.btn-primary{:name => 'commit', :type => 'submit', :value => 'Insert Text Field Tag'}
-

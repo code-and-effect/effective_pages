@@ -1,1 +1,1 @@
-= form.input text_field_tag.name, :as => :string, :required => text_field_tag.required || false, :input_html => {:maxlength => text_field_tag.maxlength, :placeholder => text_field_tag.placeholder, :class => text_field_tag.html_class}
+= form.input text_field_tag.name, :as => :string, :label => (text_field_tag.label.present? ? text_field_tag.label : false), :required => text_field_tag.required || false, :input_html => {:maxlength => text_field_tag.maxlength, :placeholder => text_field_tag.placeholder, :class => text_field_tag.html_class}
