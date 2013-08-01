@@ -17,8 +17,16 @@ module Effective
       (snippet_objects || []).each do |obj|
         name = obj.name.to_sym
 
-        self.class.instance_eval { attribute name, obj.value_type }
-        self.class.instance_eval { validates_presence_of name } if obj.required?
+        case obj.value_type
+        when Hash
+          obj.value_type.each do |value_name, value_type|
+            self.class.instance_eval { attribute "#{name}_#{value_name}", value_type }
+            self.class.instance_eval { validates_presence_of "#{name}_#{value_name}" } if obj.required?
+          end
+        else
+          self.class.instance_eval { attribute name, obj.value_type }
+          self.class.instance_eval { validates_presence_of name } if obj.required?
+        end
       end
     end
 
