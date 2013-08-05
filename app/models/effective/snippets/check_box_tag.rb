@@ -8,14 +8,12 @@ module Effective
         Boolean
       end
 
-      class << self
-        def snippet_name
-          'Check Box Tag'
-        end
+      def snippet_name
+        'Check Box Tag'
+      end
 
-        def snippet_description
-          'Standard form check box'
-        end
+      def snippet_description
+        'Standard form check box'
       end
 
     end

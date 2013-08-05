@@ -74,7 +74,7 @@ module EffectivePages
         end
       end
 
-      snippets
+      snippets.map { |klass| klass.new() rescue nil }.compact
     rescue => e
       []
     end

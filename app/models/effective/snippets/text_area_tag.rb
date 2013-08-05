@@ -9,14 +9,12 @@ module Effective
         String
       end
 
-      class << self
-        def snippet_name
-          'Text Area Tag'
-        end
+      def snippet_name
+        'Text Area Tag'
+      end
 
-        def snippet_description
-          'Standard form text area'
-        end
+      def snippet_description
+        'Standard form text area'
       end
 
     end
