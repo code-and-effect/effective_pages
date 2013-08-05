@@ -14,6 +14,8 @@ module Effective
       self.class.reset_callbacks(:validate)
 
       snippet_objects.each do |obj|
+        next unless obj.name.present?
+
         case obj.value_type
         when Hash
           obj.value_type.each { |vname, vtype| create_attribute("#{obj.name}_#{vname}", obj.required?, vtype) }
