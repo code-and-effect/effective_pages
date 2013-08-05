@@ -19,9 +19,9 @@ module Effective
       end
 
       # These are render options. For a controller to call render on.
-      def render_params
+      def render_params(render_options = {})
         partial_path = "/effective/snippets/#{self.class.demodulized_class_name}/#{self.class.demodulized_class_name}"
-        {:partial => partial_path, :locals => {self.class.demodulized_class_name => self}.merge(options)}
+        {:partial => partial_path, :locals => {self.class.demodulized_class_name => self}.merge(options).merge(render_options)}
       end
 
       def page_form(controller)

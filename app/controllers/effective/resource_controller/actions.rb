@@ -57,8 +57,6 @@ module Effective::ResourceController::Actions
   end
   alias :submit! :submit
 
-  private
-
   # https://gist.github.com/hiroshi/985457
   def content_for(region, content)
     (@_content_for ||= {})[region] = content
@@ -69,6 +67,8 @@ module Effective::ResourceController::Actions
       (@_content_for || {}).each { |name, content| view.content_for name.to_sym, content.try(:html_safe) }
     end
   end
+
+  private
 
   def cleanup(str)
     if str

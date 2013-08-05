@@ -37,23 +37,25 @@ module Effective
       self[:snippets] || HashWithIndifferentAccess.new()
     end
 
-    def form(obj = nil)
-      @page_form ||= Effective::PageForm.new(snippet_objects).tap do |form|
+    def form(obj = nil, additional_snippet_objects = nil)
+      @page_form ||= Effective::PageForm.new((snippet_objects + [additional_snippet_objects]).flatten.compact).tap do |form|
         attributes = {}
 
         if obj.kind_of?(Hash)
-          attributes = obj[:effective_page_form] || obj
+          attributes = obj['effective_page_form'] || obj
+        elsif obj.respond_to?(:attributes)
+          attributes = obj.attributes
         end
 
-        form.attributes = attributes
+        attributes.each { |k, v| form.send("#{k}=", v) rescue nil }
       end
     end
 
     def snippet_objects
       snippets.map do |k, snippet|
-        klass = "Effective::Snippets::#{snippet[:name].try(:classify)}".safe_constantize
-        klass ? klass.new(snippet[:options]) : nil
-      end.compact
+        klass = "Effective::Snippets::#{snippet['name'].try(:classify)}".safe_constantize
+        klass ? (klass.new(snippet['options'] || snippet) rescue nil) : nil
+      end
     end
   end
 end

@@ -29,11 +29,12 @@ module EffectiveRegionsHelper
     key = code.scan(/\[(snippet_\d+)\/\d+\]/).flatten.first # captures [(snippet_1)/1]
 
     snippet = page.snippets[key] || {}
-    klass = "Effective::Snippets::#{snippet[:name].try(:classify)}".safe_constantize
+    return code unless snippet['name'].present?
 
+    klass = "Effective::Snippets::#{snippet['name'].try(:classify)}".safe_constantize
     return code unless klass
 
-    render klass.new(snippet[:options], options).render_params
+    render klass.new(snippet['options'], options).render_params
   end
 
 end

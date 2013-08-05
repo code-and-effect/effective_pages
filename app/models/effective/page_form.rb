@@ -8,26 +8,24 @@ module Effective
     include ActiveModel::Conversion
     include ActiveModel::Validations
 
-    def initialize(snippet_objects)
-
+    def initialize(snippet_objects = [])
       # I don't like this code...I can't seem to add attributes/validations on the singleton class
       # These shouldn't be on the PageForm class.
       self.class.reset_callbacks(:validate)
 
-      (snippet_objects || []).each do |obj|
-        name = obj.name.to_sym
-
+      snippet_objects.each do |obj|
         case obj.value_type
         when Hash
-          obj.value_type.each do |value_name, value_type|
-            self.class.instance_eval { attribute "#{name}_#{value_name}", value_type }
-            self.class.instance_eval { validates_presence_of "#{name}_#{value_name}" } if obj.required?
-          end
+          obj.value_type.each { |vname, vtype| create_attribute("#{obj.name}_#{vname}", obj.required?, vtype) }
         else
-          self.class.instance_eval { attribute name, obj.value_type }
-          self.class.instance_eval { validates_presence_of name } if obj.required?
+          create_attribute(obj.name, obj.required?, obj.value_type)
         end
       end
+    end
+
+    def create_attribute(name, required = false, value_type = String)
+      self.class.instance_eval { attribute name, value_type }
+      self.class.instance_eval { validates_presence_of name } if required
     end
 
     def persisted?
