@@ -8,7 +8,7 @@ module EffectiveRegionsHelper
 
     snippets = html.scan(/\[snippet_\d+\/\d+\]/).flatten  # Find [snippet_1/1] and insert snippet content
     snippets.each { |snippet| html.gsub!(snippet, snippet_content(snippet, @page, options)) }
-    html.html_safe
+    html.chomp("&nbsp;").strip.html_safe
   end
 
   def simple_page_region(region, options = {})
