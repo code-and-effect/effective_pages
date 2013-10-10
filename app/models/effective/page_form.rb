@@ -36,6 +36,9 @@ module Effective
 
     def update_attributes(atts)
       return true unless atts
+
+      create_attribute(k) unless self.respond_to?("#{k}=")
+
       atts.each { |k, v| self.send("#{k}=", v) }
       save
     end
