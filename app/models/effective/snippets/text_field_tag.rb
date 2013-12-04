@@ -14,6 +14,10 @@ module Effective
         'Text Field Tag'
       end
 
+      def snippet_image
+        '/assets/effective_pages/text_field_tag.png'
+      end
+
       def snippet_description
         'Standard form text field'
       end

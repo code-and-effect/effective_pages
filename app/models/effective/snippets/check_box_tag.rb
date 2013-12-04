@@ -12,6 +12,10 @@ module Effective
         'Check Box Tag'
       end
 
+      def snippet_image
+        '/assets/effective_pages/check_box_tag.png'
+      end
+
       def snippet_description
         'Standard form check box'
       end

@@ -13,6 +13,10 @@ module Effective
         'Text Area Tag'
       end
 
+      def snippet_image
+        '/assets/effective_pages/text_area_tag.png'
+      end
+
       def snippet_description
         'Standard form text area'
       end
