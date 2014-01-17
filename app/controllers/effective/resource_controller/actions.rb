@@ -48,7 +48,7 @@ module Effective::ResourceController::Actions
   end
 
   def submit(options = {}, &block)
-    EffectivePages.authorized?(self, :read, resource)
+    EffectivePages.authorized?(self, :update, resource)
     object = resource.form
 
     object.update_attributes(params[:effective_page_form])

@@ -1,7 +1,5 @@
 module Effective
   class Page < ActiveRecord::Base
-    include ActiveModel::ForbiddenAttributesProtection
-
     acts_as_sluggable
     acts_as_role_restricted if defined?(EffectiveRoles)
 

@@ -9,7 +9,7 @@ EffectivePages::Engine.routes.draw do
   scope :module => 'effective' do
     scope '/edit' do
       get '(/*id)' => "pages#edit", :as => :edit_effective_page
-      put '(/*id)' => 'pages#update', :as => :effective_page
+      put '(/*id)' => 'pages#update', :as => :update_effective_page
     end
 
     get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint, :as => :effective_page
