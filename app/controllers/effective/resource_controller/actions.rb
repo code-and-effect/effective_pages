@@ -11,6 +11,7 @@ module Effective::ResourceController::Actions
 
     # Assign all content areas
     (template[:regions] || {}).each { |region, _| content_for(region, resource.regions[region]) }
+    @page_title ||= resource.try(:title)
 
     render "#{EffectivePages.templates_path.chomp('/')}/#{resource.template}", :layout => ((template_info[:layout].to_s rescue nil) || 'application')
   end
