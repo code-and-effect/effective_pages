@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "migrant"
   s.add_dependency "simple_form"
   s.add_dependency "virtus"
+  s.add_dependency 'strong_parameters'
 
   s.add_development_dependency "sqlite3"
 
