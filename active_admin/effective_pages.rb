@@ -14,6 +14,9 @@ if defined?(ActiveAdmin)
       column :template
       column :draft
       column :slug
+      if Effective::Page && Effective::Page.attribute_method?(:priority)
+        column :priority
+      end
 
       column do |page|
         link_to('Visit', EffectivePages::Engine.routes.url_helpers.effective_page_path(page), :class => 'member_link') +

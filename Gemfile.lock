@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    effective_pages (0.1.4)
+    effective_pages (0.2.3)
       coffee-rails
       effective_mercury
       effective_slugs
@@ -9,6 +9,7 @@ PATH
       haml
       migrant
       rails
+      simple_form
       strong_parameters
       virtus
 
@@ -130,7 +131,6 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
-    psych (1.3.4)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -178,6 +178,9 @@ GEM
       rspec-mocks (~> 2.13.0)
     shoulda-matchers (2.1.0)
       activesupport (>= 3.0.0)
+    simple_form (2.1.1)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
     slop (3.4.6)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -185,9 +188,10 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.7)
-    strong_parameters (0.2.1)
+    strong_parameters (0.2.3)
       actionpack (~> 3.0)
       activemodel (~> 3.0)
+      activesupport (~> 3.0)
       railties (~> 3.0)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
@@ -215,7 +219,6 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   poltergeist
-  psych
   rspec-rails
   shoulda-matchers
   sqlite3
