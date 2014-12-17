@@ -19,21 +19,17 @@ module EffectivePages
         template "effective_pages.rb", "config/initializers/effective_pages.rb"
       end
 
-      def copy_configuration
-        template "effective_pages.yml", "config/effective_pages.yml"
-      end
-
       def create_migration_file
         @pages_table_name = ':' + EffectivePages.pages_table_name.to_s
         migration_template '../../../db/migrate/01_create_effective_pages.rb.erb', 'db/migrate/create_effective_pages.rb'
       end
 
-      def copy_example_template
-        template "example.html.haml", "app/views/templates/example.html.haml"
+      def copy_example_page
+        template 'example.html.haml', 'app/views/effective/pages/example.html.haml'
       end
 
       def setup_routes
-        inject_into_file "config/routes.rb", "\n  mount EffectivePages::Engine => '/', :as => 'effective_pages'", :after => /root (:?)to.*/
+        inject_into_file "config/routes.rb", "\n  # if you want EffectivePages to render the home / root page\n  # uncomment the following line and create an Effective::Page with slug == 'home' \n  # root :to => 'Effective::Pages#show', :id => 'home'\n", :before => /root (:?)to.*/
       end
 
       def show_readme

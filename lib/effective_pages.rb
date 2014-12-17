@@ -3,80 +3,64 @@ require 'migrant'     # Required for rspec to run properly
 
 module EffectivePages
   mattr_accessor :pages_table_name
-  mattr_accessor :templates_path
+  mattr_accessor :pages_path
   mattr_accessor :authorization_method
-  mattr_accessor :before_filter
+  mattr_accessor :simple_form_options
+  mattr_accessor :layout
 
   def self.setup
     yield self
   end
 
   def self.authorized?(controller, action, resource)
-    raise ActiveResource::UnauthorizedAccess.new('') unless (controller || self).instance_exec(controller, action, resource, &EffectivePages.authorization_method)
+    if authorization_method.respond_to?(:call) || authorization_method.kind_of?(Symbol)
+      raise Effective::AccessDenied.new() unless (controller || self).instance_exec(controller, action, resource, &authorization_method)
+    end
     true
   end
 
-  def self.templates
-    Rails.env.development? ? read_templates : (@@templates ||= read_templates)
+  def self.pages
+    Rails.env.development? ? read_pages : (@@pages ||= read_pages)
   end
 
-  def self.templates_info
-    Rails.env.development? ? read_templates_info : (@@templates_info ||= read_templates_info)
+  def self.layouts
+    Rails.env.development? ? read_layouts : (@@layouts ||= read_layouts)
   end
 
-  def self.snippets
-    Rails.env.development? ? read_snippets : (@@snippets ||= read_snippets)
+  # Remove leading and trailing '/' characters
+  #  Will return:  "effective/pages"
+  def self.pages_path=(filepath)
+    filepath = filepath.to_s
+    filepath = filepath[1..-1] if filepath.starts_with?('/')
+    @@pages_path = filepath.chomp('/')
   end
 
   private
 
-  def self.read_templates
-    regex = /page_region\s?\(?:([a-z_0-9]+)/
-    templates = HashWithIndifferentAccess.new()
+  def self.read_pages
+    files = ApplicationController.view_paths.map { |path| Dir["#{path}/#{pages_path}/**"] }.flatten.reverse
 
-    begin
-      # Reversing here so the app's templates folder has precedence.
-      files = ApplicationController.view_paths.map { |path| Dir["#{path}/templates/**"] }.flatten.reverse
-
+    HashWithIndifferentAccess.new().tap do |pages|
       files.each do |file|
-        template = File.basename(file).gsub(/.html.+/, '').to_sym
-        regions = File.read(file).scan(regex).flatten.map(&:to_sym)
+        name = File.basename(file).split('.').first
+        next if name.starts_with?('_')
 
-        templates[template] = HashWithIndifferentAccess.new(:regions => HashWithIndifferentAccess.new())
-        regions.each { |region| templates[template][:regions][region] = HashWithIndifferentAccess.new() }
+        pages[name.to_sym] = {}
       end
-
-      templates
-    rescue => e
-      HashWithIndifferentAccess.new()
     end
   end
 
-  def self.read_templates_info
-    begin
-      HashWithIndifferentAccess.new(YAML.load(File.read('config/effective_pages.yml')))
-    rescue => e
-      HashWithIndifferentAccess.new()
-    end
-  end
+  def self.read_layouts
+    files = ApplicationController.view_paths.map { |path| Dir["#{path}/layouts/**"] }.flatten.reverse
 
-  def self.read_snippets
-    snippets = []
-
-    begin
-      # Reversing here so the app's templates folder has precedence.
-      files = ApplicationController.view_paths.map { |path| Dir["#{path}/effective/snippets/**"] }.flatten.reverse
-
+    HashWithIndifferentAccess.new().tap do |layouts|
       files.each do |file|
-        snippet = File.basename(file)
-        if (klass = "Effective::Snippets::#{snippet.try(:classify)}".safe_constantize)
-          snippets << klass unless snippets.include?(klass)
-        end
-      end
+        name = File.basename(file).split('.').first
+        next if name.starts_with?('_')
 
-      snippets.map { |klass| klass.new() rescue nil }.compact
-    rescue => e
-      []
+        layouts[name.to_sym] = {}
+      end
     end
   end
+
 end

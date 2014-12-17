@@ -2,19 +2,15 @@ class CreateEffectivePages < ActiveRecord::Migration
   def self.up
     create_table <%= @pages_table_name %> do |t|
       t.string :title
-      t.string :meta_keywords
       t.string :meta_description
 
       t.boolean :draft, :default => false
 
+      t.string :layout, :default => 'application'
       t.string :template
-      t.text :regions
-      t.text :snippets
 
       t.string :slug
-    <% if defined?(EffectiveRoles) %>
-      <%= 't.integer :roles_mask, :default => 0' %>
-    <% end %>
+      t.integer :roles_mask, :default => 0
 
       t.datetime :updated_at
       t.datetime :created_at

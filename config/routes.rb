@@ -6,12 +6,20 @@ class EffectivePagesRoutingConstraint
 end
 
 EffectivePages::Engine.routes.draw do
-  scope :module => 'effective' do
-    scope '/edit' do
-      get '(/*id)' => "pages#edit", :as => :edit_effective_page
-      put '(/*id)' => 'pages#update', :as => :update_effective_page
+  if defined?(EffectiveDatatables)
+    namespace :admin do
+      resources :pages, :except => [:show]
     end
+  end
 
-    get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint, :as => :effective_page
+  scope :module => 'effective' do
+    get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint, :as => :page
   end
 end
+
+# Automatically mount the engine as an append
+Rails.application.routes.append do
+  mount EffectivePages::Engine => '/', :as => 'effective_pages'
+end
+
+#root :to => 'Effective::Pages#show', :id => 'home'
