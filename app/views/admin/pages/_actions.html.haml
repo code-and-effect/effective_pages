@@ -2,7 +2,7 @@
   = link_to 'Visit', effective_pages.page_path(page), :target => '_blank'
   = '-'
   - if defined?(EffectiveRegions)
-    = link_to 'Edit Content', effective_regions.edit_path(page)
+    = link_to 'Edit Content', effective_regions.edit_path(page), 'data-no-turbolink' => true
     = '-'
   = link_to 'Edit', effective_pages.edit_admin_page_path(page.id)
   = '-'

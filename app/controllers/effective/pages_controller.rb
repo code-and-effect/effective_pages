@@ -7,11 +7,12 @@ module Effective
         @pages = @pages.for_role(current_user.roles)
       end
 
-      if [true, 'true'].include?(params[:edit]) == false
+      if params[:edit].to_s != 'true'
         @pages = @pages.published
       end
 
       @page = @pages.find(params[:id])
+      raise ActiveRecord::RecordNotFound unless @page
 
       EffectivePages.authorized?(self, :show, @page)
 
