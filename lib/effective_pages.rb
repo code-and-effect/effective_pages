@@ -4,6 +4,9 @@ require 'migrant'     # Required for rspec to run properly
 module EffectivePages
   mattr_accessor :pages_table_name
   mattr_accessor :pages_path
+  mattr_accessor :excluded_pages
+  mattr_accessor :excluded_layouts
+
   mattr_accessor :authorization_method
   mattr_accessor :simple_form_options
   mattr_accessor :layout
@@ -43,7 +46,7 @@ module EffectivePages
     HashWithIndifferentAccess.new().tap do |pages|
       files.each do |file|
         name = File.basename(file).split('.').first
-        next if name.starts_with?('_')
+        next if name.starts_with?('_') || Array(EffectivePages.excluded_pages).map(&:to_s).include?(name)
 
         pages[name.to_sym] = {}
       end
@@ -56,7 +59,7 @@ module EffectivePages
     HashWithIndifferentAccess.new().tap do |layouts|
       files.each do |file|
         name = File.basename(file).split('.').first
-        next if name.starts_with?('_')
+        next if name.starts_with?('_') || Array(EffectivePages.excluded_layouts).map(&:to_s).include?(name)
 
         layouts[name.to_sym] = {}
       end

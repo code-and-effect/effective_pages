@@ -6,6 +6,12 @@ EffectivePages.setup do |config|
   # Relative to app/views/
   config.pages_path = '/effective/pages/'
 
+  # Excluded Pages
+  config.excluded_pages = []
+
+  # Excluded Layouts
+  config.excluded_layouts = [:admin]
+
   # Use CanCan: can?(action, resource)
   # Use effective_roles:  resource.roles_match_with?(current_user)
   config.authorization_method = Proc.new { |controller, action, resource| true }
