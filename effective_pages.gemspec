@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Code and Effect"]
   s.email       = ["info@codeandeffect.com"]
   s.homepage    = "https://github.com/code-and-effect/effective_pages"
-  s.summary     = "A drop-in CMS solution for dynamically creating pages based off pre-defined templates.  Create templates ahead of time (think one_column, two_column..) with defined editable content regions.  Users can create content pages, choose a template, and use the fullscreen in-place editor to set their content."
-  s.description = "A full solution for creating, updating and templating content pages in your Rails application. Write templates that define content regions. Use the full-page on-screen editor (effective_mercury) to edit content regions. While not required, the intended use of this gem includes ActiveAdmin (for the CRUD screens)"
+  s.summary     = "CRUD Pages with intention to work with EffectiveRegions. WIP."
+  s.description = "CRUD Pages with intention to work with EffectiveRegions. WIP."
   s.licenses    = ['MIT']
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
@@ -21,18 +21,18 @@ Gem::Specification.new do |s|
   s.add_dependency "haml"
   s.add_dependency "migrant"
   s.add_dependency "simple_form"
-  s.add_dependency "effective_slugs"
+  s.add_dependency "effective_slugs", '> 1.1.0'
 
-  s.add_development_dependency "sqlite3"
+  # s.add_development_dependency "sqlite3"
 
-  s.add_development_dependency "factory_girl_rails"
-  s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "shoulda-matchers"
-  s.add_development_dependency "capybara"
-  s.add_development_dependency "poltergeist"
+  # s.add_development_dependency "factory_girl_rails"
+  # s.add_development_dependency "rspec-rails"
+  # s.add_development_dependency "shoulda-matchers"
+  # s.add_development_dependency "capybara"
+  # s.add_development_dependency "poltergeist"
 
-  s.add_development_dependency "guard"
-  s.add_development_dependency "guard-rspec"
-  s.add_development_dependency "guard-livereload"
+  # s.add_development_dependency "guard"
+  # s.add_development_dependency "guard-rspec"
+  # s.add_development_dependency "guard-livereload"
 
 end
