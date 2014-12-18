@@ -19,7 +19,9 @@ end
 
 # Automatically mount the engine as an append
 Rails.application.routes.append do
-  mount EffectivePages::Engine => '/', :as => 'effective_pages'
+  unless Rails.application.routes.routes.find { |r| r.name == 'effective_pages' }
+    mount EffectivePages::Engine => '/', :as => 'effective_pages'
+  end
 end
 
 #root :to => 'Effective::Pages#show', :id => 'home'
