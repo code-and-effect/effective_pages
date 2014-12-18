@@ -7,7 +7,7 @@ module Effective
         @pages = @pages.for_role(current_user.roles)
       end
 
-      if params[:edit] != true
+      if [true, 'true'].include?(params[:edit]) == false
         @pages = @pages.published
       end
 
