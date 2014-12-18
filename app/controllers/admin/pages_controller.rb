@@ -25,8 +25,12 @@ module Admin
       EffectivePages.authorized?(self, :create, @page)
 
       if @page.save
-        flash[:success] = 'Successfully created page'
-        redirect_to effective_pages.edit_admin_page_path(@page)
+        if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
+          redirect_to effective_regions.edit_path(effective_pages.page_path(@page))
+        else
+          flash[:success] = 'Successfully created page'
+          redirect_to effective_pages.edit_admin_page_path(@page)
+        end
       else
         flash.now[:danger] = 'Unable to create page'
         render :action => :new
@@ -47,8 +51,12 @@ module Admin
       EffectivePages.authorized?(self, :update, @page)
 
       if @page.update_attributes(page_params)
-        flash[:success] = 'Successfully updated page'
-        redirect_to effective_pages.edit_admin_page_path(@page)
+        if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
+          redirect_to effective_regions.edit_path(effective_pages.page_path(@page))
+        else
+          flash[:success] = 'Successfully updated page'
+          redirect_to effective_pages.edit_admin_page_path(@page)
+        end
       else
         flash.now[:danger] = 'Unable to update page'
         render :action => :edit
@@ -66,14 +74,14 @@ module Admin
         flash[:danger] = 'Unable to delete page'
       end
 
-      redirect_to effective_orers.admin_pages_path
+      redirect_to effective_pages.admin_pages_path
     end
 
     private
 
     def page_params
       params.require(:effective_page).permit(
-        :title, :meta_description, :draft, :layout, :template, :slug, :roles
+        :title, :meta_description, :draft, :layout, :template, :slug, :roles => []
       )
     end
 
