@@ -1,12 +1,12 @@
 %span.actions
   = link_to 'Visit', effective_pages.page_path(page), :target => '_blank'
   = '-'
-  = link_to 'Edit', effective_pages.edit_admin_page_path(page)
-  = '-'
   - if defined?(EffectiveRegions)
     = link_to 'Edit Content', effective_regions.edit_path(page)
     = '-'
-  = link_to 'Delete', effective_pages.admin_page_path(page), :data => {:method => :delete, :confirm => "Are you sure?  This page will be made unavailable."}
+  = link_to 'Edit', effective_pages.edit_admin_page_path(page.id)
+  = '-'
+  = link_to 'Delete', effective_pages.admin_page_path(page.id), :data => {:method => :delete, :confirm => "Are you sure?  This page will be made unavailable."}
   / = '-'
   / - if page.draft?
   /   = link_to "Undraft", effective_orders.undraft_admin_page_path(page)

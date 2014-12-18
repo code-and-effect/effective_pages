@@ -1,7 +1,17 @@
 module Effective
   class PagesController < ApplicationController
     def show
-      @page = Effective::Page.find(params[:id])
+      @pages = Effective::Page.all
+
+      if defined?(EffectiveRoles) && (current_user.respond_to?(:roles) rescue false)
+        @pages = @pages.for_role(current_user.roles)
+      end
+
+      if params[:edit] != true
+        @pages = @pages.published
+      end
+
+      @page = @pages.find(params[:id])
 
       EffectivePages.authorized?(self, :show, @page)
 
