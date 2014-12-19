@@ -9,6 +9,7 @@ EffectivePages::Engine.routes.draw do
   if defined?(EffectiveDatatables)
     namespace :admin do
       resources :pages, :except => [:show]
+      resources :menus, :except => [:show]
     end
   end
 

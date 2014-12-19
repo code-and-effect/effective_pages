@@ -2,6 +2,8 @@
 
 EffectivePages.setup do |config|
   config.pages_table_name = :pages
+  config.menus_table_name = :menus
+  config.menu_items_table_name = :menu_items
 
   # Relative to app/views/
   config.pages_path = '/effective/pages/'

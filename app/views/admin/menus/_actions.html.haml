@@ -1,0 +1,4 @@
+%span.actions
+  = link_to 'Edit', effective_pages.edit_admin_menu_path(menu)
+  = '-'
+  = link_to 'Delete', effective_pages.admin_menu_path(menu), :data => {:method => :delete, :confirm => "Are you sure?  This menu will be made unavailable."}

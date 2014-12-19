@@ -3,6 +3,9 @@ require 'migrant'     # Required for rspec to run properly
 
 module EffectivePages
   mattr_accessor :pages_table_name
+  mattr_accessor :menus_table_name
+  mattr_accessor :menu_items_table_name
+
   mattr_accessor :pages_path
   mattr_accessor :excluded_pages
   mattr_accessor :excluded_layouts
