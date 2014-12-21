@@ -8,9 +8,10 @@ initialize = ->
   draggable = null
 
   menu.on 'dragstart', 'li', (event) ->
+    menu.addClass('dragging')
     obj = $(event.currentTarget)
     event.originalEvent.dataTransfer.setData('text/html', obj[0].outerHTML)
-    obj.css('opacity', '0.5') # Show it slightly removed from the DOM
+    obj.css('opacity', '0.4') # Show it slightly removed from the DOM
     draggable = obj
     event.stopPropagation()
 
@@ -29,13 +30,22 @@ initialize = ->
     # If I don't have the placeholder class already
     if node.hasClass('placeholder') == false
       menu.find('.placeholder').removeClass('placeholder')
+      menu.find('open').removeClass('open')
       node.addClass('placeholder')
 
     event.stopPropagation() # fix on the child LI
 
+  menu.on 'dragend', 'li', (event) ->
+    obj = $(event.currentTarget)
+    obj.css('opacity', '1.0');
+    menu.find('.placeholder').removeClass('placeholder')
+    menu.removeClass('dragging')
+
   menu.on 'drop', 'li', (event) ->
     $(event.currentTarget).before(event.originalEvent.dataTransfer.getData('text/html'))
+
     menu.find('.placeholder').removeClass('placeholder')
+    menu.removeClass('dragging')
 
     draggable.remove() if draggable
 
