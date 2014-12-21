@@ -2,13 +2,6 @@ body.dragging, body.dragging * {
   cursor: move !important;
 }
 
-.dragged {
-  position: absolute;
-  top: 0;
-  opacity: 0.5;
-  z-index: 2000;
-}
-
 .effective-menu ul.nav > li.placeholder {
   &:before {
     margin-top: -6px;
@@ -21,16 +14,15 @@ body.dragging, body.dragging * {
 
 .effective-menu li.placeholder {
   position: relative;
-  /** More li styles **/
 
   &:before {
     position: absolute;
     content: "";
-    width: 0;
-    height: 0;
-    margin-top: -5px;
+    height: 0px;
+    width: 0px;
     left: -5px;
     top: -4px;
+    margin-top: -5px;
     border-left: 5px solid red;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;

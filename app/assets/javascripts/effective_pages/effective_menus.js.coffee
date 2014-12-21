@@ -1,81 +1,49 @@
-# initialize = ->
-#   menu = $('.effective-menu')
-#   return if menu.data('effective-menu-initialized') == true
+initialize = ->
+  menu = $('.effective-menu')
+  return if menu.data('effective-menu-initialized') == true
 
-#   menu.find('ul').sortable({
-#     group: 'nav'
-#     nested: true
-#     vertical: false
+  # Prevent the menu from actually working
+  menu.on 'click', 'a', (event) -> event.preventDefault()
 
-# <<<<<<< Updated upstream
-#     afterMove: (placeholder, container, closestItem) ->
-#       console.log 'after move'
-#       #console.log container.el
-#       console.log closestItem
+  draggable = null
 
-#       if closestItem.hasClass('dropdown') && !closestItem.hasClass('open') # This is a menu, expand it
-#         menu.find('.open').removeClass('open')
-#         closestItem.addClass('open')
+  menu.on 'dragstart', 'li', (event) ->
+    obj = $(event.currentTarget)
+    event.originalEvent.dataTransfer.setData('text/html', obj[0].outerHTML)
+    obj.css('opacity', '0.5') # Show it slightly removed from the DOM
+    draggable = obj
+    event.stopPropagation()
 
-# =======
-#     afterMove: (placeholder, container, item) ->
-#       if item.parent().parent().hasClass('open')
-#         console.log 'open'
-#       else
-#         detached = placeholder.detach()
-#         item.parent().parent().siblings('.open').find('ul').append(detached)
-#         console.log 'closed'
+  menu.on 'dragenter', 'li', (event) -> event.preventDefault() # enable drag and drop
+  menu.on 'dragleave', 'li', (event) -> event.preventDefault() # enable drag and drop
 
+  menu.on 'dragover', 'li', (event) ->
+    node = $(this)
 
-#   # onDragStart: function (item, container, _super) {
-#   #   // Duplicate items of the no drop area
-#   #   if(!container.options.drop)
-#   #     item.clone().insertAfter(item)
-#   #   _super(item)
-#   # }
-#     # onDragStart: (item, container, _super) ->
-#     #   console.log 'on drag start'
-#     #   console.log item
-#     #   console.log container
-#     #   console.log container.rootGroup
-#     #   console.log container.options
-#     #   _super(item)
+    if node.hasClass('dropdown') && !node.hasClass('open') # This is a menu, expand it
+      node.siblings().removeClass('open') # menu.find('.open').removeClass('open')
+      node.addClass('open')
+    else
+      event.preventDefault()
 
-#     #   item.find('.dropdown-menu').sortable('disable')
-#     #   _super(item, container)
+    # If I don't have the placeholder class already
+    if node.hasClass('placeholder') == false
+      menu.find('.placeholder').removeClass('placeholder')
+      node.addClass('placeholder')
 
+    event.stopPropagation() # fix on the child LI
 
+  menu.on 'drop', 'li', (event) ->
+    $(event.currentTarget).before(event.originalEvent.dataTransfer.getData('text/html'))
+    menu.find('.placeholder').removeClass('placeholder')
 
-#     # afterMove: (placeholder, container) ->
-# >>>>>>> Stashed changes
-#     #   if oldContainer != container
-#     #     if oldContainer
-#     #       oldContainer.el.removeClass('active')
-#     #     container.el.addClass('active')
-#     #   oldContainer = container
+    draggable.remove() if draggable
 
-#     # onDragStart: (item, container, _super) ->
-#     #   item.find('.dropdown-menu').sortable('disable')
-#     #   _super(item, container)
-#     onDrop: (item, container, _super) ->
-#       console.log 'on drop'
-#       item.find('.dropdown-menu').sortable('enable')
-#       _super(item, container)
-#   })
+    event.stopPropagation()
+    event.preventDefault()
 
-#   # menu.find('.dropdown-menu').sortable({
-#   #   group: 'nav'
-#   #   nested: false
-#   # })
+  # All Done
+  menu.data('effective-menu-initialized', true)
 
-#   menu.find("a[data-toggle='dropdown']").hover(
-#     ->
-#       $(this).closest('.effective-menu').find('li.dropdown.open').removeClass('open')
-#       $(this).closest('li.dropdown').addClass('open')
-#   )
-
-#   # All Done
-#   menu.data('effective-menu-initialized', true)
-
-# $ -> initialize()
-# $(document).on 'page:change', -> initialize()
+$ -> initialize()
+$(document).on 'page:change', -> initialize()
