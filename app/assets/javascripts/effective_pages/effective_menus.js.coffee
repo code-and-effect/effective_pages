@@ -8,11 +8,14 @@ initialize = ->
   draggable = null
 
   menu.on 'dragstart', 'li', (event) ->
+    node = $(event.currentTarget)
+    event.originalEvent.dataTransfer.setData('text/html', node[0].outerHTML)
+
+    node.css('opacity', '0.4') # Show it slightly removed from the DOM
     menu.addClass('dragging')
-    obj = $(event.currentTarget)
-    event.originalEvent.dataTransfer.setData('text/html', obj[0].outerHTML)
-    obj.css('opacity', '0.4') # Show it slightly removed from the DOM
-    draggable = obj
+
+    draggable = node
+
     event.stopPropagation()
 
   menu.on 'dragenter', 'li', (event) -> event.preventDefault() # enable drag and drop
@@ -21,8 +24,8 @@ initialize = ->
   menu.on 'dragover', 'li', (event) ->
     node = $(this)
 
-    if node.hasClass('dropdown') && !node.hasClass('open') # This is a menu, expand it
-      node.siblings().removeClass('open') # menu.find('.open').removeClass('open')
+    if (node.hasClass('dropdown') || node.hasClass('dropdown-submenu')) && !node.hasClass('open') # This is a menu, expand it
+      node.siblings().removeClass('open').find('open').removeClass('open')
       node.addClass('open')
     else
       event.preventDefault()
@@ -42,7 +45,10 @@ initialize = ->
     menu.removeClass('dragging')
 
   menu.on 'drop', 'li', (event) ->
-    $(event.currentTarget).before(event.originalEvent.dataTransfer.getData('text/html'))
+    node = $(event.currentTarget)
+
+    node.before(event.originalEvent.dataTransfer.getData('text/html'))
+    node.siblings('.open').removeClass('open')
 
     menu.find('.placeholder').removeClass('placeholder')
     menu.removeClass('dragging')

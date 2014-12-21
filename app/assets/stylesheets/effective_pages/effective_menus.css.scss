@@ -2,6 +2,13 @@
   cursor: move !important;
 }
 
+.effective-menu {
+  li.divider {
+    height: 5px;
+  }
+
+}
+
 .effective-menu ul.nav > li.placeholder {
   &:before {
     margin-top: -6px;

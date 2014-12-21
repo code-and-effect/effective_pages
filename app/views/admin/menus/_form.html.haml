@@ -18,6 +18,15 @@
           %li= link_to '222', '#'
           %li= link_to '333', '#', :class => 'nav-indent'
           %li= link_to '444', '#', :class => 'nav-indent'
+          %li.divider
+            = link_to '', '#'
+          %li.dropdown-submenu
+            = link_to 'More...', '#'
+            %ul.dropdown-menu
+              %li= link_to 'AAAA', '#'
+              %li= link_to 'BBBB', '#'
+              %li= link_to 'CCCC', '#'
+              %li= link_to 'DDDD', '#'
 
       %li.dropdown
         = link_to 'Outreach', '#', 'data-toggle' => 'dropdown'
