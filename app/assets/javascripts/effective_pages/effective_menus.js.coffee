@@ -4,10 +4,18 @@ initialize = ->
 
   menu.find('ul.nav').sortable({
     group: 'nav'
-    nested: false
+    nested: true
     vertical: false
 
-    # afterMove: (placeholder, container) ->
+    afterMove: (placeholder, container, closestItem) ->
+      console.log 'after move'
+      #console.log container.el
+      console.log closestItem
+
+      if closestItem.hasClass('dropdown') && !closestItem.hasClass('open') # This is a menu, expand it
+        menu.find('.open').removeClass('open')
+        closestItem.addClass('open')
+
     #   if oldContainer != container
     #     if oldContainer
     #       oldContainer.el.removeClass('active')
