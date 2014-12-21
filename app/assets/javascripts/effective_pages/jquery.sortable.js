@@ -332,8 +332,9 @@
     },
     movePlaceholder: function  (container, item, method, sameResultBox) {
       var lastAppendedItem = this.lastAppendedItem
-      if(!sameResultBox && lastAppendedItem && lastAppendedItem[0] === item[0])
+      if(!sameResultBox && lastAppendedItem && lastAppendedItem[0] === item[0]) {
         return;
+      }
 
       item[method](this.placeholder)
       this.lastAppendedItem = item
