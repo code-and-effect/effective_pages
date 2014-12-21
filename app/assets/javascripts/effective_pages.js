@@ -1,1 +1,1 @@
-//= require ./effective_pages/matt_menus
+//= require ./effective_pages/something
