@@ -11,4 +11,6 @@ module EffectivePagesHelper
   #   Rails.application.routes.routes.find { |r| r.name == 'root' and r.defaults[:controller] == 'Effective::Pages' and r.defaults[:action] == 'show' }.defaults[:id] rescue nil
   # end
 
+
+
 end

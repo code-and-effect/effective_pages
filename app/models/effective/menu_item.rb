@@ -1,5 +1,5 @@
 module Effective
-  class MenuNode < ActiveRecord::Base
+  class MenuItem < ActiveRecord::Base
     belongs_to :menu, :inverse_of => :menu_items, :touch => true
     belongs_to :menuable, :polymorphic => true # Optionaly belong to an object
 

@@ -2,6 +2,19 @@
   = f.input :title, :hint => "Give this menu a title"
 
   .effective-menu
+    = render_menu('main menu')
+  %br
+  %hr
+  %br
+
+  .effective-menu
+    = render_menu('second menu')
+  %br
+  %hr
+  %br
+
+
+  .effective-menu
     %ul.nav.navbar-nav
       %li.dropdown
         = link_to 'About', '#', 'data-toggle' => 'dropdown'
