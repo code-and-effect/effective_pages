@@ -11,7 +11,7 @@ module Effective
       title           :string
       url             :string
       classes         :string
-      new_window      :boolean, :default => false, :validates => [:boolean]
+      new_window      :boolean, :default => false, :validates => [:inclusion => {:in => [true, false]}]
 
       lft             :integer, :validates => [:presence], :index => true
       rgt             :integer, :validates => [:presence]

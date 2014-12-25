@@ -9,7 +9,7 @@ require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
 Bundler.require(*Rails.groups)
-require 'strong_parameters'
+require 'effective_slugs'
 require "effective_pages"
 
 module Dummy
