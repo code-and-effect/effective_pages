@@ -52,7 +52,7 @@ module EffectiveMenusHelper
         end
       end
 
-      html << "</li>" if (item.lft+1 == stack.last)
+      html << "</li>" if (item.lft + 1) == stack.last
     end
 
     stack.each do |item|
@@ -60,6 +60,8 @@ module EffectiveMenusHelper
       html << "</ul>"
       html << "</li>" if stack.size > 1
     end
+
+    html << "</ul>"
 
     html.html_safe
    end
