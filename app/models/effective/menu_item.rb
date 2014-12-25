@@ -6,6 +6,7 @@ module Effective
     belongs_to :menuable, :polymorphic => true # Optionaly belong to an object
 
     self.table_name = EffectivePages.menu_items_table_name.to_s
+    attr_protected() if Rails::VERSION::MAJOR == 3
 
     structure do
       title           :string

@@ -13,16 +13,34 @@
 
 ActiveRecord::Schema.define(:version => 1) do
 
+  create_table "menu_items", :force => true do |t|
+    t.integer "menu_id"
+    t.integer "menuable_id"
+    t.string  "menuable_type"
+    t.string  "title"
+    t.string  "url"
+    t.string  "classes"
+    t.boolean "new_window",    :default => false
+    t.integer "lft"
+    t.integer "rgt"
+  end
+
+  add_index "menu_items", ["lft"], :name => "index_menu_items_on_lft"
+
+  create_table "menus", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "pages", :force => true do |t|
     t.string   "title"
-    t.string   "meta_keywords"
     t.string   "meta_description"
     t.boolean  "draft",            :default => false
+    t.string   "layout",           :default => "application"
     t.string   "template"
-    t.text     "regions"
-    t.text     "snippets"
     t.string   "slug"
-    t.integer  "roles_mask"
+    t.integer  "roles_mask",       :default => 0
     t.datetime "updated_at"
     t.datetime "created_at"
   end

@@ -3,6 +3,7 @@ module Effective
     has_many :menu_items, :dependent => :delete_all
 
     self.table_name = EffectivePages.menus_table_name.to_s
+    attr_protected() if Rails::VERSION::MAJOR == 3
 
     structure do
       title           :string, :validates => [:presence]

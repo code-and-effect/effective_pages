@@ -61,8 +61,6 @@ module EffectiveMenusHelper
       html << "</li>" if stack.size > 1
     end
 
-    html << "</ul>"
-
     html.html_safe
    end
 end
