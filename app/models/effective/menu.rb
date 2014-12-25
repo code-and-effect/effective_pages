@@ -23,7 +23,7 @@ module Effective
       root = menu_items.build(:title => 'Root', :url => '#', :lft => 1, :rgt => 2)
       root.parent = true
       instance_exec(&block) # A call to dropdown or item
-      self # Return self
+      self
     end
 
     def dropdown(title, url = '#', options = {}, &block)
@@ -44,7 +44,7 @@ module Effective
 
       #puts menu_items.map { |item| "[DROPDOWN] #{item.lft} #{item.title} #{item.rgt}"}
 
-      # Make room for my new lft&rgt
+      # Make room for new item by shifting everything after me up by 2
       menu_items.each do |item|
         item.rgt = (item.rgt + 2) if item.rgt > (lft - 1)
         item.lft = (item.lft + 2) if item.lft > (lft - 1)
