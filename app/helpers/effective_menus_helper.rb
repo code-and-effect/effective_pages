@@ -11,16 +11,13 @@ module EffectiveMenusHelper
     #end
   end
 
-
   def render_menu_items(items, options = {})
-    return "<ul></ul>".html_safe if !items.present?
-
     html = ""
-    stack = Array.new(1, 999999) # A stack to keep track of menu_node.r values.  Initialized with a number > max(menu_items.r) values
+    stack = [Effective::MenuItem.new(:lft => 1, :rgt => 9999999)] # A stack to keep track of rgt values.  Initialized with a value > max(items.rgt)
 
     items.each_with_index do |item, index|
       if stack.size > 0
-        if (item.rgt < stack.last) # Level down?
+        if (item.rgt < stack.last.rgt) # Level down?
           if index == 0
             html << "<ul class='nav navbar-nav'>"
           else
@@ -28,13 +25,13 @@ module EffectiveMenusHelper
           end
         end
 
-        while item.rgt > stack.last # Level up?
+        while item.rgt > stack.last.rgt # Level up?
           stack.pop
-          html << "</ul></li>" if (item.rgt > stack.last)
+          html << '</ul></li>' if (item.rgt > stack.last.rgt)
         end
       end
 
-      stack.push(item.rgt)
+      stack.push(item)
 
       if false #options[:for_editor]
         html << (render(:partial => 'admin/menu_items/menu_item', :locals => { :menu_item => item })).gsub(/\n/,'').gsub(/  /, '')
@@ -44,24 +41,27 @@ module EffectiveMenusHelper
         classes << 'first' if index == 0
         classes << 'last' if (index+1) == items.length
 
-        if (item.lft + 1) == item.rgt # leaf node
+        if (item.rgt - item.lft) == 1 # leaf node
           html << "<li>"
           html << "<a href='#{item.url}'>#{item.title}</a>"
+          html << "</li>"
         else
           html << "<li class='dropdown'>" # dropdown
           html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}</a>"
         end
       end
-
-      html << '</li>' if (item.lft + 1) == stack.last
     end
 
-    stack.each do |item|
-      stack.pop
-      html << '</ul>'
-      html << '</li>' if stack.size > 1
+    while stack.size > 0
+      item = stack.pop
+
+      if item.rgt == 9999999
+        html << '</ul>'
+      elsif (item.rgt - item.lft) > 1 # not a leaf node
+        html << '</ul></li>'
+      end
     end
 
     html.html_safe
-   end
+  end
 end
