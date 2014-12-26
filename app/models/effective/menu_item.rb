@@ -18,7 +18,7 @@ module Effective
       rgt             :integer, :validates => [:presence]
     end
 
-    default_scope -> { includes(:menuable).order('lft ASC') }
+    default_scope -> { includes(:menuable).order(:lft) }
 
     # before_validation do
     #   if menuable.present?

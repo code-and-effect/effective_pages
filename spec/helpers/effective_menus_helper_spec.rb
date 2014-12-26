@@ -122,5 +122,50 @@ describe EffectiveMenusHelper do
         </ul>
       ".gsub("\n", '').gsub('  ', '')
     end
+
+    it 'correctly renders a menu with dropdowns in dropdowns and items' do
+      menu = Effective::Menu.new(:title => 'test').build do
+        dropdown 'Events' do
+          item 'Conferences'
+
+          dropdown 'Workshops' do
+            dropdown 'AAA' do
+              item '111'
+            end
+            item 'BBB'
+          end
+        end
+      end.tap { |menu| menu.save }
+
+      render_menu('test').should eq "
+        <ul class='nav navbar-nav'>
+          <li class='dropdown'>
+            <a href='#' data-toggle='dropdown'>Events</a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='#'>Conferences</a>
+              </li>
+              <li class='dropdown'>
+                <a href='#' data-toggle='dropdown'>Workshops</a>
+                <ul class='dropdown-menu'>
+                  <li class='dropdown'>
+                    <a href='#' data-toggle='dropdown'>AAA</a>
+                    <ul class='dropdown-menu'>
+                      <li>
+                        <a href='#'>111</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href='#'>BBB</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      ".gsub("\n", '').gsub('  ', '')
+
+    end
   end
 end

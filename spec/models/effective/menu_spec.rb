@@ -86,5 +86,48 @@ describe Effective::Menu do
       ]
 
     end
+
+    it 'correctly renders dropdowns and items' do
+      menu = Effective::Menu.new(:title => 'test').build do
+        dropdown 'About' do
+          item 'AAA'
+          item 'BBB'
+          item 'CCC'
+          item 'DDD'
+        end
+
+        dropdown 'Events' do
+          item 'Conferences'
+
+          dropdown 'Workshops' do
+            dropdown 'AAA' do
+              item '111'
+              item '222'
+            end
+            item 'BBB'
+          end
+        end
+      end
+
+      menu.valid?.should eq true
+
+      items = menu.menu_items.sort_by(&:lft).map { |item| [item.title, item.lft, item.rgt] }
+
+      expect(items).to eq [
+        ['Root', 1, 26],
+          ['About', 2, 11],
+            ['AAA', 3, 4],
+            ['BBB', 5, 6],
+            ['CCC', 7, 8],
+            ['DDD', 9, 10],
+          ['Events', 12, 25],
+            ['Conferences', 13, 14],
+            ['Workshops', 15, 24],
+              ['AAA', 16, 21],
+                ['111', 17, 18],
+                ['222', 19, 20],
+              ['BBB', 22, 23],
+      ]
+    end
   end
 end

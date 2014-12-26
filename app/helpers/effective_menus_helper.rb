@@ -1,7 +1,8 @@
 module EffectiveMenusHelper
   def render_menu(menu, options = {})
     menu = Effective::Menu.find_by_title(menu) if menu.kind_of?(String)
-    return "<ul><li>Menu '#{menu}' does not exist.</li></ul>".html_safe if !menu.present?
+
+    return "<ul class='nav navbar-nav'><li>Menu '#{menu}' does not exist</li></ul>".html_safe if !menu.present?
 
     render_menu_items(menu.menu_items.last(menu.menu_items.size-1), options)
     # if options[:for_editor]
