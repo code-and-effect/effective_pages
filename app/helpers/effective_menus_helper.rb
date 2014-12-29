@@ -23,7 +23,11 @@ module EffectiveMenusHelper
       if stack.size > 0
         if (item.rgt < stack.last.rgt) # Level down?
           if index == 0
-            html << "<ul class='nav navbar-nav'>"
+            if options[:form]
+              html << "<ul class='nav navbar-nav effective-menu'>"
+            else
+              html << "<ul class='nav navbar-nav'>"
+            end
           else
             html << "<ul class='dropdown-menu'>"
           end
