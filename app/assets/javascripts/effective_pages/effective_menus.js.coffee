@@ -39,8 +39,8 @@ initialize = ->
     event.stopPropagation() # fix on the child LI
 
   menu.on 'dragend', 'li', (event) ->
-    obj = $(event.currentTarget)
-    obj.css('opacity', '1.0');
+    node = $(event.currentTarget)
+    node.css('opacity', '1.0');
     menu.find('.placeholder').removeClass('placeholder')
     menu.removeClass('dragging')
 
@@ -48,7 +48,7 @@ initialize = ->
     node = $(event.currentTarget)
 
     node.before(event.originalEvent.dataTransfer.getData('text/html'))
-    node.siblings('.open').removeClass('open')
+    #node.siblings('.open').removeClass('open')
 
     menu.find('.placeholder').removeClass('placeholder')
     menu.removeClass('dragging')

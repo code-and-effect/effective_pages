@@ -2,61 +2,7 @@
   = f.input :title, :hint => "Give this menu a title"
 
   .effective-menu
-    = render_menu('third menu')
-
-  .effective-menu
-    / render_menu('main menu')
-  %br
-  %hr
-  %br
-
-  .effective-menu
-    /= render_menu('third menu')
-  %br
-  %hr
-  %br
-
-
-  .effective-menu
-    %ul.nav.navbar-nav
-      %li.dropdown
-        = link_to 'About', '#', 'data-toggle' => 'dropdown'
-        %ul.dropdown-menu
-          %li= link_to '111', '#'
-          %li= link_to '222', '#'
-          %li= link_to '333', '#', :class => 'nav-indent'
-          %li= link_to '444', '#', :class => 'nav-indent'
-
-      %li.dropdown
-        = link_to 'Become a Member', '#', 'data-toggle' => 'dropdown'
-        %ul.dropdown-menu
-          %li= link_to '111', '#'
-          %li= link_to '222', '#'
-          %li= link_to '333', '#', :class => 'nav-indent'
-          %li= link_to '444', '#', :class => 'nav-indent'
-          %li.divider
-            = link_to '', '#'
-          %li.dropdown
-            = link_to 'More...', '#', 'data-toggle' => 'dropdown'
-            %ul.dropdown-menu
-              %li= link_to 'AAAA', '#'
-              %li= link_to 'BBBB', '#'
-              %li= link_to 'CCCC', '#'
-              %li= link_to 'DDDD', '#'
-
-      %li.dropdown
-        = link_to 'Outreach', '#', 'data-toggle' => 'dropdown'
-        %ul.dropdown-menu
-          %li= link_to 'AAA', '#'
-          %li= link_to 'BBB', '#'
-          %li= link_to 'CCC', '#', :class => 'nav-indent'
-          %li= link_to 'DDD', '#', :class => 'nav-indent'
-
-      %li.dropdown
-        = link_to 'Events', '#', 'data-toggle' => 'dropdown'
-        %ul.dropdown-menu
-          %li= link_to 'Conferences', conferences_events_path
-          %li= link_to 'Workshops', workshops_events_path
+    = render_menu(@menu, :form => f)
 
   .form-group
     .col-xs-12

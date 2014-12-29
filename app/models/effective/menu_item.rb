@@ -20,6 +20,10 @@ module Effective
 
     default_scope -> { includes(:menuable).order(:lft) }
 
+    def leaf?
+      (rgt.to_i - lft.to_i) == 1
+    end
+
     # before_validation do
     #   if menuable.present?
     #     self.title = nil if menuable.menu_title == self[:title]

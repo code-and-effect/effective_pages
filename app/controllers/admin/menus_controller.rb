@@ -73,7 +73,7 @@ module Admin
 
     def menu_params
       params.require(:effective_menu).permit(
-        :title, :menu_item_attributes => [:id, :title, :url, :classes, :new_window, :lft, :rgt, :_destroy]
+        :title, :menu_items_attributes => [:id, :title, :url, :classes, :new_window, :lft, :rgt, :_destroy]
       )
     end
 

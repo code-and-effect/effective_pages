@@ -14,38 +14,39 @@ namespace :effective_pages do
 
     Effective::Menu.destroy_all
 
-    # menu = Effective::Menu.new(:title => 'main menu')
+    menu = Effective::Menu.new(:title => 'main menu')
 
-    # menu.menu_items.build(:lft => 1, :rgt => 49, :title => 'Root', :url => '#')
+    menu.menu_items.build(:lft => 1, :rgt => 49, :title => 'Root', :url => '#')
 
-    # menu.menu_items.build(:lft => 2, :rgt => 11, :title => 'About', :url => '#')
-    # menu.menu_items.build(:lft => 3, :rgt => 4, :title => 'AAA', :url => '#')
-    # menu.menu_items.build(:lft => 5, :rgt => 6, :title => 'BBB', :url => '#')
-    # menu.menu_items.build(:lft => 8, :rgt => 9, :title => 'CCC', :url => '#')
-    # menu.menu_items.build(:lft => 10, :rgt => 11, :title => 'DDD', :url => '#')
+    menu.menu_items.build(:lft => 2, :rgt => 11, :title => 'About', :url => '#')
+    menu.menu_items.build(:lft => 3, :rgt => 4, :title => 'AAA', :url => '#')
+    menu.menu_items.build(:lft => 5, :rgt => 6, :title => 'BBB', :url => '#')
+    menu.menu_items.build(:lft => 8, :rgt => 9, :title => 'CCC', :url => '#')
+    menu.menu_items.build(:lft => 10, :rgt => 11, :title => 'DDD', :url => '#')
 
-    # menu.menu_items.build(:lft => 12, :rgt => 25, :title => 'Become a Member', :url => '#')
-    # menu.menu_items.build(:lft => 13, :rgt => 14, :title => '111', :url => '#')
-    # menu.menu_items.build(:lft => 15, :rgt => 16, :title => '222', :url => '#')
-    # menu.menu_items.build(:lft => 17, :rgt => 24, :title => 'More...', :url => '#')
-    # menu.menu_items.build(:lft => 18, :rgt => 19, :title => 'AAA', :url => '#')
-    # menu.menu_items.build(:lft => 20, :rgt => 21, :title => 'BBB', :url => '#')
-    # menu.menu_items.build(:lft => 22, :rgt => 23, :title => 'CCC', :url => '#')
+    menu.menu_items.build(:lft => 12, :rgt => 25, :title => 'Become a Member', :url => '#')
+    menu.menu_items.build(:lft => 13, :rgt => 14, :title => '111', :url => '#')
+    menu.menu_items.build(:lft => 15, :rgt => 16, :title => '222', :url => '#')
+    menu.menu_items.build(:lft => 17, :rgt => 24, :title => 'More...', :url => '#')
+    menu.menu_items.build(:lft => 18, :rgt => 19, :title => 'AAA', :url => '#')
+    menu.menu_items.build(:lft => 20, :rgt => 21, :title => 'BBB', :url => '#')
+    menu.menu_items.build(:lft => 22, :rgt => 23, :title => 'CCC', :url => '#')
 
-    # menu.menu_items.build(:lft => 26, :rgt => 33, :title => 'Outreach', :url => '#')
-    # menu.menu_items.build(:lft => 27, :rgt => 28, :title => 'AAA', :url => '#')
-    # menu.menu_items.build(:lft => 29, :rgt => 30, :title => 'BBB', :url => '#')
-    # menu.menu_items.build(:lft => 31, :rgt => 32, :title => 'CCC', :url => '#')
+    menu.menu_items.build(:lft => 26, :rgt => 33, :title => 'Outreach', :url => '#')
+    menu.menu_items.build(:lft => 27, :rgt => 28, :title => 'AAA', :url => '#')
+    menu.menu_items.build(:lft => 29, :rgt => 30, :title => 'BBB', :url => '#')
+    menu.menu_items.build(:lft => 31, :rgt => 32, :title => 'CCC', :url => '#')
 
-    # menu.menu_items.build(:lft => 34, :rgt => 48, :title => 'Events', :url => '#')
-    # menu.menu_items.build(:lft => 35, :rgt => 36, :title => 'Conferences', :url => '#')
-    # menu.menu_items.build(:lft => 37, :rgt => 47, :title => 'Workshops', :url => '#')
-    # menu.menu_items.build(:lft => 38, :rgt => 44, :title => 'AAA', :url => '#')
-    # menu.menu_items.build(:lft => 40, :rgt => 41, :title => '111', :url => '#')
-    # menu.menu_items.build(:lft => 42, :rgt => 43, :title => '222', :url => '#')
-    # menu.menu_items.build(:lft => 45, :rgt => 46, :title => 'BBB', :url => '#')
+    menu.menu_items.build(:lft => 34, :rgt => 48, :title => 'Events', :url => '#')
+    menu.menu_items.build(:lft => 35, :rgt => 36, :title => 'Conferences', :url => '#')
+    menu.menu_items.build(:lft => 37, :rgt => 47, :title => 'Workshops', :url => '#')
+    menu.menu_items.build(:lft => 38, :rgt => 44, :title => 'AAA', :url => '#')
+    menu.menu_items.build(:lft => 40, :rgt => 41, :title => '111', :url => '#')
+    menu.menu_items.build(:lft => 42, :rgt => 43, :title => '222', :url => '#')
+    menu.menu_items.build(:lft => 45, :rgt => 46, :title => 'BBB', :url => '#')
 
-    # menu.save!
+    menu.save!
+    # puts render_menu(menu)
     # puts CGI::pretty(render_menu(menu))
 
     # menu = Effective::Menu.new(:title => 'second menu')
@@ -61,16 +62,17 @@ namespace :effective_pages do
     # menu.menu_items.build(:lft => 15, :rgt => 16, :title => 'Pork', :url => '#')
 
     # menu.save!
+    # puts render_menu(menu)
 
 
-    # menu = Effective::Menu.new(:title => 'third menu').build do
-    #   dropdown 'About' do
-    #     item 'AAA'
-    #     item 'BBB'
-    #     item 'CCC'
-    #     item 'DDD'
-    #   end
-    # end
+    menu = Effective::Menu.new(:title => 'easy menu').build do
+      dropdown 'About' do
+        item 'AAA'
+        item 'BBB'
+        item 'CCC'
+      end
+    end.save
+
 
     # puts "== FINAL == "
     # puts menu.menu_items.map { |item| "#{item.lft} #{item.title} #{item.rgt}"}
@@ -90,65 +92,23 @@ namespace :effective_pages do
     #   end
     # end
 
-    menu = Effective::Menu.new(:title => 'third menu').build do
-      dropdown 'About' do
-        item 'AAA'
-        item 'BBB'
-        item 'CCC'
-        item 'DDD'
-      end
+    # menu = Effective::Menu.new(:title => 'third menu').build do
+    #   dropdown 'Events' do
+    #     item 'Conferences'
 
-      dropdown 'Become a Member' do
-        item '111'
-        item '222'
-        dropdown 'More...' do
-          item 'AAA'
-          item 'BBB'
-          item 'CCC'
-        end
-      end
+    #     dropdown 'Workshops' do
+    #       dropdown 'AAA' do
+    #         item '111'
+    #       end
+    #       item 'BBB'
+    #     end
+    #   end
+    # end.tap { |menu| menu.save! }
 
-      dropdown 'Outreach' do
-        item 'AAA'
-        item 'BBB'
-        item 'CCC'
-        dropdown 'Of Doom' do
-          item 'Doooo'
-          dropdown 'ooooom' do
-            dropdown 'Doooooooo' do
-              dropdown 'oooooom' do
-                dropdown 'Dooooo' do
-                  dropdown 'eeeeeend' do
-                    item 'The end'
-                  end
-                end
-              end
-              item 'the middle'
-            end
-          end
-        end
-      end
+    # puts "== FINAL == "
 
-      dropdown 'Events' do
-        item 'Conferences'
-
-        dropdown 'Workshops' do
-          dropdown 'AAA' do
-            item '111'
-            item '222'
-          end
-          item 'BBB'
-        end
-      end
-    end
-
-    puts "== FINAL == "
-    puts menu.menu_items.map { |item| "#{item.lft} #{item.title} #{item.rgt}"}
-
-    menu.save
-
-    puts render_menu(menu)
-    puts CGI::pretty(render_menu(menu))
+    # puts render_menu('third menu')
+    # puts menu.menu_items(true).map { |item| "#{item.lft} #{item.title} #{item.rgt}"}
 
   end
 end
