@@ -69,7 +69,15 @@ namespace :effective_pages do
       dropdown 'About' do
         item 'AAA'
         item 'BBB'
-        item 'CCC'
+        dropdown 'More...' do
+          item '111'
+          item '222'
+        end
+      end
+
+      dropdown 'Membership' do
+        item 'AAA'
+        item 'BBB'
       end
     end.save
 
