@@ -1,10 +1,15 @@
 module EffectiveMenusHelper
   def render_menu(menu, options = {})
     menu = Effective::Menu.find_by_title(menu) if menu.kind_of?(String)
-
     return "<ul class='nav navbar-nav'><li>Menu '#{menu}' does not exist</li></ul>".html_safe if !menu.present?
 
+    if (effectively_editting? rescue false)
+      options[:menu_id] = menu.id
+      simple_form_for(menu, :url => '/') { |form| options[:form] = form }
+    end
+
     render_menu_items(menu.menu_items.last(menu.menu_items.size-1), options)
+
     # if options[:for_editor]
     #else
     #  Rails.cache.fetch(menu) { render_menu_items(menu.menu_items, options) }
@@ -13,7 +18,7 @@ module EffectiveMenusHelper
 
   def render_menu_items(items, options = {})
     if options[:form].present? && options[:form].kind_of?(SimpleForm::FormBuilder) == false
-      raise 'Expecting SimpleFOrm::FormBuilder object for :form => option'
+      raise 'Expecting SimpleForm::FormBuilder object for :form => option'
     end
 
     html = ""
@@ -24,8 +29,8 @@ module EffectiveMenusHelper
         if (item.rgt < stack.last.rgt) # Level down?
           if index == 0
             if options[:form]
-              html << "<ul class='nav navbar-nav effective-menu'>"
-            else
+              html << "<ul class='nav navbar-nav effective-menu' data-effective-menu-id='#{options[:menu_id]}'>"
+             else
               html << "<ul class='nav navbar-nav'>"
             end
           else
@@ -49,6 +54,7 @@ module EffectiveMenusHelper
       if item.leaf?
         html << "<li>"
         html << "<a href='#{item.url}'>#{item.title}</a>"
+
         if options[:form]
           html << (render(:partial => 'admin/menus/item', :locals => { :item => item, :form => options[:form] }))
         end

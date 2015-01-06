@@ -1,6 +1,6 @@
 .menu-item
   = form.simple_fields_for :menu_items, item do |f|
-    = f.input :title
-    = f.input :url, :as => :string
+    = f.input_field :title, :as => :hidden
+    = f.input_field :url, :as => :hidden
     = f.input_field :lft, :as => :hidden
     = f.input_field :rgt, :as => :hidden
