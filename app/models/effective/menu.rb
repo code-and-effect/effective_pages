@@ -12,9 +12,18 @@ module Effective
 
     accepts_nested_attributes_for :menu_items, :allow_destroy => true
 
+    def self.update_from_effective_regions!(params)
+      (params || {}).each do |id, attributes|
+        menu = Effective::Menu.find(id)
+        menu.attributes = attributes
+        menu.save!
+      end
+    end
+
     def contains?(obj)
       menu_items.find { |menu_item| menu_item.url == obj || menu_item.menuable == obj }.present?
     end
+
 
     # This is the entry point to the DSL method for creating menu items
     def build(&block)

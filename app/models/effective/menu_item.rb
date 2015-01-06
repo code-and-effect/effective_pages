@@ -2,7 +2,7 @@ module Effective
   class MenuItem < ActiveRecord::Base
     attr_accessor :parent  # This gets set on the Root node and a node created by Dropdown, so the item function knows whether to go down or to go accross
 
-    belongs_to :menu, :inverse_of => :menu_items, :touch => true
+    belongs_to :menu, :inverse_of => :menu_items
     belongs_to :menuable, :polymorphic => true # Optionaly belong to an object
 
     self.table_name = EffectivePages.menu_items_table_name.to_s
