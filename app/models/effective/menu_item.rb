@@ -9,7 +9,7 @@ module Effective
     attr_protected() if Rails::VERSION::MAJOR == 3
 
     structure do
-      title           :string
+      title           :string, :validates => [:presence]
       url             :string
       classes         :string
       new_window      :boolean, :default => false, :validates => [:inclusion => {:in => [true, false]}]

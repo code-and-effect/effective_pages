@@ -2,5 +2,9 @@
   = form.simple_fields_for :menu_items, item do |f|
     = f.input_field :title, :as => :hidden
     = f.input_field :url, :as => :hidden
+    = f.input_field :menuable_id, :as => :hidden
+    = f.input_field :menuable_type, :as => :hidden
+    = f.input_field :new_window, :as => :hidden
+    = f.input_field :classes, :as => :hidden
     = f.input_field :lft, :as => :hidden
     = f.input_field :rgt, :as => :hidden

@@ -5,10 +5,17 @@ module Admin
     layout (EffectivePages.layout.kind_of?(Hash) ? EffectivePages.layout[:admin] : EffectivePages.layout)
 
     def index
-      @datatable = Effective::Datatables::Pages.new() if defined?(EffectiveDatatables)
       @page_title = 'Pages'
-
       EffectivePages.authorized?(self, :index, Effective::Page)
+
+      if request.format.json?
+        # This is actually the effective_menus dialog asking for all @pages
+        render :json => ([['', '']] + Effective::Page.order(:title).map { |page| [page.title, page.id] }).to_json
+        return
+      else
+        @datatable = Effective::Datatables::Pages.new() if defined?(EffectiveDatatables)
+      end
+
     end
 
     def new

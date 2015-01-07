@@ -15,6 +15,7 @@ module Effective
     def self.update_from_effective_regions!(params)
       (params || {}).each do |id, attributes|
         menu = Effective::Menu.find(id)
+        attributes[:menu_items_attributes].each { |_, atts| atts[:menuable_type] = 'Effective::Page' if atts[:menuable_type].blank? }
         menu.attributes = attributes
         menu.save!
       end
