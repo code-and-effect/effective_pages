@@ -13,10 +13,17 @@ module Effective
     accepts_nested_attributes_for :menu_items, :allow_destroy => true
 
     def self.update_from_effective_regions!(params)
-      (params || {}).each do |id, attributes|
-        menu = Effective::Menu.find(id)
+      (params || {}).each do |menu_id, attributes|
+        menu = Effective::Menu.find(menu_id)
+
         attributes[:menu_items_attributes].each { |_, atts| atts[:menuable_type] = 'Effective::Page' if atts[:menuable_type].blank? }
         menu.attributes = attributes
+
+        # So when we render the menu, we don't include the Root/Home item.
+        # It has a left of 1 and a right of max(items.right)
+        right = attributes[:menu_items_attributes].map { |_, atts| atts[:rgt].to_i }.max
+        menu.menu_items.find { |menu_item| menu_item.lft == 1 }.rgt = right + 1
+
         menu.save!
       end
     end
@@ -24,7 +31,6 @@ module Effective
     def contains?(obj)
       menu_items.find { |menu_item| menu_item.url == obj || menu_item.menuable == obj }.present?
     end
-
 
     # This is the entry point to the DSL method for creating menu items
     def build(&block)

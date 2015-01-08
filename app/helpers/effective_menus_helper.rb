@@ -5,7 +5,7 @@ module EffectiveMenusHelper
 
     if (effectively_editting? rescue false)
       options[:menu_id] = menu.id
-      simple_form_for(menu, :url => '/') { |form| options[:form] = form }
+      form_for(menu, :url => '/') { |form| options[:form] = form }
     end
 
     render_menu_items(menu.menu_items.last(menu.menu_items.size-1), options)
@@ -17,8 +17,8 @@ module EffectiveMenusHelper
   end
 
   def render_menu_items(items, options = {})
-    if options[:form].present? && options[:form].kind_of?(SimpleForm::FormBuilder) == false
-      raise 'Expecting SimpleForm::FormBuilder object for :form => option'
+    if options[:form].present? && options[:form].kind_of?(ActionView::Helpers::FormBuilder) == false
+      raise 'Expecting ActionView::Helpers::FormBuilder object for :form => option'
     end
 
     html = ""
