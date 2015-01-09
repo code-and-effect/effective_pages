@@ -1,9 +1,6 @@
 = simple_form_for(menu, (EffectivePages.simple_form_options || {}).merge(:url => (menu.persisted? ? effective_pages.admin_menu_path(menu) : effective_pages.admin_menus_path))) do |f|
   = f.input :title, :hint => "Give this menu a title"
 
-  = render_menu(@menu, :form => f)
-
-
   .form-group
     .col-xs-12
       .form-group
