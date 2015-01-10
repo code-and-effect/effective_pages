@@ -29,13 +29,13 @@ module EffectiveMenusHelper
         if (item.rgt < stack.last.rgt) # Level down?
           if index == 0
             if options[:form]
-              html << "<ul class='nav navbar-nav effective-menu'"
+              html << "<ul class='nav navbar-nav effective-menu #{options[:class]}'"
                 html << " data-effective-menu-id='#{options[:menu_id]}'"
                 html << " data-effective-menu-expand-html=\"#{render(:partial => 'admin/menu_items/expand').gsub('"', "'").gsub("\n", '').gsub('  ', '')}\""
                 html << " data-effective-menu-new-html=\"#{render(:partial => 'admin/menu_items/new', :locals => { :item => Effective::MenuItem.new(), :form => options[:form] }).gsub('"', "'").gsub("\n", '').gsub('  ', '').gsub('[0]', '[:new]').gsub('_0_', '_:new_')}\""
               html << ">"
              else
-              html << "<ul class='nav navbar-nav'>"
+              html << "<ul class='nav navbar-nav #{options[:class]}'>"
             end
           else
             html << "<ul class='dropdown-menu'>"
@@ -66,7 +66,7 @@ module EffectiveMenusHelper
         html << "</li>"
       else
         html << "<li class='dropdown'>" # dropdown
-        html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}</a>"
+        html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}<span class='caret'></span></a>"
 
         if options[:form]
           html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
@@ -78,7 +78,7 @@ module EffectiveMenusHelper
     while stack.size > 0
       item = stack.pop
 
-      if item.rgt == 9999999 # Very last one
+      if stack.size == 0 # item.rgt == 9999999 # Very last one
         if options[:form]
           html << render(:partial => 'admin/menu_items/actions')
         end
