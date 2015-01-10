@@ -66,7 +66,13 @@ module EffectiveMenusHelper
         html << "</li>"
       else
         html << "<li class='dropdown'>" # dropdown
-        html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}<span class='caret'></span></a>"
+        html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}"
+
+        if stack.size == 2 # Only top level dropdowns, not sub dropdowns
+          html << "<span class='caret'></span>"
+        end
+
+        html << "</a>"
 
         if options[:form]
           html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
