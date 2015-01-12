@@ -35,7 +35,7 @@ module EffectiveMenusHelper
                 html << " data-effective-menu-new-html=\"#{render(:partial => 'admin/menu_items/new', :locals => { :item => Effective::MenuItem.new(), :form => options[:form] }).gsub('"', "'").gsub("\n", '').gsub('  ', '').gsub('[0]', '[:new]').gsub('_0_', '_:new_')}\""
               html << ">"
              else
-              html << "<ul class='nav navbar-nav #{options[:class]}'>"
+              html << "<ul class='nav navbar-nav#{' ' + options[:class].to_s if options[:class].present?}'>"
             end
           else
             html << "<ul class='dropdown-menu'>"

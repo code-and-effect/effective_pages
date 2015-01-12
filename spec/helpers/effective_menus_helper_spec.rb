@@ -39,7 +39,10 @@ describe EffectiveMenusHelper do
       render_menu('test').should eq "
         <ul class='nav navbar-nav'>
           <li class='dropdown'>
-            <a href='#' data-toggle='dropdown'>About</a>
+            <a href='#' data-toggle='dropdown'>
+              About
+              <span class='caret'></span>
+            </a>
             <ul class='dropdown-menu'>
               <li>
                 <a href='#'>AAA</a>
@@ -50,7 +53,10 @@ describe EffectiveMenusHelper do
             </ul>
           </li>
           <li class='dropdown'>
-            <a href='#' data-toggle='dropdown'>Become a Member</a>
+            <a href='#' data-toggle='dropdown'>
+              Become a Member
+              <span class='caret'></span>
+            </a>
             <ul class='dropdown-menu'>
               <li>
                 <a href='#'>111</a>
@@ -88,7 +94,10 @@ describe EffectiveMenusHelper do
       render_menu('test').should eq "
         <ul class='nav navbar-nav'>
           <li class='dropdown'>
-            <a href='#' data-toggle='dropdown'>Fruit</a>
+            <a href='#' data-toggle='dropdown'>
+              Fruit
+              <span class='caret'></span>
+            </a>
             <ul class='dropdown-menu'>
               <li class='dropdown'>
                 <a href='#' data-toggle='dropdown'>Red</a>
@@ -109,7 +118,10 @@ describe EffectiveMenusHelper do
             </ul>
           </li>
           <li class='dropdown'>
-            <a href='#' data-toggle='dropdown'>Meat</a>
+            <a href='#' data-toggle='dropdown'>
+              Meat
+              <span class='caret'></span>
+            </a>
             <ul class='dropdown-menu'>
               <li>
                 <a href='#'>Beef</a>
@@ -140,7 +152,10 @@ describe EffectiveMenusHelper do
       render_menu('test').should eq "
         <ul class='nav navbar-nav'>
           <li class='dropdown'>
-            <a href='#' data-toggle='dropdown'>Events</a>
+            <a href='#' data-toggle='dropdown'>
+              Events
+              <span class='caret'></span>
+            </a>
             <ul class='dropdown-menu'>
               <li>
                 <a href='#'>Conferences</a>
