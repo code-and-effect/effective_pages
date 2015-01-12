@@ -22,23 +22,21 @@ module EffectiveMenusHelper
     end
 
     html = ''
-    stack = [] # A stack to keep track of rgt values.  Initialized with a value > max(items.rgt)
+
+    if options[:form]
+      html << "<ul class='nav navbar-nav effective-menu #{options[:class]}'"
+        html << " data-effective-menu-id='#{options[:menu_id] || 0}'"
+        html << " data-effective-menu-expand-html=\"#{render(:partial => 'admin/menu_items/expand').gsub('"', "'").gsub("\n", '').gsub('  ', '')}\""
+        html << " data-effective-menu-new-html=\"#{render(:partial => 'admin/menu_items/new', :locals => { :item => Effective::MenuItem.new(), :form => options[:form] }).gsub('"', "'").gsub("\n", '').gsub('  ', '').gsub('[0]', '[:new]').gsub('_0_', '_:new_')}\""
+      html << ">"
+    else
+      html << "<ul class='nav navbar-nav#{' ' + options[:class].to_s if options[:class].present?}'>"
+    end
+
+    stack = [items.to_a.first] # A stack to keep track of rgt values.
 
     items.each_with_index do |item, index|
-      if index == 0
-        if options[:form]
-          html << "<ul class='nav navbar-nav effective-menu #{options[:class]}'"
-            html << " data-effective-menu-id='#{options[:menu_id]}'"
-            html << " data-effective-menu-expand-html=\"#{render(:partial => 'admin/menu_items/expand').gsub('"', "'").gsub("\n", '').gsub('  ', '')}\""
-            html << " data-effective-menu-new-html=\"#{render(:partial => 'admin/menu_items/new', :locals => { :item => Effective::MenuItem.new(), :form => options[:form] }).gsub('"', "'").gsub("\n", '').gsub('  ', '').gsub('[0]', '[:new]').gsub('_0_', '_:new_')}\""
-          html << ">"
-        else
-          html << "<ul class='nav navbar-nav#{' ' + options[:class].to_s if options[:class].present?}'>"
-        end
-
-        stack.push(item)
-        next
-      end
+      next if index == 0
 
       if stack.size > 1
         html << "<ul class='dropdown-menu'>" if (item.rgt < stack.last.rgt) # Level down?
@@ -69,10 +67,21 @@ module EffectiveMenusHelper
     html.html_safe
   end
 
+  private
+
   # This is where we actually build out an li item
-  def render_menu_item(item, use_caret = false, options = {})
+  def render_menu_item(item, caret, options)
     html = ""
+
+    url = case item.menuable
+      when Effective::Page
+        effective_pages.page_path(item.menuable)
+      when nil
+        item.url
+      end.presence || item.url.presence || '#'
+
     classes = (item.classes || '').split(' ')
+    classes << 'active' if request.try(:fullpath) == url
 
     if item.leaf?
       html << "<li>"
@@ -87,7 +96,7 @@ module EffectiveMenusHelper
       html << "<li class='dropdown'>" # dropdown
       html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}"
 
-      if use_caret # Only top level dropdowns, not sub dropdowns
+      if caret # Only top level dropdowns, not sub dropdowns
         html << "<span class='caret'></span>"
       end
 
