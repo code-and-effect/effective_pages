@@ -39,6 +39,7 @@ module Effective
       root = menu_items.build(:title => 'Root', :url => '#', :lft => 1, :rgt => 2)
       root.parent = true
       instance_exec(&block) # A call to dropdown or item
+      root.rgt = menu_items.map(&:rgt).max
       self
     end
 

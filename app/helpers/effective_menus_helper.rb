@@ -8,7 +8,7 @@ module EffectiveMenusHelper
       form_for(menu, :url => '/') { |form| options[:form] = form }
     end
 
-    render_menu_items(menu.menu_items.last(menu.menu_items.size-1), options)
+    render_menu_items(menu.menu_items, options)
 
     # if options[:for_editor]
     #else
@@ -21,73 +21,45 @@ module EffectiveMenusHelper
       raise 'Expecting ActionView::Helpers::FormBuilder object for :form => option'
     end
 
-    html = ""
-    stack = [Effective::MenuItem.new(:lft => 1, :rgt => 9999999)] # A stack to keep track of rgt values.  Initialized with a value > max(items.rgt)
+    html = ''
+    stack = [] # A stack to keep track of rgt values.  Initialized with a value > max(items.rgt)
 
     items.each_with_index do |item, index|
-      if stack.size > 0
-        if (item.rgt < stack.last.rgt) # Level down?
-          if index == 0
-            if options[:form]
-              html << "<ul class='nav navbar-nav effective-menu #{options[:class]}'"
-                html << " data-effective-menu-id='#{options[:menu_id]}'"
-                html << " data-effective-menu-expand-html=\"#{render(:partial => 'admin/menu_items/expand').gsub('"', "'").gsub("\n", '').gsub('  ', '')}\""
-                html << " data-effective-menu-new-html=\"#{render(:partial => 'admin/menu_items/new', :locals => { :item => Effective::MenuItem.new(), :form => options[:form] }).gsub('"', "'").gsub("\n", '').gsub('  ', '').gsub('[0]', '[:new]').gsub('_0_', '_:new_')}\""
-              html << ">"
-             else
-              html << "<ul class='nav navbar-nav#{' ' + options[:class].to_s if options[:class].present?}'>"
-            end
-          else
-            html << "<ul class='dropdown-menu'>"
-          end
+      if index == 0
+        if options[:form]
+          html << "<ul class='nav navbar-nav effective-menu #{options[:class]}'"
+            html << " data-effective-menu-id='#{options[:menu_id]}'"
+            html << " data-effective-menu-expand-html=\"#{render(:partial => 'admin/menu_items/expand').gsub('"', "'").gsub("\n", '').gsub('  ', '')}\""
+            html << " data-effective-menu-new-html=\"#{render(:partial => 'admin/menu_items/new', :locals => { :item => Effective::MenuItem.new(), :form => options[:form] }).gsub('"', "'").gsub("\n", '').gsub('  ', '').gsub('[0]', '[:new]').gsub('_0_', '_:new_')}\""
+          html << ">"
+        else
+          html << "<ul class='nav navbar-nav#{' ' + options[:class].to_s if options[:class].present?}'>"
         end
+
+        stack.push(item)
+        next
+      end
+
+      if stack.size > 1
+        html << "<ul class='dropdown-menu'>" if (item.rgt < stack.last.rgt) # Level down?
 
         while item.rgt > stack.last.rgt # Level up?
           stack.pop
-          html << '</ul></li>' if (item.rgt > stack.last.rgt)
+          html << "</ul></li>" if (item.rgt > stack.last.rgt)
         end
       end
+
+      # Render the <li>...</li>
+      html << render_menu_item(item, stack.size == 1, options)
 
       stack.push(item)
-
-      # This is where we actually build out an item
-      classes = (item.classes || '').split(' ')
-      classes << 'first' if index == 0
-      classes << 'last' if (index+1) == items.length
-
-      if item.leaf?
-        html << "<li>"
-        html << "<a href='#{item.url}'>#{item.title}</a>"
-
-        if options[:form]
-          html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
-        end
-
-        html << "</li>"
-      else
-        html << "<li class='dropdown'>" # dropdown
-        html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}"
-
-        if stack.size == 2 # Only top level dropdowns, not sub dropdowns
-          html << "<span class='caret'></span>"
-        end
-
-        html << "</a>"
-
-        if options[:form]
-          html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
-        end
-      end
-
-    end # /each
+    end
 
     while stack.size > 0
       item = stack.pop
 
-      if stack.size == 0 # item.rgt == 9999999 # Very last one
-        if options[:form]
-          html << render(:partial => 'admin/menu_items/actions')
-        end
+      if stack.size == 0 # Very last one
+        html << render(:partial => 'admin/menu_items/actions') if options[:form]
         html << '</ul>'
       elsif item.leaf? == false
         html << '</ul></li>'
@@ -96,4 +68,37 @@ module EffectiveMenusHelper
 
     html.html_safe
   end
+
+  # This is where we actually build out an li item
+  def render_menu_item(item, use_caret = false, options = {})
+    html = ""
+    classes = (item.classes || '').split(' ')
+
+    if item.leaf?
+      html << "<li>"
+      html << "<a href='#{item.url}'>#{item.title}</a>"
+
+      if options[:form]
+        html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
+      end
+
+      html << "</li>"
+    else
+      html << "<li class='dropdown'>" # dropdown
+      html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}"
+
+      if use_caret # Only top level dropdowns, not sub dropdowns
+        html << "<span class='caret'></span>"
+      end
+
+      html << "</a>"
+
+      if options[:form]
+        html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
+      end
+    end
+
+    html
+  end
+
 end
