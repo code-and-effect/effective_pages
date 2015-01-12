@@ -149,8 +149,8 @@ describe EffectiveMenusHelper do
         end
       end.tap { |menu| menu.save }
 
-      render_menu('test').should eq "
-        <ul class='nav navbar-nav'>
+      render_menu('test', :class => 'something').should eq "
+        <ul class='nav navbar-nav something'>
           <li class='dropdown'>
             <a href='#' data-toggle='dropdown'>
               Events
