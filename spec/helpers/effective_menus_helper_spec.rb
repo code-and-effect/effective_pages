@@ -202,7 +202,65 @@ describe EffectiveMenusHelper do
           </li>
         </ul>
       ".gsub("\n", '').gsub('  ', '')
-
     end
+
+    it 'correctly renders a menu with dropdowns' do
+      menu = Effective::Menu.new(:title => 'test').build do
+        dropdown 'About' do
+          item 'AAA'
+          item 'BBB', '#', :private => true # private => true and roles_mask => 0 do the same thing
+          item 'CCC'
+        end
+
+        dropdown 'Become a Member' do
+          item '111'
+
+          dropdown 'More...', '#', :roles_mask => 0 do
+            item 'ABC'
+          end
+
+          item '222'
+        end
+
+        item 'XXX'
+      end.tap { |menu| menu.save }
+
+      render_menu('test').should eq "
+        <ul class='nav navbar-nav'>
+          <li class='dropdown'>
+            <a href='#' data-toggle='dropdown'>
+              About
+              <span class='caret'></span>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='#'>AAA</a>
+              </li>
+              <li>
+                <a href='#'>CCC</a>
+              </li>
+            </ul>
+          </li>
+          <li class='dropdown'>
+            <a href='#' data-toggle='dropdown'>
+              Become a Member
+              <span class='caret'></span>
+            </a>
+            <ul class='dropdown-menu'>
+              <li>
+                <a href='#'>111</a>
+              </li>
+              <li>
+                <a href='#'>222</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href='#'>XXX</a>
+          </li>
+        </ul>
+      ".gsub("\n", '').gsub('  ', '')
+    end
+
   end
 end

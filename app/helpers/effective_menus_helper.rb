@@ -34,9 +34,17 @@ module EffectiveMenusHelper
     end
 
     stack = [items.to_a.first] # A stack to keep track of rgt values.
+    skip_to_lft = 0 # This lets us skip over nodes we don't have visible_for? permission to see
 
     items.each_with_index do |item, index|
-      next if index == 0
+      next if index == 0 # We always skip the first Root node
+
+      # This allows us to skip over nodes we don't have permission to view
+      next if item.lft < skip_to_lft
+      if !item.visible_for?(defined?(current_user) ? current_user : nil)
+        skip_to_lft = item.rgt + 1
+        next
+      end
 
       if stack.size > 1
         html << "<ul class='dropdown-menu'>" if (item.rgt < stack.last.rgt) # Level down?

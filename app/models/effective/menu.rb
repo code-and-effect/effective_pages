@@ -57,6 +57,7 @@ module Effective
         rgt = prev_item.rgt + 2
       end
 
+      options[:roles_mask] ||= 0 if options.delete(:private)
       atts = options.merge({:title => title, :url => url, :lft => lft, :rgt => rgt})
 
       #puts menu_items.map { |item| "[DROPDOWN] #{item.lft} #{item.title} #{item.rgt}"}
@@ -92,9 +93,10 @@ module Effective
         rgt = prev_item.rgt + 2
       end
 
+      options[:roles_mask] ||= 0 if options.delete(:private)
       atts = options.merge({:title => title, :lft => lft, :rgt => rgt})
 
-      if title == :divider || url == :divider
+      if title == :divider || url == :divider || options[:divider] == true
         atts[:special] = 'divider'
       else
         atts[:url] = url
