@@ -36,27 +36,30 @@ module Effective
       leaf? && special == 'divider'
     end
 
-    # This will work with effective_roles one day...
     # For now it's just logged in or not?
+    # This will work with effective_roles one day...
     def visible_for?(user)
-      return true if roles_mask == nil
-      user.present?
+      can_view_page = (
+        if menuable.kind_of?(Effective::Page) && defined?(EffectiveRoles) && menuable.is_role_restricted?
+          (user.roles_match_with?(menuable) rescue false)
+        else
+          true
+        end
+      )
+
+      can_view_menu = (
+        if roles_mask == nil
+          true
+        elsif roles_mask == 0 # Am I logged in?
+          user.present?
+        else
+          # Future functionality, compare the roles_masks directly
+          false
+        end
+      )
+
+      can_view_page && can_view_menu
     end
 
-    # before_validation do
-    #   if menuable.present?
-    #     self.title = nil if menuable.menu_title == self[:title]
-    #     self.url = nil if menuable.menu_url == self[:url]
-    #   end
-    #   true
-    # end
-
-    # def title
-    #   self[:title] || menuable.menu_title rescue nil
-    # end
-
-    # def url
-    #   self[:url] || menuable.menu_url rescue nil
-    # end
   end
 end

@@ -204,7 +204,7 @@ describe EffectiveMenusHelper do
       ".gsub("\n", '').gsub('  ', '')
     end
 
-    it 'correctly renders a menu with dropdowns' do
+    it 'hides private items when user is not logged in' do
       menu = Effective::Menu.new(:title => 'test').build do
         dropdown 'About' do
           item 'AAA'
@@ -258,6 +258,21 @@ describe EffectiveMenusHelper do
           <li>
             <a href='#'>XXX</a>
           </li>
+        </ul>
+      ".gsub("\n", '').gsub('  ', '')
+    end
+
+    it 'displays an empty menu when all nodes are private' do
+      menu = Effective::Menu.new(:title => 'test').build do
+        item 'AAA', '#', :private => true
+        dropdown 'More...', '#', :private => true do
+          item 'ABC'
+        end
+        item 'BBB', '#', :private => true
+      end.tap { |menu| menu.save }
+
+      render_menu('test').should eq "
+        <ul class='nav navbar-nav'>
         </ul>
       ".gsub("\n", '').gsub('  ', '')
     end

@@ -82,7 +82,7 @@ module EffectiveMenusHelper
     html = ""
 
     url = (
-      if item.menuable.present?
+      if item.menuable.kind_of?(Effective::Page)
         effective_pages.page_path(item.menuable)
       elsif item.divider?
         nil
