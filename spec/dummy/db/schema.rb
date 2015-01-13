@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.string  "classes"
     t.string  "special"
     t.boolean "new_window",    :default => false
+    t.integer "roles_mask"
     t.integer "lft"
     t.integer "rgt"
   end

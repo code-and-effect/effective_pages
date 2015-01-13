@@ -16,6 +16,7 @@ module Effective
 
       classes         :string
       new_window      :boolean, :default => false, :validates => [:inclusion => {:in => [true, false]}]
+      roles_mask      :integer, :default => nil # 0 is going to mean logged in, nil is going to mean public, > 0 will be future implementation of roles masking
 
       lft             :integer, :validates => [:presence], :index => true
       rgt             :integer, :validates => [:presence]

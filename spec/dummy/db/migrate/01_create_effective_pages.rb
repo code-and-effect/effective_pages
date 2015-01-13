@@ -33,6 +33,7 @@ class CreateEffectivePages < ActiveRecord::Migration
       t.string        :classes
       t.string        :special
       t.boolean       :new_window, :default => false
+      t.integer       :roles_mask, :default => nil
 
       t.integer       :lft
       t.integer       :rgt
