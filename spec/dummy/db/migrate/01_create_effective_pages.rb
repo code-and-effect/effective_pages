@@ -31,6 +31,7 @@ class CreateEffectivePages < ActiveRecord::Migration
       t.string        :title
       t.string        :url
       t.string        :classes
+      t.string        :special
       t.boolean       :new_window, :default => false
 
       t.integer       :lft

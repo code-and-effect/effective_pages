@@ -29,7 +29,10 @@ class CreateEffectivePages < ActiveRecord::Migration
       t.string        :menuable_type
 
       t.string        :title
+
       t.string        :url
+      t.string        :special
+
       t.string        :classes
       t.boolean       :new_window, :default => false
 

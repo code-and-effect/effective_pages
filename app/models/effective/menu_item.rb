@@ -10,7 +10,10 @@ module Effective
 
     structure do
       title           :string, :validates => [:presence]
+
       url             :string
+      special         :string   # divider / search / *_path
+
       classes         :string
       new_window      :boolean, :default => false, :validates => [:inclusion => {:in => [true, false]}]
 
@@ -22,6 +25,14 @@ module Effective
 
     def leaf?
       (rgt.to_i - lft.to_i) == 1
+    end
+
+    def dropdown?
+      !leaf?
+    end
+
+    def divider?
+      leaf? && special == 'divider'
     end
 
     # before_validation do

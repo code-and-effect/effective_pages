@@ -73,19 +73,30 @@ module EffectiveMenusHelper
   def render_menu_item(item, caret, options)
     html = ""
 
-    url = case item.menuable
-      when Effective::Page
+    url = (
+      if item.menuable.present?
         effective_pages.page_path(item.menuable)
-      when nil
+      elsif item.divider?
+        nil
+      elsif (item.special || '').end_with?('_path')
+        self.send(item.special) rescue nil
+      elsif item.url.present?
         item.url
-      end.presence || item.url.presence || '#'
+      end
+    ).presence || '#'
 
     classes = (item.classes || '').split(' ')
     classes << 'active' if request.try(:fullpath) == url
+    classes << 'divider' if item.divider?
+    classes << 'dropdown' if item.dropdown?
+    classes = classes.join(' ')
 
     if item.leaf?
-      html << "<li>"
-      html << "<a href='#{item.url}'>#{item.title}</a>"
+      html << (classes.present? ? "<li class='#{classes}'>" : "<li>")
+
+      if !item.divider? || options[:form] # Show the URL in edit mode, but not production
+        html << "<a href='#{url}'>#{item.title}</a>"
+      end
 
       if options[:form]
         html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
@@ -93,8 +104,9 @@ module EffectiveMenusHelper
 
       html << "</li>"
     else
-      html << "<li class='dropdown'>" # dropdown
-      html << "<a href='#{item.url}' data-toggle='dropdown'>#{item.title}"
+      html << (classes.present? ? "<li class='#{classes}'>" : "<li>")
+
+      html << "<a href='#{url}' data-toggle='dropdown'>#{item.title}"
 
       if caret # Only top level dropdowns, not sub dropdowns
         html << "<span class='caret'></span>"

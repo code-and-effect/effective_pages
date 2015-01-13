@@ -92,7 +92,13 @@ module Effective
         rgt = prev_item.rgt + 2
       end
 
-      atts = options.merge({:title => title, :url => url, :lft => lft, :rgt => rgt})
+      atts = options.merge({:title => title, :lft => lft, :rgt => rgt})
+
+      if title == :divider || url == :divider
+        atts[:special] = 'divider'
+      else
+        atts[:url] = url
+      end
 
       #puts menu_items.map { |item| "[ITEM] #{item.lft} #{item.title} #{item.rgt}"}
 

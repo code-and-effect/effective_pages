@@ -21,6 +21,26 @@ describe EffectiveMenusHelper do
       ".gsub("\n", '').gsub('  ', '')
     end
 
+    it 'correctly renders a divider' do
+      menu = Effective::Menu.new(:title => 'test').build do
+        item 'AAA'
+        item :divider
+        item 'BBB'
+      end
+
+      render_menu(menu).should eq "
+        <ul class='nav navbar-nav'>
+          <li>
+            <a href='#'>AAA</a>
+          </li>
+          <li class='divider'></li>
+          <li>
+            <a href='#'>BBB</a>
+          </li>
+        </ul>
+      ".gsub("\n", '').gsub('  ', '')
+    end
+
     it 'correctly renders a menu with dropdowns' do
       menu = Effective::Menu.new(:title => 'test').build do
         dropdown 'About' do
@@ -30,6 +50,7 @@ describe EffectiveMenusHelper do
 
         dropdown 'Become a Member' do
           item '111'
+          item :divider
           item '222'
         end
 
@@ -61,6 +82,7 @@ describe EffectiveMenusHelper do
               <li>
                 <a href='#'>111</a>
               </li>
+              <li class='divider'></li>
               <li>
                 <a href='#'>222</a>
               </li>
