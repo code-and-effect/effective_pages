@@ -43,8 +43,14 @@ module Effective
       self
     end
 
+    # The URL can be an Effective::Page object
+    # A String that ends with _path
+    # Or a String that is a URl
+
     def dropdown(title, url = '#', options = {}, &block)
       raise 'dropdown must be called with a block' if !block_given?
+      raise 'dropdown cannot be a divider' if (title == :divider || url == :divider || options[:divider] == true)
+
       #puts "[DROPDOWN] Starting: #{title}"
 
       prev_item = menu_items.last
@@ -57,8 +63,8 @@ module Effective
         rgt = prev_item.rgt + 2
       end
 
-      options[:roles_mask] ||= 0 if options.delete(:private)
-      atts = options.merge({:title => title, :url => url, :lft => lft, :rgt => rgt})
+      # Parse all the options
+      atts = build_menu_item_attributes(title, url, options).merge({:lft => lft, :rgt => rgt})
 
       #puts menu_items.map { |item| "[DROPDOWN] #{item.lft} #{item.title} #{item.rgt}"}
 
@@ -79,6 +85,7 @@ module Effective
       menu_items << menu_items.delete(dropdown) # Put myself on the end of the array
     end
 
+
     def item(title, url = '#', options = {})
       #puts "[ITEM] Starting: #{title}"
       #puts menu_items.length
@@ -93,14 +100,7 @@ module Effective
         rgt = prev_item.rgt + 2
       end
 
-      options[:roles_mask] ||= 0 if options.delete(:private)
-      atts = options.merge({:title => title, :lft => lft, :rgt => rgt})
-
-      if title == :divider || url == :divider || options[:divider] == true
-        atts[:special] = 'divider'
-      else
-        atts[:url] = url
-      end
+      atts = build_menu_item_attributes(title, url, options).merge({:lft => lft, :rgt => rgt})
 
       #puts menu_items.map { |item| "[ITEM] #{item.lft} #{item.title} #{item.rgt}"}
 
@@ -110,6 +110,33 @@ module Effective
       end
 
       menu_items.build(atts)
+    end
+
+    private
+
+    def build_menu_item_attributes(title, url, options)
+      options[:roles_mask] ||= -1 if (options.delete(:signed_out) || options.delete(:guest))
+      options[:roles_mask] ||= 0 if (options.delete(:signed_in) || options.delete(:private))
+      options[:classes] = options.delete(:class)
+
+      if title == :divider || url == :divider || options[:divider] == true
+        options[:title] = 'divider'
+        options[:special] = 'divider'
+      elsif title.kind_of?(Effective::Page)
+        options[:title] = title.title
+        options[:menuable] = title
+      elsif url.kind_of?(Effective::Page)
+        options[:title] = title.presence || url.title
+        options[:menuable] = url
+      elsif url.to_s.end_with?('_path')
+        options[:title] = title
+        options[:special] = url
+      else
+        options[:title] = title
+        options[:url] = url
+      end
+
+      options
     end
 
 

@@ -47,18 +47,21 @@ module Effective
         end
       )
 
-      can_view_menu = (
+      can_view_menu_item = (
         if roles_mask == nil
           true
+        elsif roles_mask == -1 # Am I logged out?
+          user.blank?
         elsif roles_mask == 0 # Am I logged in?
           user.present?
+        elsif roles_mask > 0 && defined?(EffectiveRoles)
+          user.present? && (user.roles_permit?(roles_mask) rescue false)
         else
-          # Future functionality, compare the roles_masks directly
           false
         end
       )
 
-      can_view_page && can_view_menu
+      can_view_page && can_view_menu_item
     end
 
   end

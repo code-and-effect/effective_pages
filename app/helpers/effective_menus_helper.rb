@@ -41,7 +41,7 @@ module EffectiveMenusHelper
 
       # This allows us to skip over nodes we don't have permission to view
       next if item.lft < skip_to_lft
-      if !item.visible_for?(defined?(current_user) ? current_user : nil)
+      if options[:form].blank? && !item.visible_for?(defined?(current_user) ? current_user : nil)
         skip_to_lft = item.rgt + 1
         next
       end
