@@ -1,5 +1,5 @@
 module EffectiveMenusHelper
-  def render_menu(menu, options = {})
+  def render_menu(menu, options = {}, &block)
     menu = Effective::Menu.find_by_title(menu) if menu.kind_of?(String)
     return "<ul class='nav navbar-nav'><li>Menu '#{menu}' does not exist</li></ul>".html_safe if !menu.present?
 
@@ -8,7 +8,11 @@ module EffectiveMenusHelper
       form_for(menu, :url => '/') { |form| options[:form] = form }
     end
 
-    render_menu_items(menu.menu_items, options)
+    if block_given? && options[:form].blank?
+      render_menu_items(menu.menu_items, options) { yield }
+    else
+      render_menu_items(menu.menu_items, options)
+    end
 
     # if options[:for_editor]
     #else
@@ -16,7 +20,7 @@ module EffectiveMenusHelper
     #end
   end
 
-  def render_menu_items(items, options = {})
+  def render_menu_items(items, options = {}, &block)
     if options[:form].present? && options[:form].kind_of?(ActionView::Helpers::FormBuilder) == false
       raise 'Expecting ActionView::Helpers::FormBuilder object for :form => option'
     end
@@ -66,6 +70,7 @@ module EffectiveMenusHelper
 
       if stack.size == 0 # Very last one
         html << render(:partial => 'admin/menu_items/actions') if options[:form]
+        html << (capture(&block) || '') if block_given? && !options[:form]
         html << '</ul>'
       elsif item.leaf? == false
         html << '</ul></li>'
@@ -103,7 +108,11 @@ module EffectiveMenusHelper
       html << (classes.present? ? "<li class='#{classes}'>" : "<li>")
 
       if !item.divider? || options[:form] # Show the URL in edit mode, but not production
-        html << "<a href='#{url}'>#{item.title}</a>"
+        if item.special == 'destroy_user_session_path'
+          html << "<a href='#{url}' data-method='delete' data-no-turbolink='true'>#{item.title}</a>"
+        else
+          html << "<a href='#{url}'>#{item.title}</a>"
+        end
       end
 
       if options[:form]
