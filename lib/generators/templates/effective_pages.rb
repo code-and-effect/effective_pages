@@ -40,4 +40,10 @@ EffectivePages.setup do |config|
   #   }
   # }
 
+  # All effective_page menu options
+  config.menu = {
+    :apply_active_class => true,
+    :maxdepth => 2
+  }
+
 end

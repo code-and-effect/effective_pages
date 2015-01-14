@@ -55,7 +55,7 @@ module Effective
         elsif roles_mask == 0 # Am I logged in?
           user.present?
         elsif roles_mask > 0 && defined?(EffectiveRoles)
-          user.present? && (user.roles_permit?(roles_mask) rescue false)
+          user.present? && (user.roles_match_with?(roles_mask) rescue false)
         else
           false
         end

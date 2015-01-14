@@ -50,7 +50,7 @@ describe EffectiveMenusHelper do
 
         dropdown 'Become a Member' do
           item '111'
-          item :divider
+          divider
           item '222'
         end
 
@@ -215,7 +215,7 @@ describe EffectiveMenusHelper do
         dropdown 'Become a Member' do
           item '111'
 
-          dropdown 'More...', '#', :roles_mask => 0 do
+          dropdown 'More...', :roles_mask => 0 do
             item 'ABC'
           end
 
@@ -265,7 +265,7 @@ describe EffectiveMenusHelper do
     it 'displays an empty menu when all nodes are private' do
       menu = Effective::Menu.new(:title => 'test').build do
         item 'AAA', '#', :private => true
-        dropdown 'More...', '#', :private => true do
+        dropdown 'More...', :private => true do
           item 'ABC'
         end
         item 'BBB', '#', :private => true

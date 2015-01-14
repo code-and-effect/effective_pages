@@ -14,7 +14,7 @@ describe Effective::Menu do
       items = menu.menu_items.sort_by(&:lft).map { |item| [item.title, item.lft, item.rgt] }
 
       expect(items).to eq [
-        ['Root', 1, 6],
+        ['Home', 1, 6],
           ['AAA', 2, 3],
           ['BBB', 4, 5]
       ]
@@ -40,7 +40,7 @@ describe Effective::Menu do
       items = menu.menu_items.sort_by(&:lft).map { |item| [item.title, item.lft, item.rgt] }
 
       expect(items).to eq [
-        ['Root', 1, 16],
+        ['Home', 1, 16],
           ['About', 2, 7],
             ['AAA', 3, 4],
             ['BBB', 5, 6],
@@ -74,7 +74,7 @@ describe Effective::Menu do
       items = menu.menu_items.sort_by(&:lft).map { |item| [item.title, item.lft, item.rgt] }
 
       expect(items).to eq [
-        ['Root', 1, 18],
+        ['Home', 1, 18],
           ['Fruit', 2, 11],
             ['Red', 3, 6],
               ['Cherry', 4, 5],
@@ -114,7 +114,7 @@ describe Effective::Menu do
       items = menu.menu_items.sort_by(&:lft).map { |item| [item.title, item.lft, item.rgt] }
 
       expect(items).to eq [
-        ['Root', 1, 26],
+        ['Home', 1, 26],
           ['About', 2, 11],
             ['AAA', 3, 4],
             ['BBB', 5, 6],

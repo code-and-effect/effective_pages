@@ -15,7 +15,6 @@ module Admin
       else
         @datatable = Effective::Datatables::Pages.new() if defined?(EffectiveDatatables)
       end
-
     end
 
     def new

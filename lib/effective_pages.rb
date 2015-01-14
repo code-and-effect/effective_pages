@@ -13,6 +13,7 @@ module EffectivePages
   mattr_accessor :authorization_method
   mattr_accessor :simple_form_options
   mattr_accessor :layout
+  mattr_accessor :menu
 
   def self.setup
     yield self

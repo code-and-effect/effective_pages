@@ -32,6 +32,10 @@ module EffectiveMenusHelper
         html << " data-effective-menu-id='#{options[:menu_id] || 0}'"
         html << " data-effective-menu-expand-html=\"#{render(:partial => 'admin/menu_items/expand').gsub('"', "'").gsub("\n", '').gsub('  ', '')}\""
         html << " data-effective-menu-new-html=\"#{render(:partial => 'admin/menu_items/new', :locals => { :item => Effective::MenuItem.new(), :form => options[:form] }).gsub('"', "'").gsub("\n", '').gsub('  ', '').gsub('[0]', '[:new]').gsub('_0_', '_:new_')}\""
+
+        maxdepth = ((options[:maxdepth].presence || EffectivePages.menu[:maxdepth].presence).to_i rescue 0)
+        html << " data-effective-menu-maxdepth='#{maxdepth}'" if maxdepth > 0
+
       html << ">"
     else
       html << "<ul class='nav navbar-nav#{' ' + options[:class].to_s if options[:class].present?}'>"
@@ -59,7 +63,7 @@ module EffectiveMenusHelper
         end
       end
 
-      # Render the <li>...</li>
+      # Render the <li>...</li> with carets only on top level dropdowns, not sub dropdowns
       html << render_menu_item(item, stack.size == 1, options)
 
       stack.push(item)
@@ -99,7 +103,7 @@ module EffectiveMenusHelper
     ).presence || '#'
 
     classes = (item.classes || '').split(' ')
-    classes << 'active' if request.try(:fullpath) == url
+    classes << 'active' if EffectivePages.menu[:apply_active_class] && request.try(:fullpath) == url
     classes << 'divider' if item.divider?
     classes << 'dropdown' if item.dropdown?
     classes = classes.join(' ')
@@ -107,12 +111,8 @@ module EffectiveMenusHelper
     if item.leaf?
       html << (classes.present? ? "<li class='#{classes}'>" : "<li>")
 
-      if !item.divider? || options[:form] # Show the URL in edit mode, but not production
-        if item.special == 'destroy_user_session_path'
-          html << "<a href='#{url}' data-method='delete' data-no-turbolink='true'>#{item.title}</a>"
-        else
-          html << "<a href='#{url}'>#{item.title}</a>"
-        end
+      if !item.divider? || options[:form] # Show the URL in edit mode, but not normally
+        html << render_menu_item_anchor_tag(item, caret, url)
       end
 
       if options[:form]
@@ -122,14 +122,7 @@ module EffectiveMenusHelper
       html << "</li>"
     else
       html << (classes.present? ? "<li class='#{classes}'>" : "<li>")
-
-      html << "<a href='#{url}' data-toggle='dropdown'>#{item.title}"
-
-      if caret # Only top level dropdowns, not sub dropdowns
-        html << "<span class='caret'></span>"
-      end
-
-      html << "</a>"
+      html << render_menu_item_anchor_tag(item, caret, url)
 
       if options[:form]
         html << render(:partial => 'admin/menu_items/item', :locals => { :item => item, :form => options[:form] })
@@ -137,6 +130,22 @@ module EffectiveMenusHelper
     end
 
     html
+  end
+
+  def render_menu_item_anchor_tag(item, caret, url)
+    new_window_html = (item.new_window? ? " target='_blank'" : "")
+
+    if item.special == 'destroy_user_session_path'
+      "<a href='#{url}' data-method='delete' data-no-turbolink='true'>#{item.title}</a>"
+    elsif item.dropdown?
+      ''.tap do |html|
+        html << "<a href='#{url}' data-toggle='dropdown'#{new_window_html}>#{item.title}"
+        html << "<span class='caret'></span>" if caret
+        html << "</a>"
+      end
+    else
+      "<a href='#{url}'#{new_window_html}>#{item.title}</a>"
+    end
   end
 
 end
