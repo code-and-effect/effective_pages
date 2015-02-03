@@ -117,29 +117,29 @@ and make sure a page with slug 'home' exists.
 
 ### Header Tags
 
-Your layout needs to be configured to set the appropriate html <title> and <meta> tags.
+Your layout needs to be configured to set the appropriate html `<title>` and `<meta>` tags.
 
-In your application layout and any additional layouts files, add the following to the <head> section:
+In your application layout and any additional layouts files, add the following to the `<head>` section:
 
 ```ruby
 = effective_pages_header_tags
 ```
 
-This helper inserts a <title>...</title> html tag based on the `@page_title` instance variable, which you can set anywhere on your non-effective controllers, and whose value is set to the `@page.title` value when displaying an `Effective::Page`.
+This helper inserts a `<title>...</title>` html tag based on the `@page_title` instance variable, which you can set anywhere on your non-effective controllers, and whose value is set to the `@page.title` value when displaying an `Effective::Page`.
 
-This helper also inserts a <meta name='description' value='...' /> html tag based on the Effective::Page's meta description value.  This tag provides the content that search engines use to display their search results.
+This helper also inserts a `<meta name='description' value='...' />` html tag based on the Effective::Page's meta description value.  This tag provides the content that search engines use to display their search results.
 
 This helper is entirely optional and in no way required for effective_pages to work.
 
 ### Body Tag Classes
 
-Another optional helper.  Add the following to your <body> tag:
+Another optional helper.  Add the following to your `<body>` tag:
 
 ```haml
 %body{:class => effective_pages_body_classes}
 ```
 
-to apply the following html classes:  params[:controller], params[:action], 'signed-in'/'not-signed-in', @page.template and any thing set in the `@body_classes` instance variable.
+to apply the following html classes:  `params[:controller]`, `params[:action]`, `'signed-in'/'not-signed-in'`, `@page.template` and any thing set in the `@body_classes` instance variable.
 
 This provides a mechanism to easily target CSS styles for specific pages.
 
@@ -162,7 +162,7 @@ The menus rendered by this gem output strict bootstrap3 (v3.3.2) html.  It is in
 </ul>
 ```
 
-The bootstrap3 `active` class will be added to the appropriate li item based on the current page.
+The bootstrap3 `.active` class will be added to the appropriate li item based on the current page.
 
 
 ### Create a menu
@@ -173,11 +173,11 @@ To display our first menu, we must create an Effective::Menu object and then ren
 
 To create your first menu, either:
 
-1. Visit `/admin/menus` and click `New Menu`.  Give it a title: `'main menu'`.
+:Visit `/admin/menus` and click `New Menu`.  Give it a title: `'main menu'`.
 
 or
 
-2. Run `bundle exec rake effective_pages:seed` to create a menu called `'main menu'` with some placeholder menu items.
+:Run `bundle exec rake effective_pages:seed` to create a menu called `'main menu'` with some placeholder menu items.
 
 then add it to your application layout where you would normally display your site's menu:
 
@@ -185,7 +185,7 @@ then add it to your application layout where you would normally display your sit
 = render_menu('main menu')
 ```
 
-or with some additional custom classes rendered on the opening <ul> tag
+or with some additional custom classes rendered on the opening `<ul>` tag
 
 ```html
 = render_menu('main menu', :class => 'menu-right')
@@ -250,7 +250,7 @@ Effective::Menu.new(:title => 'some menu').build do
     item 'Pork'
   end
 end.save
-```ruby
+```
 
 and another more advanced example:
 
@@ -285,11 +285,11 @@ Effective::Menu.new(:title => 'main menu').build do
 
   item 'Sign In', :new_user_session_path, :signed_out => true # Only signed_out users see this item
 end.save
-```ruby
+```
 
 The entire DSL consists of just 3 commands:  dropdown, item and divider
 
-with the following valid options
+with the following valid options:
 
 ```ruby
 :signed_in => true|false    # Only signed in users see this item
