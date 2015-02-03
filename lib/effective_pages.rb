@@ -9,6 +9,7 @@ module EffectivePages
   mattr_accessor :pages_path
   mattr_accessor :excluded_pages
   mattr_accessor :excluded_layouts
+  mattr_accessor :site_title_suffix
 
   mattr_accessor :authorization_method
   mattr_accessor :simple_form_options
