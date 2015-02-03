@@ -91,11 +91,11 @@ An example of a two-column layout I like to create is as follows:
 
 You can add anything to these page views. The views are not required to contain any effective_regions, but then they wouldn't be user-editable.
 
-### Page Routes
+### Routes
 
 All Effective::Page pages are immediately available to your application at a url matching the slugified title.
 
-This gem's page routes are evaluated last, after all your existing routes.  This may cause an issue if you create an Effective::Page titled 'Events' but you already have a route matching '/events' such as `resources :events`.  You can edit the Effective::Page object and set the slug to a value that does not conflict.
+This gem's page routes are evaluated last, after all your existing routes.  This may cause an issue if you create an Effective::Page titled `Events` but you already have a route matching `/events` such as `resources :events`.  You can edit the Effective::Page object and set the slug to a value that does not conflict.
 
 To find the path for an Effective::Page object:
 
@@ -139,7 +139,7 @@ Another optional helper.  Add the following to your `<body>` tag:
 %body{:class => effective_pages_body_classes}
 ```
 
-to apply the following html classes:  `params[:controller]`, `params[:action]`, `'signed-in'/'not-signed-in'`, `@page.template` and any thing set in the `@body_classes` instance variable.
+to apply the following html classes:  `params[:controller]`, `params[:action]`, `signed-in` / `not-signed-in`, `@page.template` and any thing set in the `@body_classes` instance variable.
 
 This provides a mechanism to easily target CSS styles for specific pages.
 
@@ -173,11 +173,11 @@ To display our first menu, we must create an Effective::Menu object and then ren
 
 To create your first menu, either:
 
-:Visit `/admin/menus` and click `New Menu`.  Give it a title: `'main menu'`.
+- Visit `/admin/menus` and click `New Menu`.  Give it a title: `'main menu'`.
 
 or
 
-:Run `bundle exec rake effective_pages:seed` to create a menu called `'main menu'` with some placeholder menu items.
+- Run `bundle exec rake effective_pages:seed` to create a menu called `'main menu'` with some placeholder menu items.
 
 then add it to your application layout where you would normally display your site's menu:
 
@@ -273,7 +273,7 @@ Effective::Menu.new(:title => 'main menu').build do
     item Effective::Page.find_by_title('Mentoring')
   end
 
-  dropdown 'Account', :signed_in => true do # Only signed_in users see this dropdown
+  dropdown 'Account', :signed_in => true do # Only current_user.present? users see this dropdown
     item 'Site Admin', '/admin', :roles_mask => 3 # effective_roles.  Only admins see this item
     item 'Account Settings', :user_settings_path
     divider
@@ -283,7 +283,7 @@ Effective::Menu.new(:title => 'main menu').build do
     item 'Sign Out', :destroy_user_session_path
   end
 
-  item 'Sign In', :new_user_session_path, :signed_out => true # Only signed_out users see this item
+  item 'Sign In', :new_user_session_path, :signed_out => true # Only current_user.blank? users see this item
 end.save
 ```
 
@@ -292,10 +292,10 @@ The entire DSL consists of just 3 commands:  dropdown, item and divider
 with the following valid options:
 
 ```ruby
-:signed_in => true|false    # Only signed in users see this item
-:signed_out => true|false   # Only signed out users see this item
+:signed_in => true|false    # Only signed in (current_user.present?) users see this item
+:signed_out => true|false   # Only signed out (current_user.blank?) users see this item
 :roles_mask => 1            # See effective_roles Bitmask Implementation
-:class => 'custom classes"  # Custom HTML classes
+:class => 'custom classes'  # Custom HTML classes
 :new_window => true         # Open link in a new window
 ```
 
