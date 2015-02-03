@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Code and Effect"]
   s.email       = ["info@codeandeffect.com"]
   s.homepage    = "https://github.com/code-and-effect/effective_pages"
-  s.summary     = "CRUD Pages with intention to work with EffectiveRegions. WIP."
-  s.description = "CRUD Pages with intention to work with EffectiveRegions. WIP."
+  s.summary     = "Content pages, bootstrap3 menu builder and page-specific header tag helpers for your Rails app."
+  s.description = "Content pages, bootstrap3 menu builder and page-specific header tag helpers for your Rails app."
   s.licenses    = ['MIT']
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
