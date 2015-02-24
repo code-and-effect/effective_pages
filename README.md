@@ -10,6 +10,8 @@ Use this gem to create a fully-functional CMS that provides full or restricted e
 
 Built ontop of effective_regions.
 
+Rails 3.2.x and 4.x
+
 
 ## Getting Started
 
