@@ -2,17 +2,13 @@ module Effective
   class PagesController < ApplicationController
     def show
       @pages = (Rails::VERSION::MAJOR > 3 ? Effective::Page.all : Effective::Page.scoped)
-
-      if defined?(EffectiveRoles) && (current_user.respond_to?(:roles) rescue false)
-        @pages = @pages.for_role(current_user.roles)
-      end
-
-      if params[:edit].to_s != 'true'
-        @pages = @pages.published
-      end
+      @pages = @pages.published if params[:edit].to_s != 'true'
 
       @page = @pages.find(params[:id])
-      raise ActiveRecord::RecordNotFound unless @page
+
+      if defined?(EffectiveRoles)
+        raise Effective::AccessDenied unless @page.roles_permit?(current_user)
+      end
 
       EffectivePages.authorized?(self, :show, @page)
 
