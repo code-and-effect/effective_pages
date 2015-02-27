@@ -20,7 +20,7 @@ module Effective
 
     def self.update_from_effective_regions!(params)
       (params || {}).each do |menu_id, attributes|
-        menu = Effective::Menu.find(menu_id)
+        menu = Effective::Menu.includes(:menu_items).find(menu_id)
 
         attributes[:menu_items_attributes].each { |_, atts| atts[:menuable_type] = 'Effective::Page' if atts[:menuable_type].blank? }
         menu.attributes = attributes
