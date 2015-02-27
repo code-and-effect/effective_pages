@@ -4,6 +4,8 @@ module Effective
     acts_as_role_restricted if defined?(EffectiveRoles)
     acts_as_regionable if defined?(EffectiveRegions)
 
+    has_many :menu_items, :as => :menuable, :dependent => :destroy
+
     self.table_name = EffectivePages.pages_table_name.to_s
 
     structure do
