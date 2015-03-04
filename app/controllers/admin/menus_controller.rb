@@ -2,6 +2,8 @@ module Admin
   class MenusController < ApplicationController
     before_filter :authenticate_user!   # This is devise, ensure we're logged in.
 
+    helper EffectiveMenusAdminHelper
+
     layout (EffectivePages.layout.kind_of?(Hash) ? EffectivePages.layout[:admin] : EffectivePages.layout)
 
     def index

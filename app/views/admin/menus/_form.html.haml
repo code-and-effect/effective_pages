@@ -1,6 +1,35 @@
 = simple_form_for(menu, (EffectivePages.simple_form_options || {}).merge(:url => (menu.persisted? ? effective_pages.admin_menu_path(menu) : effective_pages.admin_menus_path))) do |f|
   = f.input :title, :hint => "Give this menu a title"
 
+  %h3 Menu Item Visibility
+
+  %table.table
+    %thead
+      %th Menu Item
+      %th Public
+      %th Only Signed Out
+      %th Only Signed In
+      - if defined?(EffectiveRoles)
+        - EffectiveRoles.roles.each do |role|
+          %th= ":#{role}"
+
+    %tbody
+      - stack = [menu.menu_items.first]
+      - menu.menu_items.each_with_index do |menu_item, index|
+        - next if index == 0
+        - stack.pop while menu_item.rgt > stack.last.rgt if stack.size > 1
+        %tr
+          %td
+            = ("&nbsp;&nbsp;" * (stack.size-1)).html_safe
+            = menu_item.title
+          %td= visible_badge(menu_item, stack, Proc.new { |item| item.roles_mask == nil })
+          %td= visible_badge(menu_item, stack, Proc.new { |item| item.roles_mask == -1 })
+          %td= visible_badge(menu_item, stack, Proc.new { |item| Rails.logger.info "SIGNED IN COMPARATOR: #{item.title}"; item.roles_mask != nil && item.roles_mask.to_i >= 0 }, true)
+          - if defined?(EffectiveRoles)
+            - EffectiveRoles.roles.each do |role|
+              %td= visible_badge(menu_item, stack, Proc.new { |item| item.roles_mask.to_i <= 0 || item.visible_for?(role) })
+        - stack.push(menu_item)
+
   .form-group
     .col-xs-12
       .form-group
