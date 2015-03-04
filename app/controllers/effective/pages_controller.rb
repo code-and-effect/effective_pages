@@ -5,10 +5,7 @@ module Effective
       @pages = @pages.published if params[:edit].to_s != 'true'
 
       @page = @pages.find(params[:id])
-
-      if defined?(EffectiveRoles)
-        raise Effective::AccessDenied unless @page.roles_permit?(current_user)
-      end
+      raise Effective::AccessDenied unless @page.roles_permit?(current_user)
 
       EffectivePages.authorized?(self, :show, @page)
 

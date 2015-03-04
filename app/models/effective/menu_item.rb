@@ -8,7 +8,7 @@ module Effective
     self.table_name = EffectivePages.menu_items_table_name.to_s
     attr_protected() if Rails::VERSION::MAJOR == 3
 
-    acts_as_role_restricted if defined?(EffectiveRoles)
+    acts_as_role_restricted
 
     structure do
       title           :string, :validates => [:presence]
@@ -42,7 +42,7 @@ module Effective
     # This will work with effective_roles one day...
     def visible_for?(user)
       can_view_page = (
-        if menuable.kind_of?(Effective::Page) && defined?(EffectiveRoles)
+        if menuable.kind_of?(Effective::Page)
           menuable.roles_permit?(user)
         else
           true
@@ -56,10 +56,8 @@ module Effective
           user.blank?
         elsif roles_mask == 0 # Am I logged in?
           user.present?
-        elsif defined?(EffectiveRoles)
-          roles_permit?(user)
         else
-          false
+          roles_permit?(user)
         end
       )
 

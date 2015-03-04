@@ -18,7 +18,7 @@
   - else
     = f.input :layout, :as => :select, :collection => EffectivePages.layouts, :include_blank => false
 
-  - if defined?(EffectiveRoles) and f.object.respond_to?(:roles)
+  - if f.object.respond_to?(:roles)
     = f.input :roles, :collection => EffectiveRoles.roles_collection(f.object), :as => :check_boxes, :hint => '* leave blank for a regular public page that anyone can view'
 
   .form-group

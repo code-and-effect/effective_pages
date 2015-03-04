@@ -1,8 +1,8 @@
 module Effective
   class Page < ActiveRecord::Base
     acts_as_sluggable
-    acts_as_role_restricted if defined?(EffectiveRoles)
-    acts_as_regionable if defined?(EffectiveRegions)
+    acts_as_role_restricted
+    acts_as_regionable
 
     has_many :menu_items, :as => :menuable, :dependent => :destroy
 
