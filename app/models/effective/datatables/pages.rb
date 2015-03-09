@@ -2,7 +2,10 @@ if defined?(EffectiveDatatables)
   module Effective
     module Datatables
       class Pages < Effective::Datatable
-        table_column :id
+        default_order :title, :asc
+        default_entries :all
+
+        table_column :id, :visible => false
 
         table_column :title
         table_column :slug
