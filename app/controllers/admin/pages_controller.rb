@@ -32,7 +32,7 @@ module Admin
 
       if @page.save
         if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
-          redirect_to effective_regions.edit_path(effective_pages.page_path(@page))
+          redirect_to effective_regions.edit_path(effective_pages.page_path(@page), :exit => effective_pages.edit_admin_page_path(@page))
         elsif params[:commit] == 'Save and Add New'
           redirect_to effective_pages.new_admin_page_path
         else
@@ -60,7 +60,7 @@ module Admin
 
       if @page.update_attributes(page_params)
         if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
-          redirect_to effective_regions.edit_path(effective_pages.page_path(@page))
+          redirect_to effective_regions.edit_path(effective_pages.page_path(@page), :exit => effective_pages.edit_admin_page_path(@page))
         elsif params[:commit] == 'Save and Add New'
           redirect_to effective_pages.new_admin_page_path
         else
