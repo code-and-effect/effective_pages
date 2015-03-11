@@ -1,9 +1,6 @@
 %h2= @page_title
 
-- unless @datatable.collection.length > 0
-  %p
-    There are no pages
-- else
-  = render_datatable @datatable
+= render_datatable @datatable do
+  %p There are no pages
 
 %p= link_to 'New Page', effective_pages.new_admin_page_path, :class => 'btn btn-primary'

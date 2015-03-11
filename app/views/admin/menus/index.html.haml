@@ -1,9 +1,6 @@
 %h2= @page_title
 
-- unless @datatable.collection.length > 0
-  %p
-    There are no menus
-- else
-  = render_datatable @datatable
+= render_datatable @datatable do
+  %p There are no menus
 
 %p= link_to 'New Menu', effective_pages.new_admin_menu_path, :class => 'btn btn-primary'
