@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form"
   s.add_dependency "effective_slugs", '>= 1.1.0'
   s.add_dependency "effective_ckeditor", '>= 1.2.1'
+  s.add_dependency "effective_datatables", [">= 1.3.0"]
   s.add_dependency "effective_regions", '>= 1.2.0'
   s.add_dependency "effective_roles", '>= 1.2.1'
 
