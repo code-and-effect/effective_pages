@@ -9,8 +9,8 @@ module Effective
     self.table_name = EffectivePages.pages_table_name.to_s
 
     structure do
-      title             :string, :validates => [:presence]
-      meta_description  :string, :validates => [:presence]
+      title             :string, :validates => [:presence, :length => {:maximum => 255}]
+      meta_description  :string, :validates => [:presence, :length => {:maximum => 255}]
 
       draft             :boolean, :default => false
 

@@ -11,14 +11,14 @@ module Effective
     acts_as_role_restricted
 
     structure do
-      title           :string, :validates => [:presence]
+      title           :string, :validates => [:presence, :length => {:maximum => 255}]
 
-      url             :string
-      special         :string   # divider / search / *_path
+      url             :string, :validates => [:length => {:maximum => 255}]
+      special         :string, :validates => [:length => {:maximum => 255}]   # divider / search / *_path
 
-      classes         :string
+      classes         :string, :validates => [:length => {:maximum => 255}]
       new_window      :boolean, :default => false, :validates => [:inclusion => {:in => [true, false]}]
-      roles_mask      :integer, :default => nil # 0 is going to mean logged in, nil is going to mean public, > 0 will be future implementation of roles masking
+      roles_mask      :integer, :default => nil # 0 is going to mean logged in, -1 is going to mean public, > 0 will be future implementation of roles masking
 
       lft             :integer, :validates => [:presence], :index => true
       rgt             :integer, :validates => [:presence]

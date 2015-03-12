@@ -6,7 +6,7 @@ module Effective
     attr_protected() if Rails::VERSION::MAJOR == 3
 
     structure do
-      title           :string, :validates => [:presence, :uniqueness]
+      title           :string, :validates => [:presence, :uniqueness, :length => {:maximum => 255}]
       timestamps
     end
 
