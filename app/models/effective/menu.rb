@@ -12,25 +12,35 @@ module Effective
 
     accepts_nested_attributes_for :menu_items, :allow_destroy => true
 
-    before_create do
+    before_save do
       if self.menu_items.find { |menu_item| menu_item.lft == 1 }.blank?
-        menu_items.build(:title => 'Home', :url => '#', :lft => 1, :rgt => 2)
+        menu_items.build(:title => 'Home', :url => '/', :lft => 1, :rgt => 2)
       end
     end
 
     def self.update_from_effective_regions!(params)
-      (params || {}).each do |menu_id, attributes|
-        menu = Effective::Menu.includes(:menu_items).find(menu_id)
+      Effective::Menu.transaction do
+        (params || {}).each do |menu_id, attributes|
+          menu = Effective::Menu.includes(:menu_items).find(menu_id)
+          menu.menu_items.delete_all
 
-        attributes[:menu_items_attributes].each { |_, atts| atts[:menuable_type] = 'Effective::Page' if atts[:menuable_type].blank? }
-        menu.attributes = attributes
+          attributes[:menu_items_attributes].each do |_, atts|
+            atts[:menuable_type] = 'Effective::Page' if atts[:menuable_type].blank?
+            atts.delete(:id)
+          end
 
-        # So when we render the menu, we don't include the Root/Home item.
-        # It has a left of 1 and a right of max(items.right)
-        right = attributes[:menu_items_attributes].map { |_, atts| atts[:rgt].to_i }.max
-        menu.menu_items.find { |menu_item| menu_item.lft == 1 }.rgt = right + 1
+          menu.attributes = attributes
 
-        menu.save!
+          # So when we render the menu, we don't include the Root/Home item.
+          # It has a left of 1 and a right of max(items.right)
+          right = attributes[:menu_items_attributes].map { |_, atts| atts[:rgt].to_i }.max
+
+          root_node = menu.menu_items.find { |menu_item| menu_item.lft == 1 }
+          root_node ||= menu.menu_items.build(:title => 'Home', :url => '/', :lft => 1, :rgt => 2)
+          root_node.rgt = right + 1
+
+          menu.save!
+        end
       end
     end
 
@@ -42,7 +52,7 @@ module Effective
     def build(&block)
       raise 'build must be called with a block' if !block_given?
 
-      root = menu_items.build(:title => 'Home', :url => '#', :lft => 1, :rgt => 2)
+      root = menu_items.build(:title => 'Home', :url => '/', :lft => 1, :rgt => 2)
       root.parent = true
       instance_exec(&block) # A call to dropdown or item
       root.rgt = menu_items.map(&:rgt).max
