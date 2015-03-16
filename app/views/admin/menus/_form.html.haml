@@ -30,5 +30,5 @@
     .col-xs-12
       .form-group
         .pull-right
-          = f.button :submit, 'Save'
+          = f.button :submit, 'Save', data: { disable_with: 'Saving...' }
           = link_to 'Cancel', effective_pages.admin_menus_path

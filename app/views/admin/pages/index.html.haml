@@ -1,6 +1,9 @@
 %h2= @page_title
 
+%p.text-right= link_to 'New Page', effective_pages.new_admin_page_path, :class => 'btn btn-primary'
+
 = render_datatable @datatable do
   %p There are no pages
 
-%p= link_to 'New Page', effective_pages.new_admin_page_path, :class => 'btn btn-primary'
+- if @datatable.present?
+  %p.text-right= link_to 'New Page', effective_pages.new_admin_page_path, :class => 'btn btn-primary'

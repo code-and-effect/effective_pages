@@ -25,8 +25,8 @@
     .col-xs-12
       .form-group
         .pull-right
-          = f.button :submit, 'Save'
+          = f.button :submit, 'Save', data: { disable_with: 'Saving...' }
           - if defined?(EffectiveRegions)
-            = f.button :submit, 'Save and Edit Content'
-          = f.button :submit, 'Save and Add New'
+            = f.button :submit, 'Save and Edit Content', data: { disable_with: 'Saving...' }
+          = f.button :submit, 'Save and Add New', data: { disable_with: 'Saving...' }
           = link_to 'Cancel', effective_pages.admin_pages_path
