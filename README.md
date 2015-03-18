@@ -110,8 +110,16 @@ effective_pages.page_url(page)
 
 If you would like to use an Effective::Page for your home/root page, add the following to your routes.rb:
 
+Rails 3 Syntax:
+
 ```ruby
 root :to => 'Effective::Pages#show', :id => 'home'
+```
+
+Rails 4 Syntax:
+
+```ruby
+root :to => 'effective/pages#show', :id => 'home'
 ```
 
 and make sure a page with slug 'home' exists.
