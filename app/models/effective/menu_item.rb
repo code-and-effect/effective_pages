@@ -47,7 +47,7 @@ module Effective
         else
           true
         end
-      )
+      ) || dropdown? # If it's a dropdown, don't consider the page permissions, 'cause its not a link to the page anyway
 
       can_view_menu_item = (
         if roles_mask == nil
