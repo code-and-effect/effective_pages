@@ -22,8 +22,10 @@ module EffectivePagesHelper
   end
 
   def effective_pages_meta_description_tag
-    if @page.try(:meta_description).present?
-      "<meta content='#{@page.try(:meta_description)}' name='description' />"
+    if @meta_description.present?
+      "<meta content='#{truncate(@meta_description, :length => 150)}' name='description' />"
+    elsif @page.try(:meta_description).present?
+      "<meta content='#{@page.meta_description}' name='description' />"
     end
   end
 

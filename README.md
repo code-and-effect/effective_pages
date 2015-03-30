@@ -137,7 +137,7 @@ In your application layout and any additional layouts files, add the following t
 
 This helper inserts a `<title>...</title>` html tag based on the `@page_title` instance variable, which you can set anywhere on your non-effective controllers, and whose value is set to the `@page.title` value when displaying an `Effective::Page`.
 
-This helper also inserts a `<meta name='description' value='...' />` html tag based on the Effective::Page's meta description value.  This tag provides the content that search engines use to display their search results.
+This helper also inserts a `<meta name='description' content='...' />` html tag based on the `@meta_description` instance variable, which you can set anywhere on your non-effective controllers, and whose value is set to the `@page.meta_description` value when displaying an `Effective::Page`.  This tag provides the content that search engines use to display their search results.  This value will automatically be truncated to 150 characters.
 
 This helper is entirely optional and in no way required for effective_pages to work.
 

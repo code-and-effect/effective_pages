@@ -10,7 +10,7 @@ module Effective
 
     structure do
       title             :string, :validates => [:presence, :length => {:maximum => 255}]
-      meta_description  :string, :validates => [:presence, :length => {:maximum => 255}]
+      meta_description  :string, :validates => [:presence, :length => {:maximum => 150}]
 
       draft             :boolean, :default => false
 
