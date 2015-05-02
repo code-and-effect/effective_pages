@@ -9,7 +9,7 @@
   = f.input :meta_description, :hint => "A one or two sentence summary of this page. Appears on Google search results underneath the page title.", :input_html => {:maxlength => 150}
 
   - if EffectivePages.pages.length == 1
-    = f.input :template, :as => :hidden, :value => EffectivePages.pages.first
+    = f.input :template, :as => :hidden, input_html: { :value => EffectivePages.pages.first.first }
   - else
     = f.input :template, :as => :select, :collection => EffectivePages.pages, :include_blank => false
 
