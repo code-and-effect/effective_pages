@@ -47,6 +47,12 @@ Then migrate the database:
 rake db:migrate
 ```
 
+Add the following helper to your application layout in the `<head>..</head>` section.  This will properly create `<title>` and `<meta description>` tags based on the page.
+
+```ruby
+= effective_pages_header_tags
+```
+
 There are no required javascript or stylesheet includes.
 
 
