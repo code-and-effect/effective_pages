@@ -1,5 +1,9 @@
-require "effective_pages/engine"
+require 'effective_datatables'
+require 'effective_regions'
+require 'effective_roles'
+require 'effective_slugs'
 require 'migrant'     # Required for rspec to run properly
+require 'effective_pages/engine'
 
 module EffectivePages
   mattr_accessor :pages_table_name
