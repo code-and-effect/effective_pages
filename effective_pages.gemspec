@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", [">= 3.2.0"]
-  s.add_dependency "haml"
+  s.add_dependency "haml-rails"
   s.add_dependency "sass-rails"
   s.add_dependency "migrant"
   s.add_dependency "simple_form"

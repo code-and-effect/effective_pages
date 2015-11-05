@@ -1,8 +1,9 @@
+require 'haml-rails'
+require 'migrant'
 require 'effective_datatables'
 require 'effective_regions'
 require 'effective_roles'
 require 'effective_slugs'
-require 'migrant'     # Required for rspec to run properly
 require 'effective_pages/engine'
 
 module EffectivePages
