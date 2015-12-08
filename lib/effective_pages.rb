@@ -5,6 +5,7 @@ require 'effective_regions'
 require 'effective_roles'
 require 'effective_slugs'
 require 'effective_pages/engine'
+require 'effective_pages/version'
 
 module EffectivePages
   mattr_accessor :pages_table_name

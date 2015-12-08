@@ -16,6 +16,7 @@
 /.idea
 
 # minimal Rails specific artifacts
+*.gem
 db/*.sqlite3
 db/schema.rb
 /log/*
