@@ -1,14 +1,17 @@
-%span.actions
-  = link_to 'Visit', effective_pages.page_path(page), :target => '_blank'
-  = '-'
-  - if defined?(EffectiveRegions)
-    = link_to 'Edit Content', effective_regions.edit_path(page), 'data-no-turbolink' => true
-    = '-'
-  = link_to 'Edit', effective_pages.edit_admin_page_path(page.id)
-  = '-'
-  = link_to 'Delete', effective_pages.admin_page_path(page.id), :data => {:method => :delete, :confirm => "Are you sure?  This page will be made unavailable."}
-  / = '-'
-  / - if page.draft?
-  /   = link_to "Undraft", effective_orders.undraft_admin_page_path(page)
-  / - else
-  /   = link_to "Draft", effective_orders.draft_admin_page_path(page), :data => {:method => :delete, :confirm => "Are you sure?  This page will be made unavailable."}
+- if page.draft?
+  = link_to effective_orders.undraft_admin_page_path(page), title: 'Approve' do
+    %span.glyphicon.glyphicon-ok
+
+= link_to effective_pages.edit_admin_page_path(page.id), title: 'Settings' do
+  %span.glyphicon.glyphicon-cog
+
+= link_to effective_pages.page_path(page), title: 'View', target: '_blank' do
+  %span.glyphicon.glyphicon-eye-open
+
+- if defined?(EffectiveRegions)
+  = link_to (effective_regions.edit_path(page)), title: 'Edit Content', 'data-no-turbolink': true, target: '_blank' do
+    %span.glyphicon.glyphicon-edit
+
+= link_to effective_pages.admin_page_path(page.id), title: 'Delete', data: { method: :delete, confirm: 'Are you sure you want to delete? This cannot be undone.' } do
+  %span.glyphicon.glyphicon-trash
+
