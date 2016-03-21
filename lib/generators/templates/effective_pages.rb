@@ -19,6 +19,13 @@ EffectivePages.setup do |config|
   # Any app/views/layouts/ layout files that should be excluded
   config.excluded_layouts = [:admin]
 
+  # Work with EffectiveAssets
+  # The following will be passed into the acts_as_asset_box for the Effective::Page model
+  # The /admin/pages/new form will create the corresponding inputs
+  #config.acts_as_asset_box = :header_image
+  #config.acts_as_asset_box = header_image: true
+  #config.acts_as_asset_box = { header_image: true, body_images: 1..4 }
+
   # Use CanCan: can?(action, resource)
   # Use effective_roles:  resource.roles_permit?(current_user)
   config.authorization_method = Proc.new { |controller, action, resource| true }

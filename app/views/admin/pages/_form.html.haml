@@ -1,25 +1,30 @@
-= simple_form_for(page, (EffectivePages.simple_form_options || {}).merge(:url => (page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path))) do |f|
-  = f.input :title, :hint => "Give this page a title", :input_html => {:maxlength => 255}
-  = f.input :draft, :hint => "Save this page as a draft.  It will not be accessible on the website."
+= simple_form_for(page, (EffectivePages.simple_form_options || {}).merge(url: (page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path))) do |f|
+  = f.input :title, hint: 'The title of your page.', input_html: { maxlength: 255 }
+  = f.input :draft, hint: 'Save this page as a draft.  It will not be accessible on the website.'
 
   - if !f.object.new_record? || f.object.errors.include?(:slug)
     - current_url = (effective_pages.page_url(f.object) rescue nil)
-    = f.input :slug, :hint => "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + link_to(current_url.gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>').html_safe, current_url)) if current_url }".html_safe
+    = f.input :slug, hint: "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + link_to(current_url.gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>').html_safe, current_url)) if current_url }".html_safe
 
-  = f.input :meta_description, :hint => "A one or two sentence summary of this page. Appears on Google search results underneath the page title.", :input_html => {:maxlength => 150}
+  - if EffectivePages.acts_as_asset_box
+    = render partial: '/admin/pages/asset_box_fields', locals: { page: page, form: f, f: f }
+
+  = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
+
+  = f.input :meta_description, hint: "A one or two sentence summary of this page. Appears on Google search results underneath the page title.", input_html: { maxlength: 150 }
 
   - if EffectivePages.pages.length == 1
-    = f.input :template, :as => :hidden, input_html: { :value => EffectivePages.pages.first.first }
+    = f.input :template, as: :hidden, input_html: { value: EffectivePages.pages.first.first }
   - else
-    = f.input :template, :as => :select, :collection => EffectivePages.pages, :include_blank => false
+    = f.input :template, as: (defined?(EffectiveFormInputs?) ? :effective_select : :select), collection: EffectivePages.pages, include_blank: false
 
   - if EffectivePages.layouts.length == 1
-    = f.input :layout, :as => :hidden, :value => EffectivePages.layouts.first
+    = f.input :layout, as: :hidden, value: EffectivePages.layouts.first
   - else
-    = f.input :layout, :as => :select, :collection => EffectivePages.layouts, :include_blank => false
+    = f.input :layout, as: (defined?(EffectiveFormInputs?) ? :effective_select : :select), collection: EffectivePages.layouts, include_blank: false
 
   - if f.object.respond_to?(:roles)
-    = f.input :roles, :collection => EffectiveRoles.roles_collection(f.object), :as => :check_boxes, :hint => '* leave blank for a regular public page that anyone can view'
+    = f.input :roles, collection: EffectiveRoles.roles_collection(f.object), as: :check_boxes, hint: '* leave blank for a regular public page that anyone can view'
 
   .form-group
     .col-xs-12

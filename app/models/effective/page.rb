@@ -4,6 +4,10 @@ module Effective
     acts_as_role_restricted
     acts_as_regionable
 
+    if EffectivePages.acts_as_asset_box.present?
+      acts_as_asset_box [EffectivePages.acts_as_asset_box]
+    end
+
     has_many :menu_items, as: :menuable, dependent: :destroy
 
     self.table_name = EffectivePages.pages_table_name.to_s
