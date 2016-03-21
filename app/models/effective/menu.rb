@@ -1,20 +1,22 @@
 module Effective
   class Menu < ActiveRecord::Base
-    has_many :menu_items, :dependent => :delete_all
+    has_many :menu_items, dependent: :delete_all
 
     self.table_name = EffectivePages.menus_table_name.to_s
     attr_protected() if Rails::VERSION::MAJOR == 3
 
-    structure do
-      title           :string, :validates => [:presence, :uniqueness, :length => {:maximum => 255}]
-      timestamps
-    end
+    # structure do
+    #   title           :string
+    #   timestamps
+    # end
 
-    accepts_nested_attributes_for :menu_items, :allow_destroy => true
+    validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
+
+    accepts_nested_attributes_for :menu_items, allow_destroy: true
 
     before_save do
       if self.menu_items.find { |menu_item| menu_item.lft == 1 }.blank?
-        menu_items.build(:title => 'Home', :url => '/', :lft => 1, :rgt => 2)
+        menu_items.build(title: 'Home', url: '/', lft: 1, rgt: 2)
       end
     end
 
@@ -36,7 +38,7 @@ module Effective
           right = attributes[:menu_items_attributes].map { |_, atts| atts[:rgt].to_i }.max
 
           root_node = menu.menu_items.find { |menu_item| menu_item.lft == 1 }
-          root_node ||= menu.menu_items.build(:title => 'Home', :url => '/', :lft => 1, :rgt => 2)
+          root_node ||= menu.menu_items.build(title: 'Home', url: '/', lft: 1, rgt: 2)
           root_node.rgt = right + 1
 
           menu.save!
@@ -52,7 +54,7 @@ module Effective
     def build(&block)
       raise 'build must be called with a block' if !block_given?
 
-      root = menu_items.build(:title => 'Home', :url => '/', :lft => 1, :rgt => 2)
+      root = menu_items.build(title: 'Home', url: '/', lft: 1, rgt: 2)
       root.parent = true
       instance_exec(&block) # A call to dropdown or item
       root.rgt = menu_items.map(&:rgt).max

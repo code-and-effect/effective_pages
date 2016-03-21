@@ -2,27 +2,36 @@ module Effective
   class MenuItem < ActiveRecord::Base
     attr_accessor :parent  # This gets set on the Root node and a node created by Dropdown, so the item function knows whether to go down or to go accross
 
-    belongs_to :menu, :inverse_of => :menu_items
-    belongs_to :menuable, :polymorphic => true # Optionaly belong to an object
+    belongs_to :menu, inverse_of: :menu_items
+    belongs_to :menuable, polymorphic: true # Optionaly belong to an object
 
     self.table_name = EffectivePages.menu_items_table_name.to_s
     attr_protected() if Rails::VERSION::MAJOR == 3
 
     acts_as_role_restricted
 
-    structure do
-      title           :string, :validates => [:presence, :length => {:maximum => 255}]
+    # structure do
+    #   title           :string
 
-      url             :string, :validates => [:length => {:maximum => 255}]
-      special         :string, :validates => [:length => {:maximum => 255}]   # divider / search / *_path
+    #   url             :string
+    #   special         :string  # divider / search / *_path
 
-      classes         :string, :validates => [:length => {:maximum => 255}]
-      new_window      :boolean, :default => false, :validates => [:inclusion => {:in => [true, false]}]
-      roles_mask      :integer, :default => nil # 0 is going to mean logged in, -1 is going to mean public, > 0 will be future implementation of roles masking
+    #   classes         :string
+    #   new_window      :boolean
+    #   roles_mask      :integer # 0 is going to mean logged in, -1 is going to mean public, > 0 will be future implementation of roles masking
 
-      lft             :integer, :validates => [:presence], :index => true
-      rgt             :integer, :validates => [:presence]
-    end
+    #   lft             :integer
+    #   rgt             :integer
+    # end
+
+    validates :title, presence: true, length: { maximum: 255 }
+    validates :url, length: { maximum: 255 }
+    validates :special, length: { maximum: 255 }
+    validates :classes, length: { maximum: 255 }
+    validates :new_window, inclusion: { in: [true, false] }
+
+    validates :lft, presence: true
+    validates :rgt, presence: true
 
     default_scope -> { includes(:menuable).order(:lft) }
 
@@ -42,12 +51,14 @@ module Effective
     # This will work with effective_roles one day...
     def visible_for?(user)
       can_view_page = (
-        if menuable.kind_of?(Effective::Page)
+        if dropdown?
+          true
+        elsif menuable.kind_of?(Effective::Page)
           menuable.roles_permit?(user)
         else
           true
         end
-      ) || dropdown? # If it's a dropdown, don't consider the page permissions, 'cause its not a link to the page anyway
+      )
 
       can_view_menu_item = (
         if roles_mask == nil

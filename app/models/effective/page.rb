@@ -4,27 +4,32 @@ module Effective
     acts_as_role_restricted
     acts_as_regionable
 
-    has_many :menu_items, :as => :menuable, :dependent => :destroy
+    has_many :menu_items, as: :menuable, dependent: :destroy
 
     self.table_name = EffectivePages.pages_table_name.to_s
 
     structure do
-      title             :string, :validates => [:presence, :length => {:maximum => 255}]
-      meta_description  :string, :validates => [:presence, :length => {:maximum => 150}]
+      title             :string
+      meta_description  :string
 
-      draft             :boolean, :default => false
+      draft             :boolean
 
-      layout            :string, :default => 'application', :validates => [:presence]
-      template          :string, :validates => [:presence]
+      layout            :string
+      template          :string
 
       slug              :string
-      roles_mask        :integer, :default => 0
+      roles_mask        :integer
 
       timestamps
     end
 
-    scope :drafts, -> { where(:draft => true) }
-    scope :published, -> { where(:draft => false) }
+    validates :title, presence: true, length: { maximum: 255 }
+    validates :meta_description, presence: true, length: { maximum: 150 }
+    validates :layout, presence: true
+    validates :template, presence: true
+
+    scope :drafts, -> { where(draft: true) }
+    scope :published, -> { where(draft: false) }
   end
 
 end

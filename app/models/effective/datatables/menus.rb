@@ -6,7 +6,7 @@ if defined?(EffectiveDatatables)
           table_column :id
 
           table_column :title
-          table_column :actions, :sortable => false, :filter => false, :partial => '/admin/menus/actions'
+          table_column :actions, sortable: false, filter: false, partial: '/admin/menus/actions'
         end
 
         def collection
