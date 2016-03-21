@@ -84,9 +84,7 @@ module Admin
     private
 
     def page_params
-      params.require(:effective_page).permit(
-        :title, :meta_description, :draft, :layout, :template, :slug, roles: []
-      )
+      params.require(:effective_page).permit(EffectivePages.permitted_params)
     end
 
   end

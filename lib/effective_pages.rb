@@ -50,6 +50,10 @@ module EffectivePages
     @@pages_path = filepath.chomp('/')
   end
 
+  def self.permitted_params
+    @@permitted_params ||= [:title, :meta_description, :draft, :layout, :template, :slug, (EffectiveAssets.permitted_params if EffectivePages.acts_as_asset_box), roles: []].compact
+  end
+
   private
 
   def self.read_pages
