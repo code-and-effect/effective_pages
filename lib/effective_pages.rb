@@ -1,5 +1,4 @@
 require 'haml-rails'
-require 'migrant'
 require 'effective_datatables'
 require 'effective_regions'
 require 'effective_roles'
@@ -21,6 +20,8 @@ module EffectivePages
   mattr_accessor :simple_form_options
   mattr_accessor :layout
   mattr_accessor :menu
+
+  mattr_accessor :acts_as_asset_box
 
   def self.setup
     yield self
