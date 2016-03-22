@@ -1,11 +1,7 @@
-- if page.draft?
-  = link_to effective_orders.undraft_admin_page_path(page), title: 'Approve' do
-    %span.glyphicon.glyphicon-ok
-
 = link_to effective_pages.edit_admin_page_path(page.id), title: 'Settings' do
   %span.glyphicon.glyphicon-cog
 
-= link_to effective_pages.page_path(page), title: 'View', target: '_blank' do
+= link_to effective_pages.page_path(page, (page.draft? ? {preview: true} : nil)), title: 'View', 'data-no-turbolink': true, target: '_blank' do
   %span.glyphicon.glyphicon-eye-open
 
 - if defined?(EffectiveRegions)

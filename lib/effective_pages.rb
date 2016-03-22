@@ -14,7 +14,12 @@ module EffectivePages
   mattr_accessor :pages_path
   mattr_accessor :excluded_pages
   mattr_accessor :excluded_layouts
+
   mattr_accessor :site_title_suffix
+  mattr_accessor :fallback_meta_description
+
+  mattr_accessor :silence_missing_page_title_warnings
+  mattr_accessor :silence_missing_meta_description_warnings
 
   mattr_accessor :authorization_method
   mattr_accessor :simple_form_options

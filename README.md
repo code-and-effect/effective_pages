@@ -47,7 +47,7 @@ Then migrate the database:
 rake db:migrate
 ```
 
-Add the following helper to your application layout in the `<head>..</head>` section.  This will properly create `<title>` and `<meta description>` tags based on the page.
+Add the following helper to your application layout in the `<head>..</head>` section.  This will properly create `<title>` and `<meta description>` tags based on the Effective::Page and the controller instance variables `@page_title` and `@meta_description` for non Effective::Page routes.
 
 ```ruby
 = effective_pages_header_tags
@@ -144,6 +144,8 @@ In your application layout and any additional layouts files, add the following t
 This helper inserts a `<title>...</title>` html tag based on the `@page_title` instance variable, which you can set anywhere on your non-effective controllers, and whose value is set to the `@page.title` value when displaying an `Effective::Page`.
 
 This helper also inserts a `<meta name='description' content='...' />` html tag based on the `@meta_description` instance variable, which you can set anywhere on your non-effective controllers, and whose value is set to the `@page.meta_description` value when displaying an `Effective::Page`.  This tag provides the content that search engines use to display their search results.  This value will automatically be truncated to 150 characters.
+
+This helper will also warn about missing `@page_title` and `@meta_description` variables.  You can turn off the warnings in the config file.
 
 This helper is entirely optional and in no way required for effective_pages to work.
 
