@@ -2,7 +2,7 @@ module Effective
   class PagesController < ApplicationController
     def show
       @pages = (Rails::VERSION::MAJOR > 3 ? Effective::Page.all : Effective::Page.scoped)
-      @pages = @pages.published if params[:edit].to_s != 'true'
+      @pages = @pages.published unless (params[:edit] || params[:preview])
 
       @page = @pages.find(params[:id])
 
@@ -12,6 +12,7 @@ module Effective
       EffectivePages.authorized?(self, :show, @page)
 
       @page_title = @page.title
+      @meta_description = @page.meta_description
 
       render @page.template, :layout => @page.layout, :locals => {:page => @page}
     end
