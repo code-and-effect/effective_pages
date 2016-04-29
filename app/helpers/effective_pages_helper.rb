@@ -19,7 +19,7 @@ module EffectivePagesHelper
 
   def effective_pages_site_title
     unless @page_title.present? || EffectivePages.silence_missing_page_title_warnings
-      Rails.logger.error("WARNING: Expected @page_title to be present. Please assign a @page_title variable in your controller action.")
+      Rails.logger.error("WARNING: (effective_pages) Expected @page_title to be present. Please assign a @page_title variable in your controller action.")
     end
 
     (@page_title || "#{params[:controller].try(:titleize)} #{params[:action].try(:titleize)}") + EffectivePages.site_title_suffix.to_s
@@ -27,7 +27,7 @@ module EffectivePagesHelper
 
   def effective_pages_meta_description
     unless @meta_description.present? || EffectivePages.silence_missing_meta_description_warnings
-      Rails.logger.error("WARNING: Expected @meta_description to be present. Please assign a @meta_description variable in your controller action.")
+      Rails.logger.error("WARNING: (effective_pages) Expected @meta_description to be present. Please assign a @meta_description variable in your controller action.")
     end
 
     truncate((@meta_description || EffectivePages.fallback_meta_description).to_s, length: 150)

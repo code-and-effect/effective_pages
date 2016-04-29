@@ -46,6 +46,10 @@ module Effective
       end
     end
 
+    def to_s
+      self[:title] || 'New Menu'
+    end
+
     def contains?(obj)
       menu_items.find { |menu_item| menu_item.url == obj || menu_item.menuable == obj }.present?
     end

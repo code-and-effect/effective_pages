@@ -12,20 +12,20 @@ module Effective
 
     self.table_name = EffectivePages.pages_table_name.to_s
 
-    structure do
-      title             :string
-      meta_description  :string
+    # structure do
+    #   title             :string
+    #   meta_description  :string
 
-      draft             :boolean
+    #   draft             :boolean
 
-      layout            :string
-      template          :string
+    #   layout            :string
+    #   template          :string
 
-      slug              :string
-      roles_mask        :integer
+    #   slug              :string
+    #   roles_mask        :integer
 
-      timestamps
-    end
+    #   timestamps
+    # end
 
     validates :title, presence: true, length: { maximum: 255 }
     validates :meta_description, presence: true, length: { maximum: 150 }
