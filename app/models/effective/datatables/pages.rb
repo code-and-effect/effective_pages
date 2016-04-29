@@ -12,7 +12,7 @@ if defined?(EffectiveDatatables)
           table_column :slug
           table_column :draft
 
-          table_column :actions, sortable: false, filter: false, partial: '/admin/pages/actions'
+          actions_column partial: '/admin/pages/actions'
         end
 
         def collection
