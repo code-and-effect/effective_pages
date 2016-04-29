@@ -331,6 +331,16 @@ To enable this functionality, require the following stylesheet on the asset pipe
 
 and change the `config.menu[:maxdepth]` value in the `app/config/initializers/effective_pages.rb` initializer to 3, 4, or even 9999.
 
+### Breadcrumbs
+
+Bootstrap3 breadcrumbs can be generated based on a given menu and page.
+
+```ruby
+= render_breadcrumb(menu, page)
+```
+
+where menu is an `Effective::Menu` object, or the name of a menu, `'main menu'` and page is an `Effective::Page` object, or a string.
+
 
 ## Authorization
 
