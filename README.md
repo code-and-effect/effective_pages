@@ -399,7 +399,11 @@ The permissions you actually want to define are as follows (using CanCan):
 
 ```ruby
 can [:show], Effective::Page
-can [:manage], Effective::Page if user.is?(:admin)
+
+if user.is?(:admin)
+  can :manage, Effective::Page
+  can :manage, Effective::Menu
+end
 ```
 
 
