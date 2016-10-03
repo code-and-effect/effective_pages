@@ -67,7 +67,7 @@ module EffectivePages
     HashWithIndifferentAccess.new().tap do |pages|
       files.each do |file|
         name = File.basename(file).split('.').first
-        next if name.starts_with?('_') || Array(EffectivePages.excluded_pages).map(&:to_s).include?(name)
+        next if name.starts_with?('_') || Array(EffectivePages.excluded_pages).map { |str| str.to_s }.include?(name)
 
         pages[name.to_sym] = {}
       end
@@ -81,8 +81,8 @@ module EffectivePages
       files.each do |file|
         name = File.basename(file).split('.').first
         next if name.starts_with?('_')
-        next if name.include?('mailer_layout')
-        next if Array(EffectivePages.excluded_layouts).map(&:to_s).include?(name)
+        next if name.include?('mailer')
+        next if Array(EffectivePages.excluded_layouts).map { |str| str.to_s }.include?(name)
 
         layouts[name.to_sym] = {}
       end

@@ -1,4 +1,10 @@
-%span.actions
-  = link_to 'Edit', effective_pages.edit_admin_menu_path(menu)
-  = '-'
-  = link_to 'Delete', effective_pages.admin_menu_path(menu), :data => {:method => :delete, :confirm => "Are you sure?  This menu will be made unavailable."}
+= link_to effective_pages.edit_admin_menu_path(menu), title: 'Settings' do
+  %span.glyphicon.glyphicon-cog
+
+- if defined?(EffectiveRegions)
+  = link_to (effective_regions.edit_path('/')), title: 'Edit Content', 'data-no-turbolink': true, target: '_blank' do
+    %span.glyphicon.glyphicon-edit
+
+= link_to effective_pages.admin_menu_path(menu), title: 'Delete', data: { method: :delete, confirm: 'Are you sure?  This menu will be made unavailable.' } do
+  %span.glyphicon.glyphicon-trash
+
