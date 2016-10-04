@@ -6,6 +6,8 @@ module Admin
 
     def index
       @page_title = 'Pages'
+
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :index, Effective::Page)
 
       @datatable = Effective::Datatables::Pages.new() if defined?(EffectiveDatatables)
@@ -15,6 +17,7 @@ module Admin
       @page = Effective::Page.new()
       @page_title = 'New Page'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :new, @page)
     end
 
@@ -22,6 +25,7 @@ module Admin
       @page = Effective::Page.new(page_params)
       @page_title = 'New Page'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :create, @page)
 
       if @page.save
@@ -43,6 +47,7 @@ module Admin
       @page = Effective::Page.find(params[:id])
       @page_title = 'Edit Page'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :edit, @page)
     end
 
@@ -50,6 +55,7 @@ module Admin
       @page = Effective::Page.find(params[:id])
       @page_title = 'Edit Page'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :update, @page)
 
       if @page.update_attributes(page_params)
@@ -70,6 +76,7 @@ module Admin
     def destroy
       @page = Effective::Page.find(params[:id])
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :destroy, @page)
 
       if @page.destroy

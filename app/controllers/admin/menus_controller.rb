@@ -10,6 +10,7 @@ module Admin
       @datatable = Effective::Datatables::Menus.new() if defined?(EffectiveDatatables)
       @page_title = 'Menus'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :index, Effective::Menu)
     end
 
@@ -17,6 +18,7 @@ module Admin
       @menu = Effective::Menu.new()
       @page_title = 'New Menu'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :new, @menu)
     end
 
@@ -24,6 +26,7 @@ module Admin
       @menu = Effective::Menu.new(menu_params)
       @page_title = 'New Menu'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :create, @menu)
 
       if @menu.save
@@ -39,6 +42,7 @@ module Admin
       @menu = Effective::Menu.find(params[:id])
       @page_title = 'Edit Menu'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :edit, @menu)
     end
 
@@ -46,6 +50,7 @@ module Admin
       @menu = Effective::Menu.find(params[:id])
       @page_title = 'Edit Menu'
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :update, @menu)
 
       if @menu.update_attributes(menu_params)
@@ -60,6 +65,7 @@ module Admin
     def destroy
       @menu = Effective::Menu.find(params[:id])
 
+      EffectivePages.authorized?(self, :admin, :effective_pages)
       EffectivePages.authorized?(self, :destroy, @menu)
 
       if @menu.destroy

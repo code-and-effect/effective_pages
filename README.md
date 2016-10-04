@@ -403,6 +403,8 @@ can [:show], Effective::Page
 if user.is?(:admin)
   can :manage, Effective::Page
   can :manage, Effective::Menu
+
+  can :admin, :effective_pages # Can access the admin screens
 end
 ```
 
