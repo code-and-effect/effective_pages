@@ -8,10 +8,16 @@ module EffectiveMenusHelper
       form_for(menu, :url => '/') { |form| options[:form] = form }
     end
 
+    menu_items = menu.menu_items
+
+    if menu.new_record?
+      menu_items = menu_items.to_a.sort! { |a, b| a.lft <=> b.lft }
+    end
+
     if block_given? && options[:form].blank?
-      render_menu_items(menu.menu_items, options) { yield }
+      render_menu_items(menu_items, options) { yield }
     else
-      render_menu_items(menu.menu_items, options)
+      render_menu_items(menu_items, options)
     end
 
     # if options[:for_editor]
