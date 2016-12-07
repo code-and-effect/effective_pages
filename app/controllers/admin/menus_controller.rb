@@ -10,24 +10,21 @@ module Admin
       @datatable = Effective::Datatables::Menus.new() if defined?(EffectiveDatatables)
       @page_title = 'Menus'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :index, Effective::Menu)
+      authorize_effective_menus!
     end
 
     def new
       @menu = Effective::Menu.new()
       @page_title = 'New Menu'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :new, @menu)
+      authorize_effective_menus!
     end
 
     def create
       @menu = Effective::Menu.new(menu_params)
       @page_title = 'New Menu'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :create, @menu)
+      authorize_effective_menus!
 
       if @menu.save
         flash[:success] = 'Successfully created menu'
@@ -42,16 +39,14 @@ module Admin
       @menu = Effective::Menu.find(params[:id])
       @page_title = 'Edit Menu'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :edit, @menu)
+      authorize_effective_menus!
     end
 
     def update
       @menu = Effective::Menu.find(params[:id])
       @page_title = 'Edit Menu'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :update, @menu)
+      authorize_effective_menus!
 
       if @menu.update_attributes(menu_params)
         flash[:success] = 'Successfully updated menu'
@@ -65,8 +60,7 @@ module Admin
     def destroy
       @menu = Effective::Menu.find(params[:id])
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :destroy, @menu)
+      authorize_effective_menus!
 
       if @menu.destroy
         flash[:success] = 'Successfully deleted menu'
@@ -78,6 +72,11 @@ module Admin
     end
 
     private
+
+    def authorize_effective_menus!
+      EffectivePages.authorized?(self, :admin, :effective_pages)
+      EffectivePages.authorized?(self, action_name.to_sym, @menu || Effective::Menu)
+    end
 
     def menu_params
       params.require(:effective_menu).permit(:title)

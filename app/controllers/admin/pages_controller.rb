@@ -5,28 +5,24 @@ module Admin
     layout (EffectivePages.layout.kind_of?(Hash) ? EffectivePages.layout[:admin] : EffectivePages.layout)
 
     def index
+      @datatable = Effective::Datatables::Pages.new() if defined?(EffectiveDatatables)
       @page_title = 'Pages'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :index, Effective::Page)
-
-      @datatable = Effective::Datatables::Pages.new() if defined?(EffectiveDatatables)
+      authorize_effective_pages!
     end
 
     def new
       @page = Effective::Page.new()
       @page_title = 'New Page'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :new, @page)
+      authorize_effective_pages!
     end
 
     def create
       @page = Effective::Page.new(page_params)
       @page_title = 'New Page'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :create, @page)
+      authorize_effective_pages!
 
       if @page.save
         if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
@@ -47,16 +43,14 @@ module Admin
       @page = Effective::Page.find(params[:id])
       @page_title = 'Edit Page'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :edit, @page)
+      authorize_effective_pages!
     end
 
     def update
       @page = Effective::Page.find(params[:id])
       @page_title = 'Edit Page'
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :update, @page)
+      authorize_effective_pages!
 
       if @page.update_attributes(page_params)
         if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
@@ -76,8 +70,7 @@ module Admin
     def destroy
       @page = Effective::Page.find(params[:id])
 
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, :destroy, @page)
+      authorize_effective_pages!
 
       if @page.destroy
         flash[:success] = 'Successfully deleted page'
@@ -89,6 +82,11 @@ module Admin
     end
 
     private
+
+    def authorize_effective_pages!
+      EffectivePages.authorized?(self, :admin, :effective_pages)
+      EffectivePages.authorized?(self, action_name.to_sym, @page|| Effective::Page)
+    end
 
     def page_params
       params.require(:effective_page).permit(EffectivePages.permitted_params)
