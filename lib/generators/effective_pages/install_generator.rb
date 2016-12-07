@@ -3,9 +3,9 @@ module EffectivePages
     class InstallGenerator < Rails::Generators::Base
       include Rails::Generators::Migration
 
-      desc "Creates an EffectivePages initializer in your application."
+      desc 'Creates an EffectivePages initializer in your application.'
 
-      source_root File.expand_path("../../templates", __FILE__)
+      source_root File.expand_path('../../templates', __FILE__)
 
       def self.next_migration_number(dirname)
         if not ActiveRecord::Base.timestamped_migrations
@@ -16,7 +16,7 @@ module EffectivePages
       end
 
       def copy_initializer
-        template "effective_pages.rb", "config/initializers/effective_pages.rb"
+        template ('../' * 3) + 'config/effective_pages.rb', 'config/initializers/effective_pages.rb'
       end
 
       def create_migration_file
@@ -24,7 +24,7 @@ module EffectivePages
         @menus_table_name = ':' + EffectivePages.menus_table_name.to_s
         @menu_items_table_name = ':' + EffectivePages.menu_items_table_name.to_s
 
-        migration_template '../../../db/migrate/01_create_effective_pages.rb.erb', 'db/migrate/create_effective_pages.rb'
+        migration_template ('../' * 3) + 'db/migrate/01_create_effective_pages.rb.erb', 'db/migrate/create_effective_pages.rb'
       end
 
       def copy_example_page
@@ -32,7 +32,7 @@ module EffectivePages
       end
 
       def setup_routes
-        inject_into_file "config/routes.rb", "\n  # if you want EffectivePages to render the home / root page\n  # uncomment the following line and create an Effective::Page with slug == 'home' \n  # root :to => 'Effective::Pages#show', :id => 'home'\n", :before => /root (:?)to.*/
+        inject_into_file 'config/routes.rb', "\n  # if you want EffectivePages to render the home / root page\n  # uncomment the following line and create an Effective::Page with slug == 'home' \n  # root :to => 'Effective::Pages#show', :id => 'home'\n", :before => /root (:?)to.*/
       end
 
     end

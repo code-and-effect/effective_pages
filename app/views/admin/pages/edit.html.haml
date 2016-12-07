@@ -1,2 +1,3 @@
-%h2= @page_title
-= render :partial => 'form', :as => :page, :object => @page
+%h1.effective-admin-heading= @page_title
+
+= render partial: 'form', as: :page, object: @page

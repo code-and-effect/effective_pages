@@ -13,7 +13,7 @@ module EffectivePages
     # Set up our default configuration options.
     initializer "effective_pages.defaults", before: :load_config_initializers do |app|
       # Set up our defaults, as per our initializer template
-      eval File.read("#{config.root}/lib/generators/templates/effective_pages.rb")
+      eval File.read("#{config.root}/config/effective_pages.rb")
     end
 
     initializer 'effective_pages.effective_assets_validation', after: :load_config_initializers do

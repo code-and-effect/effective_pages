@@ -4,7 +4,3 @@
 - if defined?(EffectiveRegions)
   = link_to (effective_regions.edit_path('/')), title: 'Edit Content', 'data-no-turbolink': true, target: '_blank' do
     %span.glyphicon.glyphicon-edit
-
-= link_to effective_pages.admin_menu_path(menu), title: 'Delete', data: { method: :delete, confirm: 'Are you sure?  This menu will be made unavailable.' } do
-  %span.glyphicon.glyphicon-trash
-
