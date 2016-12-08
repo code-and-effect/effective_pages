@@ -1,6 +1,6 @@
 module EffectiveBreadcrumbsHelper
   def render_breadcrumbs(menu, page)
-    menu = Effective::Menu.find_by_title(menu) if menu.kind_of?(String)
+    menu = Effective::Menu.find_by_title(menu.to_s) if menu.kind_of?(String) || menu.kind_of?(Symbol)
     return "Menu '#{menu}' does not exist".html_safe unless menu.present?
 
     return breadcrumbs_fallback(page) if !page.present?

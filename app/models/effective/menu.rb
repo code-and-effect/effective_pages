@@ -138,6 +138,10 @@ module Effective
       options[:roles_mask] ||= 0 if (options.delete(:signed_in) || options.delete(:private))
       options[:roles_mask] ||= -1 if (options.delete(:signed_out) || options.delete(:guest))
 
+      if options[:roles]
+        options[:roles_mask] = EffectiveRoles.roles_mask_for(options.delete(:roles))
+      end
+
       options[:classes] = options.delete(:class)
 
       if title == :divider || url == :divider || options[:divider] == true

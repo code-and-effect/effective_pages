@@ -28,47 +28,18 @@ module Admin
 
       if @menu.save
         flash[:success] = 'Successfully created menu'
-        redirect_to effective_pages.edit_admin_menu_path(@menu)
+        redirect_to effective_pages.admin_menu_path(@menu)
       else
         flash.now[:danger] = 'Unable to create menu'
         render :action => :new
       end
     end
 
-    def edit
+    def show
       @menu = Effective::Menu.find(params[:id])
-      @page_title = 'Edit Menu'
+      @page_title = @menu.to_s
 
       authorize_effective_menus!
-    end
-
-    def update
-      @menu = Effective::Menu.find(params[:id])
-      @page_title = 'Edit Menu'
-
-      authorize_effective_menus!
-
-      if @menu.update_attributes(menu_params)
-        flash[:success] = 'Successfully updated menu'
-        redirect_to effective_pages.edit_admin_menu_path(@menu)
-      else
-        flash.now[:danger] = 'Unable to update menu'
-        render :action => :edit
-      end
-    end
-
-    def destroy
-      @menu = Effective::Menu.find(params[:id])
-
-      authorize_effective_menus!
-
-      if @menu.destroy
-        flash[:success] = 'Successfully deleted menu'
-      else
-        flash[:danger] = 'Unable to delete menu'
-      end
-
-      redirect_to effective_pages.admin_menus_path
     end
 
     private

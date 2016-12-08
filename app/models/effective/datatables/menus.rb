@@ -3,7 +3,8 @@ if defined?(EffectiveDatatables)
     module Datatables
       class Menus < Effective::Datatable
         datatable do
-          table_column :id
+          table_column :id, visible: false
+          table_column :updated_at, visible: false
 
           table_column :title
           actions_column partial: '/admin/menus/actions'

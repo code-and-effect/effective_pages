@@ -7,6 +7,7 @@ if defined?(EffectiveDatatables)
           default_entries :all
 
           table_column :id, visible: false
+          table_column :updated_at, visible: false
 
           table_column :title
           table_column :slug

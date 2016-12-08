@@ -16,12 +16,12 @@
   - if EffectivePages.pages.length == 1
     = f.input :template, as: :hidden, input_html: { value: EffectivePages.pages.first.first }
   - else
-    = f.input :template, as: (defined?(EffectiveFormInputs?) ? :effective_select : :select), collection: EffectivePages.pages, include_blank: false
+    = f.input :template, as: (defined?(EffectiveFormInputs) ? :effective_select : :select), collection: EffectivePages.pages, include_blank: false
 
   - if EffectivePages.layouts.length == 1
     = f.input :layout, as: :hidden, value: EffectivePages.layouts.first
   - else
-    = f.input :layout, as: (defined?(EffectiveFormInputs?) ? :effective_select : :select), collection: EffectivePages.layouts, include_blank: false
+    = f.input :layout, as: (defined?(EffectiveFormInputs) ? :effective_select : :select), collection: EffectivePages.layouts, include_blank: false
 
   - if f.object.respond_to?(:roles)
     = f.input :roles, collection: EffectiveRoles.roles_collection(f.object), as: :check_boxes, hint: '* leave blank for a regular public page that anyone can view'
