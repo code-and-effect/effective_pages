@@ -8,6 +8,9 @@ module EffectiveBreadcrumbsHelper
     menu_item = if page.kind_of?(Effective::Page)
       url = effective_pages.page_path(page)
       menu.menu_items.find { |item| item.menuable == page || item.title == page.title || item.url == url }
+    elsif page.kind_of?(String)
+      downcased = page.downcase
+      menu.menu_items.find { |item| item.title.downcase == downcased || item.url == downcased }
     else
       menu.menu_items.find { |item| item.menuable == page || item.title == page || item.url == page }
     end
