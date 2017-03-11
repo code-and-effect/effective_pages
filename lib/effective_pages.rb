@@ -15,6 +15,8 @@ module EffectivePages
   mattr_accessor :excluded_pages
   mattr_accessor :excluded_layouts
 
+  mattr_accessor :site_og_image
+  mattr_accessor :site_title
   mattr_accessor :site_title_suffix
   mattr_accessor :fallback_meta_description
 
