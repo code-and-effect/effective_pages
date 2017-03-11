@@ -23,8 +23,8 @@ EffectivePages.setup do |config|
   # The site_title_suffix will be appended to the effective_pages_header_tags title tag
   config.site_title_suffix = " | #{Rails.application.class.name.split('::').first.titleize}"
 
-  # This site_opengraph_image is the filename for an image placed in /assets/images and will be used to populate the og:image tag
-  config.site_opengraph_image = ''
+  # This site_og_image is the filename for an image placed in /assets/images and will be used to populate the og:image tag
+  config.site_og_image = ''
 
   # When using the effective_pages_header_tags() helper in <head> to set the <meta name='description'>
   # The value will be populated from an Effective::Page's .meta_description field,

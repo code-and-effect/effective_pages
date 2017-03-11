@@ -14,11 +14,11 @@ module EffectivePagesHelper
     [
       content_tag(:title, effective_pages_site_title),
       tag(:meta, name: 'description'.freeze, content: effective_pages_meta_description),
-      tag(:meta, name: 'og:site_name', content:  EffectivePages.site_title.to_s),
-      tag(:meta, name: 'og:title', content: effective_pages_page_title),
-      tag(:meta, name: 'og:description', content: effective_pages_meta_description),
-      tag(:meta, name: 'og:url', content: request.original_url),
-      tag(:meta, name: 'og:image', content: asset_path( EffectivePages.site_opengraph_image.to_s))
+      tag(:meta, property: 'og:site_name',   content: EffectivePages.site_title.to_s),
+      tag(:meta, property: 'og:title',       content: effective_pages_page_title),
+      tag(:meta, property: 'og:description', content: effective_pages_meta_description),
+      tag(:meta, property: 'og:url',         content: request.original_url),
+      tag(:meta, property: 'og:image',       content: asset_path(EffectivePages.site_og_image.to_s))
     ].compact.join("\n").html_safe
   end
 
