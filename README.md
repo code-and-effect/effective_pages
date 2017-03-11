@@ -47,13 +47,13 @@ Then migrate the database:
 rake db:migrate
 ```
 
-Add the following helper to your application layout in the `<head>..</head>` section.  This will properly create `<title>` and `<meta description>` tags based on the Effective::Page and the controller instance variables `@page_title` and `@meta_description` for non Effective::Page routes.
+Add the following helper to your application layout in the `<head>..</head>` section.  This will properly create `<title>` and `<meta description>` tags based on the Effective::Page and the controller instance variables `@page_title` and `@meta_description` for non Effective::Page routes. It will also create additional Open Graph tags based on the initializer.
 
 ```ruby
 = effective_pages_header_tags
 ```
 
-There are no required javascript or stylesheet includes.
+There are no required javascript or stylesheet includes, but you will want to ensure there is an Open Graph compatible image available in your assets folder.
 
 
 ### Post Installation
