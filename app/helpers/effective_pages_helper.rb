@@ -18,7 +18,7 @@ module EffectivePagesHelper
       tag(:meta, property: 'og:title',       content: effective_pages_page_title),
       tag(:meta, property: 'og:description', content: effective_pages_meta_description),
       tag(:meta, property: 'og:url',         content: request.original_url),
-      tag(:meta, property: 'og:image',       content: asset_path(EffectivePages.site_og_image.to_s))
+      tag(:meta, property: 'og:image',       content: asset_url(EffectivePages.site_og_image.to_s))
     ].compact.join("\n").html_safe
   end
 
