@@ -7,7 +7,12 @@ module Admin
     layout (EffectivePages.layout.kind_of?(Hash) ? EffectivePages.layout[:admin] : EffectivePages.layout)
 
     def index
-      @datatable = Effective::Datatables::Menus.new() if defined?(EffectiveDatatables)
+      if Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
+        @datatable = Effective::Datatables::Menus.new()
+      else
+        @datatable = EffectiveMenusDatatable.new(self)
+      end
+
       @page_title = 'Menus'
 
       authorize_effective_menus!

@@ -5,7 +5,12 @@ module Admin
     layout (EffectivePages.layout.kind_of?(Hash) ? EffectivePages.layout[:admin] : EffectivePages.layout)
 
     def index
-      @datatable = Effective::Datatables::Pages.new() if defined?(EffectiveDatatables)
+      if Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
+        @datatable = Effective::Datatables::Pages.new()
+      else
+        @datatable = EffectivePagesDatatable.new(self)
+      end
+
       @page_title = 'Pages'
 
       authorize_effective_pages!
