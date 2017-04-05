@@ -1,8 +1,5 @@
 unless Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
   class EffectivePagesDatatable < Effective::Datatable
-    collection do
-      Effective::Page.all
-    end
 
     datatable do
       order :title, :asc
@@ -18,6 +15,9 @@ unless Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
       actions_col partial: 'admin/pages/actions', partial_as: :page
     end
 
-  end
+    collection do
+      Effective::Page.all
+    end
 
+  end
 end

@@ -1,8 +1,5 @@
 unless Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
   class EffectiveMenusDatatable < Effective::Datatable
-    collection do
-      Effective::Menu.all
-    end
 
     datatable do
       col :id, visible: false
@@ -12,5 +9,10 @@ unless Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
 
       actions_col partial: 'admin/menus/actions', partial_as: :menu
     end
+
+    collection do
+      Effective::Menu.all
+    end
+
   end
 end
