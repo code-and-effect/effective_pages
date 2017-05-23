@@ -26,17 +26,18 @@ module Effective
           menu = Effective::Menu.includes(:menu_items).find(menu_id)
           menu.menu_items.delete_all
 
+          right = -1
+
           attributes[:menu_items_attributes].each do |_, atts|
             atts[:menuable_type] = 'Effective::Page' if atts[:menuable_type].blank?
             atts.delete(:id)
+            right = [atts[:rgt].to_i, right].max
           end
 
           menu.attributes = attributes
 
           # So when we render the menu, we don't include the Root/Home item.
           # It has a left of 1 and a right of max(items.right)
-          right = attributes[:menu_items_attributes].map { |_, atts| atts[:rgt].to_i }.max
-
           root_node = menu.menu_items.find { |menu_item| menu_item.lft == 1 }
           root_node ||= menu.menu_items.build(title: 'Home', url: '/', lft: 1, rgt: 2)
           root_node.rgt = right + 1
