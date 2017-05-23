@@ -1,4 +1,3 @@
-require 'haml-rails'
 require 'effective_datatables'
 require 'effective_regions'
 require 'effective_roles'
