@@ -29,11 +29,11 @@ module EffectiveBreadcrumbsHelper
 
   alias_method :render_breadcrumb, :render_breadcrumbs
 
-  def breadcrumbs_fallback(page)
+  def breadcrumbs_fallback(page = nil, root: 'Home')
     content_tag(:ol, class: 'breadcrumb') do
       [
-        content_tag(:li, link_to('Home', '/', title: 'Home')),
-        content_tag(:li, (page.try(:title) || page || @page_title || 'Here'), class: 'active')
+        content_tag(:li, link_to(root, root_path, title: root)),
+        content_tag(:li, ((page.title if page.respond_to?(:title)) || page || @page_title || 'Here'), class: 'active')
       ].join().html_safe
     end
   end
