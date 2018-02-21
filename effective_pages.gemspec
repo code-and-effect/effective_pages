@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", [">= 3.2.0"]
   s.add_dependency "sass-rails"
-  s.add_dependency "simple_form"
   s.add_dependency "effective_ckeditor", '>= 1.6.2'
   s.add_dependency "effective_datatables", '>= 2.0.0'
   s.add_dependency "effective_regions", '>= 1.4.4'
