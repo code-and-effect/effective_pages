@@ -31,7 +31,7 @@ module EffectivePagesHelper
   end
 
   def effective_pages_site_title
-    effective_pages_page_title + EffectivePages.site_title_suffix.to_s
+    effective_pages_page_title + (@site_title_suffix || EffectivePages.site_title_suffix).to_s
   end
 
   def effective_pages_meta_description
