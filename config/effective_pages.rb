@@ -36,13 +36,6 @@ EffectivePages.setup do |config|
   config.silence_missing_page_title_warnings = false
   config.silence_missing_meta_description_warnings = false
 
-  # Work with EffectiveAssets
-  # The following will be passed into the acts_as_asset_box for the Effective::Page model
-  # The /admin/pages/new form will create the corresponding inputs
-  #config.acts_as_asset_box = :header_image
-  #config.acts_as_asset_box = header_image: true
-  #config.acts_as_asset_box = { header_image: true, body_images: 1..4 }
-
   # Authorization Method
   #
   # This method is called by all controller actions with the appropriate action and resource
@@ -72,20 +65,6 @@ EffectivePages.setup do |config|
   config.layout = {
     :admin => 'application'
   }
-
-  # SimpleForm Options
-  # This Hash of options will be passed into any simple_form_for() calls
-  config.simple_form_options = {}
-
-  # config.simple_form_options = {
-  #   :html => {:class => 'form-horizontal'},
-  #   :wrapper => :horizontal_form,
-  #   :wrapper_mappings => {
-  #     :boolean => :horizontal_boolean,
-  #     :check_boxes => :horizontal_radio_and_checkboxes,
-  #     :radio_buttons => :horizontal_radio_and_checkboxes
-  #   }
-  # }
 
   # All effective_page menu options
   config.menu = {

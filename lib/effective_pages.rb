@@ -1,7 +1,6 @@
 require 'effective_datatables'
 require 'effective_regions'
 require 'effective_roles'
-require 'effective_slugs'
 require 'effective_pages/engine'
 require 'effective_pages/version'
 
@@ -23,21 +22,28 @@ module EffectivePages
   mattr_accessor :silence_missing_meta_description_warnings
 
   mattr_accessor :authorization_method
-  mattr_accessor :simple_form_options
   mattr_accessor :layout
   mattr_accessor :menu
-
-  mattr_accessor :acts_as_asset_box
 
   def self.setup
     yield self
   end
 
   def self.authorized?(controller, action, resource)
-    if authorization_method.respond_to?(:call) || authorization_method.kind_of?(Symbol)
-      raise Effective::AccessDenied.new() unless (controller || self).instance_exec(controller, action, resource, &authorization_method)
+    @_exceptions ||= [Effective::AccessDenied, (CanCan::AccessDenied if defined?(CanCan)), (Pundit::NotAuthorizedError if defined?(Pundit))].compact
+
+    return !!authorization_method unless authorization_method.respond_to?(:call)
+    controller = controller.controller if controller.respond_to?(:controller)
+
+    begin
+      !!(controller || self).instance_exec((controller || self), action, resource, &authorization_method)
+    rescue *@_exceptions
+      false
     end
-    true
+  end
+
+  def self.authorize!(controller, action, resource)
+    raise Effective::AccessDenied.new('Access Denied', action, resource) unless authorized?(controller, action, resource)
   end
 
   def self.pages

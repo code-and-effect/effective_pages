@@ -1,19 +1,16 @@
-class EffectivePagesRoutingConstraint
+class EffectivePagesConstraint
   def self.matches?(request)
     Effective::Page.find(request.path_parameters[:id] || '/').present? rescue false
   end
 end
 
 EffectivePages::Engine.routes.draw do
-  if defined?(EffectiveDatatables)
-    namespace :admin do
-      resources :pages, except: [:show]
-      resources :menus, only: [:index, :show, :new, :create]
-    end
+  namespace :admin do
+    resources :pages, except: [:show]
   end
 
   scope :module => 'effective' do
-    get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint, :as => :page
+    get '*id': 'pages#show', constraints: EffectivePagesConstraint, as: :page
   end
 end
 
