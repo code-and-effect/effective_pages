@@ -2,6 +2,7 @@ module Effective
   class Page < ActiveRecord::Base
     acts_as_role_restricted
     acts_as_regionable
+    acts_as_slugged
 
     has_many :menu_items, as: :menuable, dependent: :destroy
 
@@ -24,16 +25,18 @@ module Effective
 
     validates :title, presence: true, length: { maximum: 255 }
     validates :meta_description, presence: true, length: { maximum: 150 }
+
     validates :layout, presence: true
     validates :template, presence: true
 
     scope :drafts, -> { where(draft: true) }
     scope :published, -> { where(draft: false) }
+    scope :sorted, -> { order(:title) }
+    scope :except_home, -> { where.not(title: 'Home') }
 
-    def to_param
-      (title || id).parameterize
+    def to_s
+      title
     end
-
   end
 
 end

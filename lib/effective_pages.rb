@@ -46,14 +46,6 @@ module EffectivePages
     raise Effective::AccessDenied.new('Access Denied', action, resource) unless authorized?(controller, action, resource)
   end
 
-  def self.pages
-    Rails.env.development? ? read_pages : (@@pages ||= read_pages)
-  end
-
-  def self.layouts
-    Rails.env.development? ? read_layouts : (@@layouts ||= read_layouts)
-  end
-
   # Remove leading and trailing '/' characters
   #  Will return:  "effective/pages"
   def self.pages_path=(filepath)
@@ -62,38 +54,27 @@ module EffectivePages
     @@pages_path = filepath.chomp('/')
   end
 
+  def self.templates
+    ApplicationController.view_paths.map { |path| Dir["#{path}/#{pages_path}/**"] }.flatten.reverse.map do |file|
+      name = File.basename(file).split('.').first
+      next if name.starts_with?('_')
+      next if Array(EffectivePages.excluded_pages).map { |str| str.to_s }.include?(name)
+      name
+    end.compact
+  end
+
+  def self.layouts
+    ApplicationController.view_paths.map { |path| Dir["#{path}/layouts/**"] }.flatten.reverse.map do |file|
+      name = File.basename(file).split('.').first
+      next if name.starts_with?('_')
+      next if name.include?('mailer')
+      next if Array(EffectivePages.excluded_layouts).map { |str| str.to_s }.include?(name)
+      name
+    end.compact
+  end
+
   def self.permitted_params
-    @@permitted_params ||= [:title, :meta_description, :draft, :layout, :template, :slug, (EffectiveAssets.permitted_params if EffectivePages.acts_as_asset_box), roles: []].compact
-  end
-
-  private
-
-  def self.read_pages
-    files = ApplicationController.view_paths.map { |path| Dir["#{path}/#{pages_path}/**"] }.flatten.reverse
-
-    HashWithIndifferentAccess.new().tap do |pages|
-      files.each do |file|
-        name = File.basename(file).split('.').first
-        next if name.starts_with?('_') || Array(EffectivePages.excluded_pages).map { |str| str.to_s }.include?(name)
-
-        pages[name.to_sym] = {}
-      end
-    end
-  end
-
-  def self.read_layouts
-    files = ApplicationController.view_paths.map { |path| Dir["#{path}/layouts/**"] }.flatten.reverse
-
-    HashWithIndifferentAccess.new().tap do |layouts|
-      files.each do |file|
-        name = File.basename(file).split('.').first
-        next if name.starts_with?('_')
-        next if name.include?('mailer')
-        next if Array(EffectivePages.excluded_layouts).map { |str| str.to_s }.include?(name)
-
-        layouts[name.to_sym] = {}
-      end
-    end
+    @@permitted_params ||= [:title, :meta_description, :draft, :layout, :template, :slug, roles: []]
   end
 
 end

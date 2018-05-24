@@ -7,7 +7,7 @@ module Effective
       @page = @pages.find(params[:id])
 
       raise ActiveRecord::RecordNotFound unless @page.present? # Incase .find() isn't raising it
-      raise Effective::AccessDenied('Access Denied', :show, @page) unless @page.roles_permit?(current_user)
+      raise Effective::AccessDenied.new('Access Denied', :show, @page) unless @page.roles_permit?(current_user)
 
       EffectivePages.authorized?(self, :show, @page)
 

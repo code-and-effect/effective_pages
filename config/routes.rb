@@ -10,7 +10,7 @@ EffectivePages::Engine.routes.draw do
   end
 
   scope :module => 'effective' do
-    get '*id': 'pages#show', constraints: EffectivePagesConstraint, as: :page
+    get '*id', to: 'pages#show', constraints: EffectivePagesConstraint, as: :page
   end
 end
 
@@ -21,4 +21,4 @@ Rails.application.routes.append do
   end
 end
 
-#root :to => 'Effective::Pages#show', :id => 'home'
+#root to: 'effective/pages#show', id: 'home'

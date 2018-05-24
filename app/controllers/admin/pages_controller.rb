@@ -1,16 +1,11 @@
 module Admin
   class PagesController < ApplicationController
-    respond_to?(:before_action) ? before_action(:authenticate_user!) : before_filter(:authenticate_user!) # Devise
+    before_action(:authenticate_user!) # Devise
 
     layout (EffectivePages.layout.kind_of?(Hash) ? EffectivePages.layout[:admin] : EffectivePages.layout)
 
     def index
-      if Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
-        @datatable = Effective::Datatables::Pages.new()
-      else
-        @datatable = EffectivePagesDatatable.new(self)
-      end
-
+      @datatable = EffectivePagesDatatable.new(self)
       @page_title = 'Pages'
 
       authorize_effective_pages!

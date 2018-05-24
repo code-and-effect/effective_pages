@@ -1,6 +1,2 @@
-= link_to effective_pages.admin_menu_path(menu), title: 'Settings' do
-  %span.glyphicon.glyphicon-cog
-
-- if defined?(EffectiveRegions)
-  = link_to (effective_regions.edit_path('/')), title: 'Edit Content', 'data-no-turbolink': true, target: '_blank' do
-    %span.glyphicon.glyphicon-edit
+= dropdown(variation: :dropleft) do
+  = dropdown_link_to 'Settings', effective_pages.admin_menu_path(menu)
