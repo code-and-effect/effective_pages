@@ -4,10 +4,6 @@ module EffectivePages
 
     # Include Helpers to base application
     initializer 'effective_pages.action_controller' do |app|
-      ActiveSupport.on_load :action_controller do
-        helper EffectivePagesHelper
-        helper EffectiveMenusHelper
-      end
     end
 
     # Set up our default configuration options.
