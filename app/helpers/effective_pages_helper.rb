@@ -11,15 +11,43 @@ module EffectivePagesHelper
   end
 
   def effective_pages_header_tags
-    [
+    tags = [
       content_tag(:title, effective_pages_site_title),
-      tag(:meta, name: 'description'.freeze, content: effective_pages_meta_description),
+      tag(:meta, name: 'description', content: effective_pages_meta_description),
       tag(:meta, property: 'og:site_name',   content: EffectivePages.site_title.to_s),
       tag(:meta, property: 'og:title',       content: effective_pages_page_title),
-      tag(:meta, property: 'og:description', content: effective_pages_meta_description),
       tag(:meta, property: 'og:url',         content: request.original_url),
-      tag(:meta, property: 'og:image',       content: asset_url(EffectivePages.site_og_image.to_s))
-    ].compact.join("\n").html_safe
+      tag(:meta, property: 'og:type',        content: 'website'),
+      tag(:meta, property: 'og:description', content: effective_pages_meta_description),
+      tag(:meta, itemprop: 'name', content: effective_pages_page_title),
+      tag(:meta, itemprop: 'url', content: request.original_url),
+      tag(:meta, itemprop: 'description', content: effective_pages_meta_description),
+      tag(:meta, name: 'twitter:title', content: effective_pages_page_title),
+      tag(:meta, name: 'twitter:url', content: request.original_url),
+      tag(:meta, name: 'twitter:card', content: 'summary'),
+      tag(:meta, name: 'twitter:description', content: effective_pages_meta_description),
+    ]
+
+    if EffectivePages.site_og_image.present?
+      image_url = asset_url(EffectivePages.site_og_image)
+
+      tags += [
+        tag(:meta, property: 'og:image', content: image_url),
+        tag(:meta, itemprop: 'thumbnailUrl', content: image_url),
+        tag(:meta, itemprop: 'image', content: image_url),
+        tag(:meta, name: 'twitter:image', content: image_url),
+      ]
+
+      if EffectivePages.site_og_image_width.present?
+        tags << tag(:meta, property: 'og:image:width', content: EffectivePages.site_og_image_width) 
+      end
+
+      if EffectivePages.site_og_image_height.present?
+        tags << tag(:meta, property: 'og:image:height', content: EffectivePages.site_og_image_height) 
+      end
+    end
+
+    tags.compact.join("\n").html_safe
   end
 
   def effective_pages_page_title

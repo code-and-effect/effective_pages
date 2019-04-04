@@ -25,6 +25,8 @@ EffectivePages.setup do |config|
 
   # This site_og_image is the filename for an image placed in /assets/images and will be used to populate the og:image tag
   config.site_og_image = ''
+  config.site_og_image_width = ''  # Just 1024, no units
+  config.site_og_image_height = ''
 
   # When using the effective_pages_header_tags() helper in <head> to set the <meta name='description'>
   # The value will be populated from an Effective::Page's .meta_description field,
