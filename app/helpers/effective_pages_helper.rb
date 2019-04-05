@@ -17,7 +17,7 @@ module EffectivePagesHelper
       tag(:meta, property: 'og:site_name',   content: EffectivePages.site_title.to_s),
       tag(:meta, property: 'og:title',       content: effective_pages_page_title),
       tag(:meta, property: 'og:url',         content: request.original_url),
-      tag(:meta, property: 'og:type',        content: 'website'),
+      tag(:meta, property: 'og:type',        content: effective_pages_og_type),
       tag(:meta, property: 'og:description', content: effective_pages_meta_description),
       tag(:meta, itemprop: 'name', content: effective_pages_page_title),
       tag(:meta, itemprop: 'url', content: request.original_url),
@@ -68,6 +68,10 @@ module EffectivePagesHelper
     end
 
     truncate((@meta_description || EffectivePages.fallback_meta_description).to_s, length: 150)
+  end
+
+  def effective_pages_og_type
+    @effective_pages_og_type || 'website'
   end
 
   def application_root_to_effective_pages_slug
