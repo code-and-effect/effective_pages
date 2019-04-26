@@ -23,10 +23,12 @@ module EffectivePages
 
   mattr_accessor :silence_missing_page_title_warnings
   mattr_accessor :silence_missing_meta_description_warnings
+  
+  mattr_accessor :use_effective_roles
 
+  mattr_accessor :menu
   mattr_accessor :authorization_method
   mattr_accessor :layout
-  mattr_accessor :menu
 
   def self.setup
     yield self
