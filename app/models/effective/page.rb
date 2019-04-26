@@ -42,6 +42,21 @@ module Effective
       !draft?
     end
 
+    # Returns a duplicated post object, or throws an exception
+    def duplicate!
+      Page.new(attributes.except('id', 'updated_at', 'created_at')).tap do |page|
+        page.title = page.title + ' (Copy)'
+        page.slug = page.slug + '-copy'
+        page.draft = true
+
+        regions.each do |region|
+          page.regions.build(region.attributes.except('id', 'updated_at', 'created_at'))
+        end
+
+        page.save!
+      end
+    end
+
   end
 
 end

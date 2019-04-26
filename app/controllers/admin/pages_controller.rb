@@ -63,6 +63,17 @@ module Admin
           redirect_to effective_pages.new_admin_page_path
         elsif params[:commit] == 'Save and View'
           redirect_to effective_pages.page_path(@page)
+        elsif params[:commit] == 'Duplicate'
+          begin
+            page = @page.duplicate!
+            flash[:success] = 'Successfully saved and duplicated page.'
+            flash[:info] = "You are now editting the duplicated page. This new page has been created as a Draft."
+          rescue => e
+            flash.delete(:success)
+            flash[:danger] = "Unable to duplicate page: #{e.message}"
+          end
+
+          redirect_to effective_pages.edit_admin_page_path(page || @page)
         else
           flash[:success] = 'Successfully updated page'
           redirect_to effective_pages.edit_admin_page_path(@page)
