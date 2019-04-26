@@ -2,7 +2,7 @@ module Effective
   class PagesController < ApplicationController
     def show
       @pages = Effective::Page.all
-      @pages = @pages.published unless (params[:edit] || params[:preview])
+      @pages = @pages.published unless EffectivePosts.authorized?(self, :admin, :effective_pages)
 
       @page = @pages.find(params[:id])
 
@@ -14,7 +14,24 @@ module Effective
       @page_title = @page.title
       @meta_description = @page.meta_description
 
+      if EffectivePages.authorized?(self, :admin, :effective_pages)
+        flash.now[:warning] = [
+          'Hi Admin!',
+          ('You are viewing a hidden page.' unless @page.published?),
+          'Click here to',
+          ("<a href='#{effective_regions.edit_path(effective_pages.page_path(@page))}' class='alert-link'>edit page content</a> or" unless admin_edit?),
+          ("<a href='#{effective_pages.edit_admin_page_path(@page)}' class='alert-link'>edit page settings</a>.")
+        ].compact.join(' ')
+      end
+
       render @page.template, layout: @page.layout, locals: { page: @page }
     end
+
+    private
+
+    def admin_edit?
+      EffectivePages.authorized?(self, :admin, :effective_posts) && (params[:edit].to_s == 'true')
+    end
+
   end
 end

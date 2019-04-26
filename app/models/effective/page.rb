@@ -37,6 +37,11 @@ module Effective
     def to_s
       title
     end
+
+    def published?
+      !draft?
+    end
+
   end
 
 end
