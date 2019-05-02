@@ -22,7 +22,7 @@
   = f.check_box :draft, label: 'Save this page as a draft.  It will not be accessible on the website.'
 
   - if defined?(EffectiveRoles) and f.object.respond_to?(:roles) && EffectivePages.use_effective_roles
-    = f.checks :roles, EffectiveRoles.roles_collection(f.object), hint: '* leave blank for a regular public page that anyone can view'
+    = render partial: '/admin/pages/roles', locals: { page: page, form: f, f: f }
 
   = f.submit do
     = f.save 'Save'
