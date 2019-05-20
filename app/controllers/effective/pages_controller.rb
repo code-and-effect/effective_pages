@@ -2,7 +2,7 @@ module Effective
   class PagesController < ApplicationController
     def show
       @pages = Effective::Page.all
-      @pages = @pages.published unless EffectivePosts.authorized?(self, :admin, :effective_pages)
+      @pages = @pages.published unless EffectivePages.authorized?(self, :admin, :effective_pages)
 
       @page = @pages.find(params[:id])
 
