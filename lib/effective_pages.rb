@@ -23,7 +23,8 @@ module EffectivePages
 
   mattr_accessor :silence_missing_page_title_warnings
   mattr_accessor :silence_missing_meta_description_warnings
-  
+  mattr_accessor :silence_missing_canonical_url_warnings
+
   mattr_accessor :use_effective_roles
 
   mattr_accessor :menu

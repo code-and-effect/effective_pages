@@ -13,6 +13,7 @@ module Effective
 
       @page_title = @page.title
       @meta_description = @page.meta_description
+      @canonical_url = effective_pages.page_url(@page)
 
       if EffectivePages.authorized?(self, :admin, :effective_pages)
         flash.now[:warning] = [

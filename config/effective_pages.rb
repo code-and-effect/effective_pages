@@ -37,6 +37,8 @@ EffectivePages.setup do |config|
   # Turn off missing meta page title and meta description warnings
   config.silence_missing_page_title_warnings = false
   config.silence_missing_meta_description_warnings = false
+  config.silence_missing_canonical_url_warnings = false
+
 
   # Display the effective roles 'choose roles' input when an admin creates a new post
   config.use_effective_roles = false
