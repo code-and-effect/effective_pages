@@ -39,12 +39,16 @@ module EffectivePagesHelper
       ]
 
       if EffectivePages.site_og_image_width.present?
-        tags << tag(:meta, property: 'og:image:width', content: EffectivePages.site_og_image_width) 
+        tags << tag(:meta, property: 'og:image:width', content: EffectivePages.site_og_image_width)
       end
 
       if EffectivePages.site_og_image_height.present?
-        tags << tag(:meta, property: 'og:image:height', content: EffectivePages.site_og_image_height) 
+        tags << tag(:meta, property: 'og:image:height', content: EffectivePages.site_og_image_height)
       end
+    end
+
+    if effective_pages_canonical_url.present?
+      tags << tag(:link, rel: 'canonical', href: effective_pages_canonical_url)
     end
 
     tags.compact.join("\n").html_safe
@@ -68,6 +72,14 @@ module EffectivePagesHelper
     end
 
     truncate((@meta_description || EffectivePages.fallback_meta_description).to_s, length: 150)
+  end
+
+  def effective_pages_canonical_url
+    unless @canonical_url.present? || EffectivePages.silence_missing_canonical_url_warnings
+      Rails.logger.error("WARNING: (effective_pages) Expected @canonical_url to be present. Please assign a @canonical_url variable in your controller action.")
+    end
+
+    @canonical_url
   end
 
   def effective_pages_og_type
