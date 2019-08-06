@@ -2,6 +2,8 @@ module Effective
   class Menu < ActiveRecord::Base
     has_many :menu_items, dependent: :delete_all
 
+    acts_as_role_restricted
+
     self.table_name = EffectivePages.menus_table_name.to_s
     attr_protected() if Rails::VERSION::MAJOR == 3
 
