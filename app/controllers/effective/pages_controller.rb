@@ -20,7 +20,7 @@ module Effective
           'Hi Admin!',
           ('You are viewing a hidden page.' unless @page.published?),
           'Click here to',
-          ("<a href='#{effective_regions.edit_path(effective_pages.page_path(@page))}' class='alert-link'>edit page content</a> or" unless admin_edit?),
+          ("<a href='#{effective_regions.edit_path(effective_pages.page_path(@page))}' class='alert-link' data-no-turbolink='true' data-turbolinks='false'>edit page content</a> or" unless admin_edit?),
           ("<a href='#{effective_pages.edit_admin_page_path(@page)}' class='alert-link'>edit page settings</a>.")
         ].compact.join(' ')
       end

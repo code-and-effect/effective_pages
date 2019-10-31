@@ -7,7 +7,7 @@
         All menu editing may be done from the fullscreen editor. Just drag and drop menu items.
     .col-sm-6
       %p.text-right
-        = link_to "Edit #{@menu}", effective_regions.edit_path('/'), class: 'btn btn-primary', 'data-no-turbolink': true, target: '_blank'
+        = link_to "Edit #{@menu}", effective_regions.edit_path('/'), class: 'btn btn-primary', 'data-no-turbolink': true, 'data-turbolinks': false, target: '_blank'
 
 - if defined?(EffectiveRoles)
   %h2 Menu Items
