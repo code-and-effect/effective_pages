@@ -2,7 +2,7 @@ module EffectivePagesHelper
 
   def effective_pages_body_classes
     [
-      params[:controller].parameterize,
+      params[:controller].to_s.parameterize,
       params[:action],
       ((user_signed_in? ? 'signed-in'.freeze : 'not-signed-in'.freeze) rescue nil),
       (@page.template rescue nil),
