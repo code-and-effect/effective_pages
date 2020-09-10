@@ -101,8 +101,8 @@ module Admin
     private
 
     def authorize_effective_pages!
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, action_name.to_sym, @page|| Effective::Page)
+      EffectivePages.authorize!(self, :admin, :effective_pages)
+      EffectivePages.authorize!(self, action_name.to_sym, @page || Effective::Page)
     end
 
     def page_params

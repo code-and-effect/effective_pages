@@ -26,6 +26,7 @@ module EffectivePages
   mattr_accessor :silence_missing_canonical_url_warnings
 
   mattr_accessor :use_effective_roles
+  mattr_accessor :authenticate_user
 
   mattr_accessor :menu
   mattr_accessor :authorization_method

@@ -42,6 +42,14 @@ module Effective
       !draft?
     end
 
+    def content
+      region(:content).content
+    end
+
+    def content=(input)
+      region(:content).content = input
+    end
+
     # Returns a duplicated post object, or throws an exception
     def duplicate!
       Page.new(attributes.except('id', 'updated_at', 'created_at')).tap do |page|
@@ -60,7 +68,3 @@ module Effective
   end
 
 end
-
-
-
-

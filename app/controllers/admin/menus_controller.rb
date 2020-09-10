@@ -45,8 +45,8 @@ module Admin
     private
 
     def authorize_effective_menus!
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, action_name.to_sym, @menu || Effective::Menu)
+      EffectivePages.authorize!(self, :admin, :effective_pages)
+      EffectivePages.authorize!(self, action_name.to_sym, @menu || Effective::Menu)
     end
 
     def menu_params

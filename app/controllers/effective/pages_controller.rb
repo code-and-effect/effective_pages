@@ -1,5 +1,7 @@
 module Effective
   class PagesController < ApplicationController
+    before_action(:authenticate_user!) if EffectivePages.authenticate_user # Devise
+
     def show
       @pages = Effective::Page.all
       @pages = @pages.published unless EffectivePages.authorized?(self, :admin, :effective_pages)
@@ -9,7 +11,7 @@ module Effective
       raise ActiveRecord::RecordNotFound unless @page.present? # Incase .find() isn't raising it
       raise Effective::AccessDenied.new('Access Denied', :show, @page) unless @page.roles_permit?(current_user)
 
-      EffectivePages.authorized?(self, :show, @page)
+      EffectivePages.authorize!(self, :show, @page)
 
       @page_title = @page.title
       @meta_description = @page.meta_description
