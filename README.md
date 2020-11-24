@@ -15,9 +15,9 @@ Rails 3.2.x and 4.x
 
 ## Bootstrap3
 
-This is the `bootstrap3` branch of effective_datatables which supports Twitter Bootstrap 3.
+This is the `bootstrap3` branch of effective_pages which supports Twitter Bootstrap 3.
 
-All published effective_datatables 3.x gems will support Twitter Bootstrap 3 and SimpleForm.
+All published effective_pages 1.x gems will support Twitter Bootstrap 3 and SimpleForm.
 
 For Bootstrap 4 please see the master branch and/or effective_pages 2.x gems.
 
@@ -438,5 +438,3 @@ guard
 4. Push to the branch (`git push origin my-new-feature`)
 5. Bonus points for test coverage
 6. Create new Pull Request
-
-
