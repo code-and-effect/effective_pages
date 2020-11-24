@@ -15,7 +15,7 @@ This is the 2.0 series of effective_pages.
 
 This requires Twitter Bootstrap 4 and Rails 5.1+
 
-Please check out [bootstrap3 branch](https://github.com/code-and-effect/effective_datatables/tree/bootstrap3) for more information using this gem with Bootstrap 3.
+Please check out [bootstrap3 branch](https://github.com/code-and-effect/effective_pages/tree/bootstrap3) for more information using this gem with Bootstrap 3.
 
 
 ## Getting Started
@@ -250,5 +250,3 @@ MIT License.  Copyright [Code and Effect Inc.](http://www.codeandeffect.com/)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Bonus points for test coverage
 6. Create new Pull Request
-
-
