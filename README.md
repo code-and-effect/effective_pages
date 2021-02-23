@@ -11,7 +11,7 @@ Built ontop of effective_regions and effective_ckeditor.
 
 ## effective_pages 2.0
 
-This is the 2.0 series of effective_pages.
+This is the 2.0 / bootstrap4 series of effective_pages.
 
 This requires Twitter Bootstrap 4 and Rails 5.1+
 
