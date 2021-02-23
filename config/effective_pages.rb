@@ -10,7 +10,11 @@ EffectivePages.setup do |config|
   # Any files in this directory will be automatically available when
   # creating/editting an Effective::Page from the Admin screens
   # Relative to app/views/
-  config.pages_path = '/effective/pages/'
+  config.pages_path = 'effective/pages/'
+
+  # The directory where your layouts live
+  # Relative to app/views/
+  config.layouts_path = 'layouts/'
 
   # Excluded Pages
   # Any page templates from the above directory that should be excluded
@@ -42,44 +46,16 @@ EffectivePages.setup do |config|
   config.silence_missing_meta_description_warnings = false
   config.silence_missing_canonical_url_warnings = false
 
-
   # Display the effective roles 'choose roles' input when an admin creates a new post
   config.use_effective_roles = false
 
-  # Authorization Method
-  #
-  # This method is called by all controller actions with the appropriate action and resource
-  # If the method returns false, an Effective::AccessDenied Error will be raised (see README.md for complete info)
-  #
-  # Use via Proc (and with CanCan):
-  # config.authorization_method = Proc.new { |controller, action, resource| can?(action, resource) }
-  #
-  # Use via custom method:
-  # config.authorization_method = :my_authorization_method
-  #
-  # And then in your application_controller.rb:
-  #
-  # def my_authorization_method(action, resource)
-  #   current_user.is?(:admin)
-  # end
-  #
-  # Or disable the check completely:
-  # config.authorization_method = false
-  config.authorization_method = Proc.new { |controller, action, resource| authorize!(action, resource) && resource.roles_permit?(current_user) } # CanCanCan
-  # Use effective_roles:  resource.roles_permit?(current_user)
-
   # Layout Settings
-  # Configure the Layout per controller, or all at once
-
-  # The layout for the EffectivePages admin screen
-  config.layout = {
-    :admin => 'application'
-  }
+  # config.layout = { admin: 'admin' }
 
   # All effective_page menu options
   config.menu = {
-    :apply_active_class => true,  # Add an .active class to the appropriate li item based on current page url
-    :maxdepth => 2                # 2 by default, strict bootstrap3 doesnt support dropdowns in your dropdowns
+    apply_active_class: true,  # Add an .active class to the appropriate li item based on current page url
+    maxdepth: 2                # 2 by default, strict bootstrap3 doesnt support dropdowns in your dropdowns
   }
 
 end

@@ -18,7 +18,9 @@ class EffectivePagesDatatable < Effective::Datatable
     col :layout, visible: false
     col :tempate, visible: false
 
-    actions_col partial: 'admin/pages/actions', partial_as: :page
+    actions_col do |page|
+      dropdown_link_to('View', effective_pages.page_path(page), target: '_blank')
+    end
   end
 
   collection do

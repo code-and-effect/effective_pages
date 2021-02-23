@@ -1,15 +1,15 @@
-= effective_form_with(model: page, url: (page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path)) do |f|
-  = f.text_field :title, hint: 'The title of your page.', input_html: { maxlength: 255 }
+= effective_form_with(model: page, url: page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path) do |f|
+  = f.text_field :title, hint: 'The title of your page.'
 
-  - if (templates = EffectivePages.templates).length == 1
-    = f.hidden_field :template, value: templates.first
-  - else
+  - if (templates = EffectivePages.templates).length > 1
     = f.select :template, templates
-
-  - if (layouts = EffectivePages.layouts).length == 1
-    = f.hidden_field :layout, value: layouts.first
   - else
+    = f.hidden_field :template, value: templates.first
+
+  - if (layouts = EffectivePages.layouts).length > 1
     = f.select :layout, layouts
+  - else
+    = f.hidden_field :layout, value: layouts.first
 
   - if f.object.persisted? || f.object.errors.include?(:slug)
     - current_url = (effective_pages.page_url(f.object) rescue nil)
@@ -19,14 +19,11 @@
 
   = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
 
-  = f.check_box :draft, label: 'Save this page as a draft.  It will not be accessible on the website.'
+  = f.rich_text_area :body, hint: 'The main body of your page'
+
+  = f.check_box :draft, label: 'Save this page as a draft. It will not be accessible on the website.'
 
   - if defined?(EffectiveRoles) and f.object.respond_to?(:roles) && EffectivePages.use_effective_roles
     = render partial: '/admin/pages/roles', locals: { page: page, form: f, f: f }
 
-  = f.submit do
-    = f.save 'Save'
-    = f.save 'Save and Edit Content', class: 'btn btn-secondary'
-    = f.save 'Save and View', class: 'btn btn-secondary'
-    - if f.object.persisted?
-      = f.save 'Duplicate', class: 'btn btn-info'
+  = effective_submit(f)

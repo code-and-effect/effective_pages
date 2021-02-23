@@ -6,18 +6,14 @@ Create content pages ontop of one or more templates -- just regular Rails views 
 
 Use this gem to create a fully-functional CMS that provides full or restricted editing for your end users.
 
-Built ontop of effective_regions and effective_ckeditor.
 
+## effective_pages 3.0
 
-## effective_pages 2.0
+This is the 3.0 series of effective_pages.
 
-This is the 2.0 series of effective_pages.
+This requires Twitter Bootstrap 4 and Rails 6+
 
-This requires Twitter Bootstrap 4 and Rails 5.1+
-
-Please check out [bootstrap3 branch](https://github.com/code-and-effect/effective_pages/tree/bootstrap3) for more information using this gem with Bootstrap 3.
-
-
+Please check out [Effective Posts 0.x](https://github.com/code-and-effect/effective_posts/tree/bootstrap3) for more information using this gem with Bootstrap 3.
 ## Getting Started
 
 Please first install the [effective_regions](https://github.com/code-and-effect/effective_regions) and [effective_datatables](https://github.com/code-and-effect/effective_datatables) gems.
@@ -90,6 +86,7 @@ An example of a two-column layout I like to create is as follows:
 
 ```haml
 %h1
+
   = simple_effective_region page, :header do
     = page.title
 
@@ -121,19 +118,11 @@ effective_pages.page_url(page)
 
 If you would like to use an Effective::Page for your home/root page, add the following to your routes.rb:
 
-Rails 3 Syntax:
-
 ```ruby
-root :to => 'Effective::Pages#show', :id => 'home'
+root to: 'effective/pages#show', id: 'home'
 ```
 
-Rails 4 Syntax:
-
-```ruby
-root :to => 'effective/pages#show', :id => 'home'
-```
-
-and make sure a page with slug 'home' exists.
+and make sure a page with slug `home` exists.
 
 
 ### Header Tags
@@ -156,10 +145,10 @@ This helper is entirely optional and in no way required for effective_pages to w
 
 ### Body Tag Classes
 
-Another optional helper.  Add the following to your `<body>` tag:
+Another optional helper. Add the following to your `<body>` tag:
 
 ```haml
-%body{:class => effective_pages_body_classes}
+%body{class: effective_pages_body_classes}
 ```
 
 to apply the following html classes:  `params[:controller]`, `params[:action]`, `signed-in` / `not-signed-in`, `@page.template` and any thing set in the `@body_classes` instance variable.
@@ -176,54 +165,7 @@ Use this functionality to create member-only type pages.
 
 ## Authorization
 
-All authorization checks are handled via the config.authorization_method found in the `config/initializers/effective_pages.rb` file.
-
-It is intended for flow through to CanCan or Pundit, but neither of those gems are required.
-
-This method is called by all controller actions with the appropriate action and resource
-
-Action will be one of [:index, :show, :new, :create, :edit, :update, :destroy]
-
-Resource will the appropriate Effective::Page object or class
-
-The authorization method is defined in the initializer file:
-
-```ruby
-# As a Proc (with CanCan)
-config.authorization_method = Proc.new { |controller, action, resource| authorize!(action, resource) }
-```
-
-```ruby
-# As a Custom Method
-config.authorization_method = :my_authorization_method
-```
-
-and then in your application_controller.rb:
-
-```ruby
-def my_authorization_method(action, resource)
-  current_user.is?(:admin) || EffectivePunditPolicy.new(current_user, resource).send('#{action}?')
-end
-```
-
-or disabled entirely:
-
-```ruby
-config.authorization_method = false
-```
-
-If the method or proc returns false (user is not authorized) an Effective::AccessDenied exception will be raised
-
-You can rescue from this exception by adding the following to your application_controller.rb:
-
-```ruby
-rescue_from Effective::AccessDenied do |exception|
-  respond_to do |format|
-    format.html { render 'static_pages/access_denied', :status => 403 }
-    format.any { render :text => 'Access Denied', :status => 403 }
-  end
-end
-```
+All authorization checks are handled via the effective_resources gem found in the `config/initializers/effective_resources.rb` file.
 
 ### Permissions
 
@@ -234,6 +176,7 @@ can [:show], Effective::Page
 
 if user.is?(:admin)
   can :manage, Effective::Page
+  can :manage, Effective::Menu
   can :admin, :effective_pages # Can access the admin screens
 end
 ```

@@ -1,6 +1,6 @@
 # bundle exec rake effective_pages:seed
 namespace :effective_pages do
-  task :seed => :environment do
+  task seed: :environment do
     include EffectiveMenusHelper
 
     return true if Effective::Menu.find_by_title('main menu').present?

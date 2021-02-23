@@ -1,48 +1,24 @@
 module Effective
   class Menu < ActiveRecord::Base
-    has_many :menu_items, dependent: :delete_all
+    attr_accessor :current_user
+
+    log_changes if respond_to?(:log_changes)
 
     self.table_name = EffectivePages.menus_table_name.to_s
 
-    # structure do
-    #   title           :string
-    #   timestamps
-    # end
+    effective_resource do
+      title           :string
+      timestamps
+    end
 
     validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
 
+    has_many :menu_items, -> { MenuItem.sorted }, inverse_of: :menu, dependent: :delete_all
     accepts_nested_attributes_for :menu_items, allow_destroy: true
 
     before_save do
       if self.menu_items.find { |menu_item| menu_item.lft == 1 }.blank?
         menu_items.build(title: 'Home', url: '/', lft: 1, rgt: 2)
-      end
-    end
-
-    def self.update_from_effective_regions!(params)
-      Effective::Menu.transaction do
-        (params || {}).each do |menu_id, attributes|
-          menu = Effective::Menu.includes(:menu_items).find(menu_id)
-          menu.menu_items.delete_all
-
-          right = -1
-
-          attributes[:menu_items_attributes].each do |_, atts|
-            atts[:menuable_type] = 'Effective::Page' if atts[:menuable_type].blank?
-            atts.delete(:id)
-            right = [atts[:rgt].to_i, right].max
-          end
-
-          menu.attributes = attributes
-
-          # So when we render the menu, we don't include the Root/Home item.
-          # It has a left of 1 and a right of max(items.right)
-          root_node = menu.menu_items.find { |menu_item| menu_item.lft == 1 }
-          root_node ||= menu.menu_items.build(title: 'Home', url: '/', lft: 1, rgt: 2)
-          root_node.rgt = right + 1
-
-          menu.save!
-        end
       end
     end
 

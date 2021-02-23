@@ -32,7 +32,7 @@ module EffectivePages
       end
 
       def setup_routes
-        inject_into_file 'config/routes.rb', "\n  # if you want EffectivePages to render the home / root page\n  # uncomment the following line and create an Effective::Page with slug == 'home' \n  # root :to => 'Effective::Pages#show', :id => 'home'\n", :before => /root (:?)to.*/
+        inject_into_file 'config/routes.rb', "\n  # if you want EffectivePages to render the home / root page\n  # uncomment the following line and create an Effective::Page with slug == 'home' \n  # root to: 'Effective::Pages#show', id: 'home'\n", :before => /root (:?)to.*/
       end
 
     end

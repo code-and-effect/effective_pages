@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module EffectivePagesHelper
 
   def effective_pages_body_classes
     [
       params[:controller].to_s.parameterize,
       params[:action],
-      ((user_signed_in? ? 'signed-in'.freeze : 'not-signed-in'.freeze) rescue nil),
-      (@page.template rescue nil),
+      (user_signed_in? ? 'signed-in' : 'not-signed-in'),
+      (@page.template if @page && @page.respond_to?(:template)),
       @body_classes
     ].compact.join(' ')
   end

@@ -1,39 +1,43 @@
 module Effective
   class PagesController < ApplicationController
-    before_action(:authenticate_user!) if EffectivePages.authenticate_user # Devise
+    before_action(:authenticate_user!) if defined?(Devise) && EffectiveResources.authenticate_user
+
+    include Effective::CrudController
 
     def show
       @pages = Effective::Page.all
-      @pages = @pages.published unless EffectivePages.authorized?(self, :admin, :effective_pages)
+      @pages = @pages.published unless EffectiveResources.authorized?(self, :admin, :effective_pages)
 
       @page = @pages.find(params[:id])
 
       raise ActiveRecord::RecordNotFound unless @page.present? # Incase .find() isn't raising it
       raise Effective::AccessDenied.new('Access Denied', :show, @page) unless @page.roles_permit?(current_user)
 
-      EffectivePages.authorize!(self, :show, @page)
+      EffectiveResources.authorize!(self, :show, @page)
 
       @page_title = @page.title
       @meta_description = @page.meta_description
       @canonical_url = effective_pages.page_url(@page)
 
-      if EffectivePages.authorized?(self, :admin, :effective_pages)
+      if EffectiveResources.authorized?(self, :admin, :effective_pages)
         flash.now[:warning] = [
           'Hi Admin!',
           ('You are viewing a hidden page.' unless @page.published?),
           'Click here to',
-          ("<a href='#{effective_regions.edit_path(effective_pages.page_path(@page))}' class='alert-link' data-no-turbolink='true' data-turbolinks='false'>edit page content</a> or" unless admin_edit?),
           ("<a href='#{effective_pages.edit_admin_page_path(@page)}' class='alert-link'>edit page settings</a>.")
         ].compact.join(' ')
       end
 
-      render @page.template, layout: @page.layout, locals: { page: @page }
+      template = File.join(EffectivePages.pages_path, @page.template)
+      layout = (@page.layout.presence || resource_layout)
+
+      render(template, layout: layout, locals: { page: @page })
     end
 
     private
 
     def admin_edit?
-      EffectivePages.authorized?(self, :admin, :effective_posts) && (params[:edit].to_s == 'true')
+      EffectiveResources.authorized?(self, :admin, :effective_pages) && (params[:edit].to_s == 'true')
     end
 
   end

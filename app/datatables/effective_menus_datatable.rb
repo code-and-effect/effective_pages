@@ -6,7 +6,7 @@ class EffectiveMenusDatatable < Effective::Datatable
 
     col :title
 
-    actions_col partial: 'admin/menus/actions', partial_as: :menu
+    actions_col
   end
 
   collection do

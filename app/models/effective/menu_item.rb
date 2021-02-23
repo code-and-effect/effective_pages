@@ -9,19 +9,21 @@ module Effective
 
     acts_as_role_restricted
 
-    # structure do
-    #   title           :string
+    effective_resource do
+      title           :string
 
-    #   url             :string
-    #   special         :string  # divider / search / *_path
+      url             :string
+      special         :string  # divider / search / *_path
 
-    #   classes         :string
-    #   new_window      :boolean
-    #   roles_mask      :integer # 0 is going to mean logged in, -1 is going to mean public, > 0 will be future implementation of roles masking
+      classes         :string
+      new_window      :boolean
+      roles_mask      :integer # 0 is going to mean logged in, -1 is going to mean public, > 0 will be future implementation of roles masking
 
-    #   lft             :integer
-    #   rgt             :integer
-    # end
+      lft             :integer
+      rgt             :integer
+
+      timestamps
+    end
 
     validates :title, presence: true, length: { maximum: 255 }
     validates :url, length: { maximum: 255 }
@@ -32,7 +34,8 @@ module Effective
     validates :lft, presence: true
     validates :rgt, presence: true
 
-    default_scope -> { includes(:menuable).order(:lft) }
+    scope :deep, -> { includes(:menuable) }
+    scope :sorted, -> { order(:lft) }
 
     def leaf?
       (rgt.to_i - lft.to_i) == 1

@@ -16,9 +16,8 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'README.md']
 
-  s.add_dependency 'rails', '>= 3.2.0'
+  s.add_dependency 'rails', '>= 6'
   s.add_dependency 'effective_datatables', '>= 4.0.0'
-  s.add_dependency 'effective_regions'
   s.add_dependency 'effective_resources'
   s.add_dependency 'effective_roles'
 end

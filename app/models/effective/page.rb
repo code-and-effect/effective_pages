@@ -1,32 +1,35 @@
 module Effective
   class Page < ActiveRecord::Base
-    acts_as_role_restricted
-    acts_as_regionable
+    attr_accessor :current_user
+
     acts_as_slugged
 
+    log_changes if respond_to?(:log_changes)
+    acts_as_role_restricted
+
+    has_rich_text :body
     has_many :menu_items, as: :menuable, dependent: :destroy
 
     self.table_name = EffectivePages.pages_table_name.to_s
 
-    # structure do
-    #   title             :string
-    #   meta_description  :string
+    effective_resource do
+      title             :string
+      meta_description  :string
 
-    #   draft             :boolean
+      draft             :boolean
 
-    #   layout            :string
-    #   template          :string
+      layout            :string
+      template          :string
 
-    #   slug              :string
-    #   roles_mask        :integer
+      slug              :string
+      roles_mask        :integer
 
-    #   timestamps
-    # end
+      timestamps
+    end
 
     validates :title, presence: true, length: { maximum: 255 }
     validates :meta_description, presence: true, length: { maximum: 150 }
 
-    validates :layout, presence: true
     validates :template, presence: true
 
     scope :drafts, -> { where(draft: true) }
@@ -42,27 +45,19 @@ module Effective
       !draft?
     end
 
-    def content
-      region(:content).content
-    end
-
-    def content=(input)
-      region(:content).content = input
-    end
-
     # Returns a duplicated post object, or throws an exception
-    def duplicate!
+    def duplicate
       Page.new(attributes.except('id', 'updated_at', 'created_at')).tap do |page|
         page.title = page.title + ' (Copy)'
         page.slug = page.slug + '-copy'
         page.draft = true
 
-        regions.each do |region|
-          page.regions.build(region.attributes.except('id', 'updated_at', 'created_at'))
-        end
-
-        page.save!
+        post.body = body
       end
+    end
+
+    def duplicate!
+      duplicate.tap { |page| page.save! }
     end
 
   end
