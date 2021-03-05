@@ -1,7 +1,5 @@
 module Effective
   class PagesController < ApplicationController
-    before_action(:authenticate_user!) if defined?(Devise) && EffectiveResources.authenticate_user
-
     include Effective::CrudController
 
     def show
@@ -10,9 +8,11 @@ module Effective
 
       @page = @pages.find(params[:id])
 
-      raise ActiveRecord::RecordNotFound unless @page.present? # Incase .find() isn't raising it
-      raise Effective::AccessDenied.new('Access Denied', :show, @page) unless @page.roles_permit?(current_user)
+      if @page.authenticate_user? || @page.roles.present?
+        authenticate_user!
+      end
 
+      raise Effective::AccessDenied.new('Access Denied', :show, @page) unless @page.roles_permit?(current_user)
       EffectiveResources.authorize!(self, :show, @page)
 
       @page_title = @page.title
@@ -29,7 +29,7 @@ module Effective
       end
 
       template = File.join(EffectivePages.pages_path, @page.template)
-      layout = (@page.layout.presence || resource_layout)
+      layout = File.join(EffectivePages.layouts_path, @page.layout)
 
       render(template, layout: layout, locals: { page: @page })
     end

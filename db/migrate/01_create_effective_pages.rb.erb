@@ -4,13 +4,21 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.string :title
       t.string :meta_description
 
-      t.boolean :draft, :default => false
+      t.boolean :draft, default: false
 
-      t.string :layout, :default => 'application'
+      t.string :layout, default: 'application'
       t.string :template
 
       t.string :slug
-      t.integer :roles_mask, :default => 0
+
+      t.boolean :authenticate_user, default: false
+      t.integer :roles_mask, default: 0
+
+      t.integer :menu_parent_id
+      t.boolean :menu, default: true
+      t.string :menu_name
+      t.string :menu_url
+      t.integer :menu_position
 
       t.datetime :updated_at
       t.datetime :created_at

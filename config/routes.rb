@@ -1,9 +1,3 @@
-class EffectivePagesConstraint
-  def self.matches?(request)
-    Effective::Page.find(request.path_parameters[:id] || '/').present? rescue false
-  end
-end
-
 EffectivePages::Engine.routes.draw do
   namespace :admin do
     resources :pages, except: [:show]
@@ -11,7 +5,9 @@ EffectivePages::Engine.routes.draw do
   end
 
   scope module: 'effective' do
-    get '*id', to: 'pages#show', constraints: EffectivePagesConstraint, as: :page
+    match '*id', to: 'pages#show', via: :get, as: :page, constraints: lambda { |req|
+      Effective::Page.find_by_slug_or_id(req.path_parameters[:id] || '/').present?
+    }
   end
 end
 

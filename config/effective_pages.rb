@@ -3,8 +3,8 @@ EffectivePages.setup do |config|
   config.menus_table_name = :menus
   config.menu_items_table_name = :menu_items
 
-  # Call devise authenticate_user! as a before_action on Effective::Pages#show
-  config.authenticate_user = false
+  # The menu names a page can belong to
+  config.menus = [:main, :footer]
 
   # The directory where your page templates live
   # Any files in this directory will be automatically available when

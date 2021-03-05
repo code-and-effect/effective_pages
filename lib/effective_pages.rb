@@ -12,7 +12,7 @@ module EffectivePages
       :site_og_image, :site_og_image_width, :site_og_image_height,
       :site_title, :site_title_suffix, :fallback_meta_description,
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
-      :use_effective_roles, :authenticate_user, :menu, :layout
+      :use_effective_roles, :menus, :menu, :layout
     ]
   end
 
@@ -37,12 +37,6 @@ module EffectivePages
       next if Array(EffectivePages.excluded_layouts).map { |str| str.to_s }.include?(name)
       name
     end.compact.sort
-  end
-
-  def self.permitted_params
-    @permitted_params ||= [
-      :title, :meta_description, :draft, :layout, :template, :slug, roles: []
-    ]
   end
 
 end
