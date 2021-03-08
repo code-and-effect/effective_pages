@@ -1,0 +1,16 @@
+= effective_form_with(model: page, url: page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path) do |f|
+  = f.check_box :menu, label: 'Yes, display this page on the menu'
+
+  = f.show_if :menu, true do
+
+    - if (menus = EffectivePages.menus).length > 1
+      = f.select :menu_name, menus
+    - else
+      = f.hidden_field :menu_name, value: menus.first
+
+    = f.text_field :menu_url, label: "Redirect to path or url instead of displaying page",
+      hint: "Must start with http(s):// or /"
+
+    = f.select :menu_parent_id, Effective::Page.menuable.root_level, placeholder: 'None. Top level menu.'
+
+  = f.submit

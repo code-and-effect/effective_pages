@@ -1,5 +1,21 @@
 module EffectiveMenusHelper
-  def render_menu(menu, options = {}, &block)
+  def render_menu(name, options = {}, &block)
+    pages_menu = Array(EffectivePages.menus).find { |menu| menu.to_s == name }
+
+    if pages_menu.present?
+      render_pages_menu(name, options, &block)
+    else
+      render_effective_menu(name, options, &block)
+    end
+  end
+
+  def render_pages_menu(menu, options = {}, &block)
+    content_tag(:ul, options) { render('effective/pages/menu', menu: menu) }
+  end
+
+  # Everything below here is basically deprecated
+
+  def render_effective_menu(menu, options = {}, &block)
     menu = Effective::Menu.find_by_title(menu.to_s) if menu.kind_of?(String) || menu.kind_of?(Symbol)
     return "<ul class='nav navbar-nav'><li>Menu '#{menu}' does not exist</li></ul>".html_safe if !menu.present?
 
@@ -19,11 +35,6 @@ module EffectiveMenusHelper
     else
       render_menu_items(menu_items, options)
     end
-
-    # if options[:for_editor]
-    #else
-    #  Rails.cache.fetch(menu) { render_menu_items(menu.menu_items, options) }
-    #end
   end
 
   def render_menu_items(items, options = {}, &block)

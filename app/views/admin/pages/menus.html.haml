@@ -1,0 +1,9 @@
+%p
+  Click Reorder to drag & drop reorder the menu.
+  Edit an item to reorder its children items.
+
+- EffectivePages.menus.each do |menu|
+  %h2 #{menu.to_s.titleize} Menu
+  - datatable = EffectivePagesMenuDatatable.new(menu: menu)
+  = render_datatable(datatable, simple: true, inline: true)
+  %hr

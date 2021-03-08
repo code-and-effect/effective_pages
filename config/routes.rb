@@ -1,6 +1,9 @@
 EffectivePages::Engine.routes.draw do
   namespace :admin do
-    resources :pages, except: [:show]
+    resources :pages, except: [:show] do
+      get :menus, on: :collection
+    end
+
     resources :menus
   end
 

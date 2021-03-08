@@ -1,0 +1,5 @@
+= effective_form_with(model: page, url: page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path) do |f|
+  = f.rich_text_area :rich_text_body, label: 'Body', hint: 'The main body of your page'
+  = f.rich_text_area :rich_text_sidebar, label: 'Sidebar', hint: 'The sidebar content of your page'
+
+  = effective_submit(f)

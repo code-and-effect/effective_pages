@@ -1,0 +1,28 @@
+= effective_form_with(model: page, url: page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path) do |f|
+  = f.text_field :title, hint: 'The title of your page.'
+
+  = f.check_box :draft,
+    label: 'Save this page as a draft. It will not be accessible on the website.'
+
+  = f.text_field :meta_description,
+    hint: "A one or two sentence summary of this page. Appears on Google search results underneath the page title.",
+    input_html: { maxlength: 150 }
+
+  - if (layouts = EffectivePages.layouts).length > 1
+    = f.select :layout, layouts
+  - else
+    = f.hidden_field :layout, value: layouts.first
+
+
+  - if (templates = EffectivePages.templates).length > 1
+    = f.select :template, templates
+  - else
+    = f.hidden_field :template, value: templates.first
+
+  - if f.object.persisted? || f.object.errors.include?(:slug)
+    - current_url = (effective_pages.page_url(f.object) rescue nil)
+    = f.text_field :slug, hint: "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + link_to(current_url.gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>').html_safe, current_url)) if current_url }".html_safe
+
+  = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
+
+  = effective_submit(f)
