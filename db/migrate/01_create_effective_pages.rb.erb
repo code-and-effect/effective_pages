@@ -23,38 +23,12 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.datetime :updated_at
       t.datetime :created_at
     end
+
     add_index <%= @pages_table_name %>, :slug, :unique => true
-
-    create_table <%= @menus_table_name %> do |t|
-      t.string      :title
-      t.timestamps
-    end
-
-    create_table <%= @menu_items_table_name %> do |t|
-      t.integer       :menu_id
-
-      t.integer       :menuable_id
-      t.string        :menuable_type
-
-      t.string        :title
-
-      t.string        :url
-      t.string        :special
-
-      t.string        :classes
-      t.boolean       :new_window, :default => false
-      t.integer       :roles_mask, :default => nil
-
-      t.integer       :lft
-      t.integer       :rgt
-    end
-    add_index <%= @menu_items_table_name %>, :lft
   end
 
   def self.down
     drop_table <%= @pages_table_name %>
-    drop_table <%= @menus_table_name %>
-    drop_table <%= @menu_items_table_name %>
   end
 
 end

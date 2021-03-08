@@ -5,7 +5,7 @@
   = render '/admin/pages/form_menu', page: page
 
   - if datatable.present?(self)
-    %h3 Menu Items
+    %h3 Children
     = render_datatable(datatable, simple: true, inline: true)
 
 - else

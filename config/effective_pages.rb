@@ -1,7 +1,5 @@
 EffectivePages.setup do |config|
   config.pages_table_name = :pages
-  config.menus_table_name = :menus
-  config.menu_items_table_name = :menu_items
 
   # The menu names a page can belong to
   config.menus = [:main, :footer]
@@ -51,11 +49,5 @@ EffectivePages.setup do |config|
 
   # Layout Settings
   # config.layout = { admin: 'admin' }
-
-  # All effective_page menu options
-  config.menu = {
-    apply_active_class: true,  # Add an .active class to the appropriate li item based on current page url
-    maxdepth: 2                # 2 by default, strict bootstrap3 doesnt support dropdowns in your dropdowns
-  }
 
 end

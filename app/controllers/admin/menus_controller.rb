@@ -5,7 +5,7 @@ module Admin
 
     include Effective::CrudController
 
-    helper EffectiveMenusAdminHelper
+    resource_scope -> { Effective::Page.all }
 
     if (config = EffectivePages.layout)
       layout(config.kind_of?(Hash) ? config[:admin] : config)

@@ -24,4 +24,8 @@
 
   = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
 
+  -# This is for duplicate
+  - if f.object.new_record? && f.object.rich_texts.present?
+    = render partial: '/admin/pages/rich_text_areas', locals: { page: page, form: f, f: f }
+
   = effective_submit(f)

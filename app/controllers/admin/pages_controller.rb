@@ -12,7 +12,7 @@ module Admin
     submit :save, 'Save'
     submit :save, 'Save and Add New', redirect: :new
     submit :save, 'Save and View', redirect: -> { effective_pages.page_path(resource) }
-    submit :save, 'Duplicate', only: :edit, redirect: -> { effective_posts.new_admin_page_path(duplicate_id: resource.id) }
+    submit :save, 'Duplicate', only: :edit, redirect: -> { effective_pages.new_admin_page_path(duplicate_id: resource.id) }
 
     def permitted_params
       params.require(:effective_page).permit!

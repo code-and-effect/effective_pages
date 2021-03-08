@@ -91,9 +91,12 @@ module Effective
       Page.new(attributes.except('id', 'updated_at', 'created_at')).tap do |page|
         page.title = page.title + ' (Copy)'
         page.slug = page.slug + '-copy'
-        page.draft = true
 
-        post.body = body
+        rich_texts.each do |rt|
+          page.send("rich_text_#{rt.name}=", rt.body)
+        end
+
+        page.draft = true
       end
     end
 

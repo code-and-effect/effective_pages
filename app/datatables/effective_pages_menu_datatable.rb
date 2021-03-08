@@ -7,16 +7,19 @@ class EffectivePagesMenuDatatable < Effective::Datatable
       col :menu_parent
     end
 
-    col :title
-    col :menu_url, label: 'Path or URL'
+    col :title do |page|
+      link_to(page, effective_pages.edit_admin_page_path(page))
+    end
 
-    col :menu_position, visible: false
+    col :menu_url, label: 'Redirect Url'
+    col :menu_position, label: 'Position', visible: false
+    col :menu_children, label: 'Children'
 
-    actions_col(new: false)
+    actions_col(new: false, destroy: false)
   end
 
   collection(apply_belongs_to: false) do
-    scope = Effective::Page.for_menu(menu)
+    scope = Effective::Page.deep.for_menu(menu)
 
     scope = if attributes[:menu_parent_id].present?
       scope.where(menu_parent_id: attributes[:menu_parent_id])

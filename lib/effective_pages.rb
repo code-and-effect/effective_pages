@@ -7,12 +7,12 @@ require 'effective_pages/version'
 module EffectivePages
   def self.config_keys
     [
-      :pages_table_name, :menus_table_name, :menu_items_table_name,
+      :pages_table_name,
       :pages_path, :excluded_pages, :layouts_path, :excluded_layouts,
       :site_og_image, :site_og_image_width, :site_og_image_height,
       :site_title, :site_title_suffix, :fallback_meta_description,
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
-      :use_effective_roles, :menus, :menu, :layout
+      :use_effective_roles, :menus, :layout
     ]
   end
 
