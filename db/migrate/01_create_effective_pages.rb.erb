@@ -17,6 +17,7 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.integer :menu_parent_id
       t.boolean :menu, default: false
       t.string :menu_name
+      t.string :menu_title
       t.string :menu_url
       t.integer :menu_position
 

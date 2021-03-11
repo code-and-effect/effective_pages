@@ -31,6 +31,7 @@ module Effective
       menu              :boolean
       menu_name         :string
 
+      menu_title        :string
       menu_url          :string
       menu_position     :integer
 

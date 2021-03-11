@@ -8,6 +8,8 @@
     - else
       = f.hidden_field :menu_name, value: menus.first
 
+    = f.text_field :menu_title, hint: "Display this title on menus instead of full page title"
+
     = f.text_field :menu_url, label: "Redirect to path or url instead of displaying page",
       hint: "Must start with http(s):// or /"
 
