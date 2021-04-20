@@ -12,7 +12,7 @@
     = nav_link_to((page.menu_title.presence || page.title), (page.menu_url.presence || effective_pages.page_path(page)))
   - else
     = nav_dropdown(page.to_s) do
-      - ([page] + menu_children).each do |page|
+      - menu_children.each do |page|
         - next unless EffectiveResources.authorized?(self, :show, page)
         - next if (page.authenticate_user || page.roles.present?) && current_user.blank?
         - next if page.roles.present? && !current_user.roles.include?(page.roles)

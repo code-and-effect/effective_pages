@@ -1,6 +1,7 @@
 module Effective
   class Page < ActiveRecord::Base
     attr_accessor :current_user
+    attr_accessor :menu_root_level
 
     # These parent / children are for the menu as well
     belongs_to :menu_parent, class_name: 'Effective::Page', optional: true
@@ -103,6 +104,10 @@ module Effective
 
     def duplicate!
       duplicate.tap { |page| page.save! }
+    end
+
+    def menu_root_level
+      menu_parent.blank?
     end
 
   end

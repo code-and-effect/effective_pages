@@ -8,11 +8,17 @@
     - else
       = f.hidden_field :menu_name, value: menus.first
 
+    = f.check_box :menu_root_level, label: "This is a top level menu item. Do not show page content."
+
+    = f.show_if :menu_root_level, true do
+      = f.hidden_field :menu_parent_id, value: nil
+
+    = f.show_if :menu_root_level, false do
+      = f.select :menu_parent_id, Effective::Page.menuable.root_level.where.not(id: f.object), required: true
+
     = f.text_field :menu_title, hint: "Display this title on menus instead of full page title"
 
     = f.text_field :menu_url, label: "Redirect to path or url instead of displaying page",
       hint: "Must start with http(s):// or /"
-
-    = f.select :menu_parent_id, Effective::Page.menuable.root_level, placeholder: 'None. Top level menu.'
 
   = f.submit

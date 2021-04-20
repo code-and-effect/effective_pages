@@ -14,11 +14,12 @@
       = render '/admin/pages/form_page', page: page
 
     - if page.persisted?
-      = tab 'Content' do
-        = render '/admin/pages/form_content', page: page
-
       = tab 'Menu' do
         = render '/admin/pages/form_menu', page: page
+
+      - unless page.menu_root_level
+        = tab 'Content' do
+          = render '/admin/pages/form_content', page: page
 
       = tab 'Access' do
         = render '/admin/pages/form_access', page: page

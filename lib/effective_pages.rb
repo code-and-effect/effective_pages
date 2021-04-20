@@ -1,6 +1,6 @@
-require 'effective_datatables'
-require 'effective_resources'
 require 'effective_roles'
+require 'effective_resources'
+require 'effective_datatables'
 require 'effective_pages/engine'
 require 'effective_pages/version'
 
