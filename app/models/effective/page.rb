@@ -84,6 +84,15 @@ module Effective
       title
     end
 
+    # As per has_many_rich_texts
+    def body
+      rich_text_body
+    end
+
+    def sidebar
+      rich_text_sidebar
+    end
+
     def published?
       !draft?
     end
@@ -107,7 +116,7 @@ module Effective
     end
 
     def menu_root_level
-      menu_parent.blank?
+      menu? && menu_parent.blank?
     end
 
   end

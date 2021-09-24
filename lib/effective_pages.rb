@@ -19,7 +19,9 @@ module EffectivePages
   include EffectiveGem
 
   def self.templates
-    ApplicationController.view_paths.map { |path| Dir[File.join(path, pages_path, '**')] }.flatten.map do |file|
+    view_paths = defined?(Tenant) ? Tenant.view_paths : ApplicationController.view_paths
+
+    view_paths.map { |path| Dir[File.join(path, pages_path, '**')] }.flatten.map do |file|
       name = File.basename(file).split('.').first
       next if name.starts_with?('_')
       next if Array(EffectivePages.excluded_pages).map { |str| str.to_s }.include?(name)
@@ -30,7 +32,9 @@ module EffectivePages
   def self.layouts
     return [] if layouts_path.blank?
 
-    ApplicationController.view_paths.map { |path| Dir[File.join(path, layouts_path, '**')] }.flatten.map do |file|
+    view_paths = defined?(Tenant) ? Tenant.view_paths : ApplicationController.view_paths
+
+    view_paths.map { |path| Dir[File.join(path, layouts_path, '**')] }.flatten.map do |file|
       name = File.basename(file).split('.').first
       next if name.starts_with?('_')
       next if name.include?('mailer')

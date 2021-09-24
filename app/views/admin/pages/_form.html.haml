@@ -14,8 +14,9 @@
       = render '/admin/pages/form_page', page: page
 
     - if page.persisted?
-      = tab 'Menu' do
-        = render '/admin/pages/form_menu', page: page
+      - if EffectivePages.menus.present?
+        = tab 'Menu' do
+          = render '/admin/pages/form_menu', page: page
 
       - unless page.menu_root_level
         = tab 'Content' do
