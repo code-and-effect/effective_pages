@@ -59,8 +59,7 @@ module Effective
     validates :layout, presence: true
     validates :template, presence: true
 
-    validates :menu_name, if: -> { menu? && EffectivePages.menus.present? },
-      presence: true, inclusion: { in: EffectivePages.menus.map(&:to_s) }
+    validates :menu_name, if: -> { menu? && EffectivePages.menus.present? }, presence: true
 
     # validates :menu_position, if: -> { menu? },
     #   presence: true, uniqueness: { scope: [:menu_name, :menu_parent_id] }
