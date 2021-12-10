@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 EffectivePages::Engine.routes.draw do
   namespace :admin do
     resources :pages, except: [:show]
