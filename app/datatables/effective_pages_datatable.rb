@@ -28,7 +28,7 @@ class EffectivePagesDatatable < Effective::Datatable
     col :tempate, visible: false
 
     col :menu_url, visible: false
-    col :menu_parent
+    col :menu_parent, search: { collection: admin_menu_parent_collection(), grouped: true }
     col :menu_position, visible: false
 
     col :authenticate_user, visible: false

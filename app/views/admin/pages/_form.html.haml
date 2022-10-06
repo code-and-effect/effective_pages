@@ -1,12 +1,5 @@
-- if inline_datatable? && inline_datatable.attributes[:menu]
-  - menu = inline_datatable.attributes[:menu]
-  - datatable = EffectivePagesMenuDatatable.new(menu: menu, menu_parent_id: page.id)
-
+- if inline_datatable?
   = render '/admin/pages/form_menu', page: page
-
-  - if datatable.present?(self)
-    %h3 Children
-    = render_datatable(datatable, simple: true, inline: true)
 
 - else
   = tabs do

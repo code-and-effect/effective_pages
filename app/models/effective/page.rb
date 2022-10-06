@@ -59,7 +59,7 @@ module Effective
     validates :layout, presence: true
     validates :template, presence: true
 
-    validates :menu_name, if: -> { menu? && EffectivePages.menus.present? }, presence: true
+    validates :menu_name, if: -> { menu_root? && EffectivePages.menus.present? }, presence: true
 
     # validates :menu_position, if: -> { menu? },
     #   presence: true, uniqueness: { scope: [:menu_name, :menu_parent_id] }
@@ -114,8 +114,26 @@ module Effective
       duplicate.tap { |page| page.save! }
     end
 
+    # When true, this should not appear in sitemap.xml and should return 404 if visited
+    def menu_root_with_children?
+      menu_root? && menu_parent?
+    end
+
+    # This is for the form
     def menu_root_level
-      menu? && menu_parent.blank?
+      menu_root?
+    end
+
+    def menu_root?
+      menu? && menu_parent_id.blank?
+    end
+
+    def menu_parent?
+      menu? && menu_children.to_a.present?
+    end
+
+    def menu_child?
+      menu? && menu_parent_id.present?
     end
 
   end

@@ -26,7 +26,7 @@
   = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
 
   - if f.object.persisted?
-    - if page.menu_root_level && page.menu_children.present?
+    - if page.menu_root? && page.menu_parent?
       .alert.alert-info.my-3.pl-0
         %ul.mb-0
           %li This page is a top level menu item with at least one child page
@@ -37,7 +37,6 @@
 
     - else
       = render '/admin/pages/rich_text_areas', page: page, f: f
-
 
   -# This is for duplicate
   - if f.object.new_record? && f.object.rich_texts.present?

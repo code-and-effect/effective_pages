@@ -50,4 +50,10 @@ EffectivePages.setup do |config|
   # Layout Settings
   # config.layout = { admin: 'admin' }
 
+  # Menus
+  # Strict bootstrap only supports depth 2. A root level and one dropdown.
+  # Other sites can be configured such that the depth 3 menus are displayed on a sidebar.
+  # Only 2 or 3 are supported right now
+  config.max_menu_depth = 2
+
 end

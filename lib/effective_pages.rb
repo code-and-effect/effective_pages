@@ -12,7 +12,7 @@ module EffectivePages
       :site_og_image, :site_og_image_width, :site_og_image_height,
       :site_title, :site_title_suffix, :fallback_meta_description,
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
-      :use_effective_roles, :menus, :layout
+      :use_effective_roles, :menus, :layout, :max_menu_depth
     ]
   end
 
@@ -41,6 +41,12 @@ module EffectivePages
       next if Array(EffectivePages.excluded_layouts).map { |str| str.to_s }.include?(name)
       name
     end.compact.sort
+  end
+
+  def self.max_menu_depth
+    depth = config[:max_menu_depth] || 2
+    raise('only depths 2 and 3 are supported') unless [2, 3].include?(depth)
+    depth
   end
 
 end
