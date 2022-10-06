@@ -1,12 +1,13 @@
 - raise('expected a menu') unless menu.present?
 - menu = menu.to_s
 
+- # Renders menu_root? level pages and their immediate children
 - Effective::Page.for_menu_root(menu).each do |page|
   - next unless EffectiveResources.authorized?(self, :show, page)
   - next if (page.authenticate_user || page.roles.present?) && current_user.blank?
   - next if page.roles.present? && (current_user.roles & page.roles).blank?
 
-  - menu_children = page.menu_children.select { |page| page.menu_name == menu }
+  - menu_children = page.menu_children
 
   - if menu_children.blank?
     = nav_link_to((page.menu_title.presence || page.title), (page.menu_url.presence || effective_pages.page_path(page)))

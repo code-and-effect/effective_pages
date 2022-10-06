@@ -3,18 +3,18 @@
 
   = f.show_if :menu, true do
 
-    - if (menus = EffectivePages.menus).length > 1
-      = f.select :menu_name, menus
-    - else
-      = f.hidden_field :menu_name, value: menus.first
-
     = f.check_box :menu_root_level, label: "This is a top level menu item. It has no content and cannot be viewed, but can have children pages"
 
     = f.show_if :menu_root_level, true do
       = f.hidden_field :menu_parent_id, value: nil
 
+      - if (menus = EffectivePages.menus).length > 1
+        = f.select :menu_name, menus, label: 'Top level menu item in this menu'
+      - else
+        = f.hidden_field :menu_name, value: menus.first
+
     = f.show_if :menu_root_level, false do
-      = f.select :menu_parent_id, Effective::Page.menuable.root_level.where.not(id: f.object), required: true
+      = f.select :menu_parent_id, admin_menu_parent_collection(f.object), required: true, grouped: true
 
     = f.text_field :menu_title, hint: "Display this title on menus instead of full page title"
 

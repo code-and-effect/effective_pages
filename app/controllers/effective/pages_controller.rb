@@ -8,6 +8,8 @@ module Effective
 
       @page = @pages.find(params[:id])
 
+      raise ActionController::RoutingError.new('Not Found') if @page.menu_root_with_children?
+
       if @page.authenticate_user? || @page.roles.present?
         authenticate_user!
       end

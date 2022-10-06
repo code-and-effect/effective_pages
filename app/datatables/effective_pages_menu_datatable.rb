@@ -13,7 +13,21 @@ class EffectivePagesMenuDatatable < Effective::Datatable
 
     col :menu_url, label: 'Redirect Url'
     col :menu_position, label: 'Position', visible: false
-    col :menu_children, label: 'Children'
+
+    # We only support depth 2 and 3.
+    col :menu_children, label: 'Children' do |page|
+      page.menu_children.map do |child|
+        content_tag(:div, class: 'col-resource_item') do
+          link = link_to(child, effective_pages.edit_admin_page_path(child))
+
+          list = child.menu_children.map do |child|
+            content_tag(:li, link_to(child, effective_pages.edit_admin_page_path(child)))
+          end
+
+          link + (content_tag(:ul, list.join.html_safe) if list.present?).to_s
+        end
+      end.join.html_safe
+    end
 
     actions_col(new: false, destroy: false)
   end
