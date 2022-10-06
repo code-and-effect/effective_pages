@@ -22,9 +22,8 @@ module Effective
       if EffectiveResources.authorized?(self, :admin, :effective_pages)
         flash.now[:warning] = [
           'Hi Admin!',
-          ('You are viewing a hidden page.' unless @page.published?),
-          'Click here to',
-          ("<a href='#{effective_pages.edit_admin_page_path(@page)}' class='alert-link'>edit page settings</a>.")
+          ('You are viewing a draft page.' unless @page.published?),
+          ("<a href='#{effective_pages.edit_admin_page_path(@page)}' class='alert-link'>Click here to edit this page</a>.")
         ].compact.join(' ')
       end
 

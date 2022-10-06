@@ -10,6 +10,7 @@
 
   - if menu_children.blank?
     = nav_link_to((page.menu_title.presence || page.title), (page.menu_url.presence || effective_pages.page_path(page)))
+
   - else
     = nav_dropdown(page.to_s) do
       - menu_children.each do |page|
