@@ -22,3 +22,13 @@
       hint: "Must start with http(s):// or /"
 
   = f.submit
+
+- if page.menu_parent.present?
+  .mb-4
+    %h3 Parent
+    = link_to(page.menu_parent, effective_pages.edit_admin_page_path(page.menu_parent))
+
+- if page.menu_children.present?
+  %h3 Children
+  - datatable = EffectivePagesMenuDatatable.new(page: page)
+  = render_datatable(datatable, simple: true, inline: true)

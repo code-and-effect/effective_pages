@@ -33,12 +33,14 @@ class EffectivePagesMenuDatatable < Effective::Datatable
   end
 
   collection(apply_belongs_to: false) do
-    scope = Effective::Page.deep.for_menu(menu)
+    scope = Effective::Page.deep.menuable
 
-    scope = if attributes[:menu_parent_id].present?
-      scope.where(menu_parent_id: attributes[:menu_parent_id])
-    else
-      scope.where(menu_parent_id: nil)
+    if attributes[:menu].present?
+      scope = scope.root_level.for_menu(menu)
+    end
+
+    if attributes[:page_id].present?
+      scope = scope.where(menu_parent_id: attributes[:page_id])
     end
 
     scope

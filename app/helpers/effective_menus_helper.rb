@@ -55,8 +55,8 @@ module EffectiveMenusHelper
     end
   end
 
-  def admin_menu_parent_collection(page)
-    raise('expected a page') unless page.kind_of?(Effective::Page)
+  def admin_menu_parent_collection(page = nil)
+    raise('expected a page') if page.present? && !page.kind_of?(Effective::Page)
 
     pages = Effective::Page.menuable.root_level.where.not(id: page)
 
