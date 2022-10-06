@@ -72,7 +72,7 @@ module Effective
     scope :on_menu, -> { where(menu: true) }
     scope :except_home, -> { where.not(title: 'Home') }
 
-    scope :menuable, -> { where(menu: true).order(:menu_position) }
+    scope :menuable, -> { published.where(menu: true).order(:menu_position) }
     scope :menu_deep, -> { includes(:menu_parent, :menu_children) }
 
     scope :for_menu, -> (name) { menuable.where(menu_name: name) }

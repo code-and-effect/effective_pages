@@ -1,10 +1,7 @@
 = effective_form_with(model: page, url: page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path) do |f|
-  = f.check_box :authenticate_user, label: 'Yes, the user must be be signed in to view this page'
+  = f.check_box :authenticate_user, label: 'Restrict the page to any signed in user'
 
   - if EffectivePages.use_effective_roles
-    = f.checks :roles, EffectiveRoles.roles_collection(f.object)
-
-  %p.text-hint
-    * leave blank for a regular public page that anyone can view
+    = f.checks :roles, EffectiveRoles.roles_collection(f.object), label: 'Restrict the page to any signed in user that has the role:'
 
   = f.submit

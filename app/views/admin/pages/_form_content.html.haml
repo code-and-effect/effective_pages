@@ -1,3 +1,0 @@
-= effective_form_with(model: page, url: page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path) do |f|
-  = render '/admin/pages/rich_text_areas', page: page, f: f
-  = effective_submit(f)

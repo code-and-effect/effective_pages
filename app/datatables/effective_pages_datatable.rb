@@ -1,10 +1,10 @@
 class EffectivePagesDatatable < Effective::Datatable
 
   filters do
+    scope :all
     scope :published
     scope :draft
     scope :on_menu
-    scope :all
   end
 
   datatable do
@@ -15,6 +15,8 @@ class EffectivePagesDatatable < Effective::Datatable
     col :updated_at, visible: false
 
     col :title
+    col :menu_title
+    col :menu_name
 
     col :slug do |page|
       link_to(page.slug, effective_pages.page_path(page), target: '_blank')
@@ -25,10 +27,8 @@ class EffectivePagesDatatable < Effective::Datatable
     col :layout, visible: false
     col :tempate, visible: false
 
-    col :menu
-    col :menu_name, visible: false
     col :menu_url, visible: false
-    col :menu_parent, visible: false
+    col :menu_parent
     col :menu_position, visible: false
 
     col :authenticate_user, visible: false
