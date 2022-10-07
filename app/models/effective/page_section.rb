@@ -6,7 +6,7 @@ module Effective
     belongs_to :owner, polymorphic: true, optional: true
 
     has_many_rich_texts
-    has_many_attached :files
+    has_one_attached :file
 
     log_changes if respond_to?(:log_changes)
 
@@ -32,7 +32,7 @@ module Effective
     validates :link_url, presence: true, if: -> { link_label.present? }
     validates :link_url, absence: true, if: -> { link_label.blank? }
 
-    scope :deep, -> { with_attached_files.includes(:rich_texts) }
+    scope :deep, -> { with_attached_file.includes(:rich_texts) }
     scope :sorted, -> { order(:name) }
 
     def to_s
