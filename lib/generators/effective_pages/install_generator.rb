@@ -21,6 +21,7 @@ module EffectivePages
 
       def create_migration_file
         @pages_table_name = ':' + EffectivePages.pages_table_name.to_s
+        @page_sections_table_name = ':' + EffectivePages.page_sections_table_name.to_s
         migration_template ('../' * 3) + 'db/migrate/01_create_effective_pages.rb.erb', 'db/migrate/create_effective_pages.rb'
       end
 

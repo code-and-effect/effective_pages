@@ -1,0 +1,25 @@
+= effective_form_with(model: [:admin, page_section], engine: true) do |f|
+  - if f.object.new_record?
+    = f.text_field :name, hint: 'The name of this region must be unique'
+  - else
+    = f.static_field :name
+
+  - if f.object.hint.present?
+    .mb-4= f.object.hint.html_safe
+
+  = f.text_field :title
+
+  - if defined?(EffectiveArticleEditor)
+    = f.article_editor :rich_text_body, label: 'Body', hint: 'The main content'
+  - else
+    = f.rich_text_area :rich_text_body, label: 'Body', hint: 'The main content'
+
+  .row
+    .col= f.text_field :link_label
+    .col= f.url_field :link_url
+
+  = f.file_field :files, label: 'Attachment'
+
+  = f.text_field :caption
+
+  = effective_submit(f)

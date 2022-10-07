@@ -3,6 +3,7 @@
 EffectivePages::Engine.routes.draw do
   namespace :admin do
     resources :pages, except: [:show]
+    resources :page_sections, only: [:index, :edit, :update]
     resources :menus, only: [:index]
   end
 

@@ -1,5 +1,6 @@
 EffectivePages.setup do |config|
   config.pages_table_name = :pages
+  config.page_sections_table_name = :page_sections
 
   # The menu names a page can belong to
   config.menus = [:main, :footer]

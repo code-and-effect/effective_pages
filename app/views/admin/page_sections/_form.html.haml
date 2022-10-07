@@ -1,0 +1,7 @@
+= tabs do
+  = tab 'Page Section' do
+    = render '/admin/page_sections/form_page_section', page_section: page_section
+
+  - if page_section.persisted?
+    = tab 'Logs' do
+      = render_datatable(page_section.log_changes_datatable, inline: true, namespace: :admin)
