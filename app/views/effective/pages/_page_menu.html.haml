@@ -14,4 +14,4 @@
     - next if (page.authenticate_user || page.roles.present?) && current_user.blank?
     - next if page.roles.present? && (current_user.roles & page.roles).blank?
 
-    = nav_link_to((page.menu_title.presence || page.title), (page.menu_url.presence || effective_pages.page_path(page)))
+    = nav_link_to(page.menu_to_s, (page.menu_url.presence || effective_pages.page_path(page)))

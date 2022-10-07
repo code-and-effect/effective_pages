@@ -70,7 +70,7 @@ module EffectiveMenusHelper
           label = content_tag(:div) do
             arrow = "&rarr;"
             group = content_tag(:span, child.menu_group, class: 'badge badge-info') if child.menu_group.present?
-            title = (child.menu_title.presence || child.title)
+            title = child.menu_to_s
 
             [arrow, group, title].compact.join(' ').html_safe
           end

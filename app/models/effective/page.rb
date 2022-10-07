@@ -97,6 +97,10 @@ module Effective
       title
     end
 
+    def menu_to_s
+      (menu_title.presence || title)
+    end
+
     # As per has_many_rich_texts
     def body
       rich_text_body
