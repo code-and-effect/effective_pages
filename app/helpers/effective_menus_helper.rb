@@ -67,7 +67,15 @@ module EffectiveMenusHelper
       # You can only select root level pages and immediate children
       pages.map do |page|
         [[page.to_s, page.id, page.menu_name]] + page.menu_children.map do |child|
-          [' -- ' + child.to_s, child.id, child.menu_name]
+          label = content_tag(:div) do
+            arrow = "&rarr;"
+            group = content_tag(:span, child.menu_group, class: 'badge badge-info') if child.menu_group.present?
+            title = (child.menu_title.presence || child.title)
+
+            [arrow, group, title].compact.join(' ').html_safe
+          end
+
+          [child.to_s, child.to_param, { 'data-html': label }, child.menu_name]
         end
       end.flatten(1).group_by(&:last)
     end

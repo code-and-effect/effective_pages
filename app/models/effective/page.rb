@@ -29,12 +29,13 @@ module Effective
       slug              :string
 
       # Menu stuff
-      menu              :boolean
-      menu_name         :string
+      menu              :boolean        # Should this be displayed on the menu at all?
+      menu_name         :string         # When I'm a root level item, this is the menu I render underneath
+      menu_group        :string         # Used for design. Group by menu_group to display full dropdowns.
 
-      menu_title        :string
-      menu_url          :string
-      menu_position     :integer
+      menu_title        :string         # Displayed on the menu instead of title
+      menu_url          :string         # Redirect to this url instead of the page url
+      menu_position     :integer        # Position in the menu
 
       # Access
       roles_mask        :integer
@@ -59,7 +60,10 @@ module Effective
     validates :layout, presence: true
     validates :template, presence: true
 
-    validates :menu_name, if: -> { menu_root? && EffectivePages.menus.present? }, presence: true
+    validates :menu_name, presence: true, if: -> { menu_root? && EffectivePages.menus.present? }
+
+    # Doesn't make sense for a top level item to have a menu group
+    validates :menu_group, absence: true, if: -> { menu_root? && EffectivePages.menus.present? }
 
     # validates :menu_position, if: -> { menu? },
     #   presence: true, uniqueness: { scope: [:menu_name, :menu_parent_id] }
@@ -69,6 +73,7 @@ module Effective
     scope :draft, -> { where(draft: true) }
     scope :published, -> { where(draft: false) }
     scope :sorted, -> { order(:title) }
+
     scope :on_menu, -> { where(menu: true) }
     scope :except_home, -> { where.not(title: 'Home') }
 
@@ -78,6 +83,15 @@ module Effective
     scope :for_menu, -> (name) { menuable.where(menu_name: name) }
     scope :for_menu_root, -> (name) { for_menu(name).menu_deep.root_level }
     scope :root_level, -> { where(menu_parent_id: nil) }
+
+    scope :menu_root_with_children, -> { menu_parents.where(menu_parent_id: nil) }
+    scope :menu_roots, -> { where(menu: true).where(menu_parent_id: nil) }
+    scope :menu_parents, -> { where(menu: true).where(id: Effective::Page.select('menu_parent_id')) }
+    scope :menu_children, -> { where(menu: true).where.not(menu_parent_id: nil) }
+
+    scope :for_sitemap, -> {
+      published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
+    }
 
     def to_s
       title
