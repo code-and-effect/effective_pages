@@ -14,14 +14,15 @@
         = f.hidden_field :menu_name, value: menus.first
 
     = f.show_if :menu_root_level, false do
-      = f.select :menu_parent_id, admin_menu_parent_collection(f.object), required: true, grouped: true
+      = f.select :menu_parent_id, admin_menu_parent_collection(f.object), required: true, grouped: true, hint: 'Displayed on the menu underneath this parent'
+      = f.text_field :menu_group, hint: 'Displayed on the menu in this group or column'
 
     = f.text_field :menu_title, hint: "Display this title on menus instead of full page title"
 
     = f.text_field :menu_url, label: "Redirect to path or url instead of displaying page",
       hint: "Must start with http(s):// or /"
 
-  = f.submit
+  = effective_submit(f)
 
 - if page.menu_parent.present?
   .mb-4

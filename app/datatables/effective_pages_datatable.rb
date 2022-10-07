@@ -15,8 +15,6 @@ class EffectivePagesDatatable < Effective::Datatable
     col :updated_at, visible: false
 
     col :title
-    col :menu_title
-    col :menu_name
 
     col :slug do |page|
       link_to(page.slug, effective_pages.page_path(page), target: '_blank')
@@ -26,6 +24,10 @@ class EffectivePagesDatatable < Effective::Datatable
 
     col :layout, visible: false
     col :tempate, visible: false
+
+    col :menu_name
+    col :menu_title
+    col :menu_group
 
     col :menu_url, visible: false
     col :menu_parent, search: { collection: admin_menu_parent_collection(), grouped: true }

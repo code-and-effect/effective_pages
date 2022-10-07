@@ -5,9 +5,13 @@
 - if menu_children.blank? && page.menu_parent&.menu_children.present?
   - menu_children = page.menu_parent&.menu_children
 
-- menu_children.each do |page|
-  - next unless EffectiveResources.authorized?(self, :show, page)
-  - next if (page.authenticate_user || page.roles.present?) && current_user.blank?
-  - next if page.roles.present? && (current_user.roles & page.roles).blank?
+- menu_children.group_by(&:menu_group).each do |menu_group, pages|
+  - if menu_group.present?
+    %h6= menu_group
 
-  = nav_link_to((page.menu_title.presence || page.title), (page.menu_url.presence || effective_pages.page_path(page)))
+  - pages.each do |page|
+    - next unless EffectiveResources.authorized?(self, :show, page)
+    - next if (page.authenticate_user || page.roles.present?) && current_user.blank?
+    - next if page.roles.present? && (current_user.roles & page.roles).blank?
+
+    = nav_link_to(page.menu_to_s, (page.menu_url.presence || effective_pages.page_path(page)))
