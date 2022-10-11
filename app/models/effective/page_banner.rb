@@ -27,6 +27,7 @@ module Effective
 
     scope :deep, -> { with_attached_file.includes(:rich_texts) }
     scope :sorted, -> { order(:name) }
+    scope :random, -> { order('RANDOM()') }
 
     validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
     validates :file, presence: true
