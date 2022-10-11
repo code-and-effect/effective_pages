@@ -1,0 +1,11 @@
+%h1= @page_title
+
+%p
+  Click Reorder to drag & drop reorder carousel items.
+  Edit an item to change its content.
+
+- EffectivePages.carousels.each do |carousel|
+  %h3 #{carousel.to_s.titleize} Carousel
+  - datatable = EffectiveCarouselItemsDatatable.new(carousel: carousel)
+  = render_datatable(datatable, simple: true, inline: true)
+  %hr.my-5

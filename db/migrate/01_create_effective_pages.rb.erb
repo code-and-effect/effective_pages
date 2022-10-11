@@ -46,10 +46,8 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
     add_index <%= @page_banners_table_name %>, :name, :unique => true
 
     create_table <%= @page_sections_table_name %> do |t|
-      t.string :owner_type
-      t.integer :owner_id
-
       t.string :name
+      t.text :hint
 
       t.string :title
       t.string :caption
@@ -57,18 +55,33 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.string :link_label
       t.string :link_url
 
-      t.text :hint
-
       t.datetime :updated_at
       t.datetime :created_at
     end
 
     add_index <%= @page_sections_table_name %>, :name, :unique => true
+
+    create_table <%= @carousel_items_table_name %> do |t|
+      t.string :carousel
+
+      t.string :title
+      t.string :caption
+
+      t.string :link_label
+      t.string :link_url
+
+      t.integer :position
+
+      t.timestamps
+    end
+
   end
 
   def self.down
     drop_table <%= @pages_table_name %>
+    drop_table <%= @page_banners_table_name %>
     drop_table <%= @page_sections_table_name %>
+    drop_table <%= @carousel_items_table_name %>
   end
 
 end

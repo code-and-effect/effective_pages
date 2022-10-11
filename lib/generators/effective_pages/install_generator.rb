@@ -23,6 +23,8 @@ module EffectivePages
         @pages_table_name = ':' + EffectivePages.pages_table_name.to_s
         @page_sections_table_name = ':' + EffectivePages.page_sections_table_name.to_s
         @page_banners_table_name = ':' + EffectivePages.page_banners_table_name.to_s
+        @carousel_items_table_name = ':' + EffectivePages.carousel_items_table_name.to_s
+
         migration_template ('../' * 3) + 'db/migrate/01_create_effective_pages.rb.erb', 'db/migrate/create_effective_pages.rb'
       end
 

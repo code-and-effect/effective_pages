@@ -30,7 +30,7 @@ module Effective
 
       slug              :string
 
-      # Menu stuff
+      # Menus
       menu              :boolean        # Should this be displayed on the menu at all?
       menu_name         :string         # When I'm a root level item, this is the menu I render underneath
       menu_group        :string         # Used for design. Group by menu_group to display full dropdowns.
@@ -39,7 +39,7 @@ module Effective
       menu_url          :string         # Redirect to this url instead of the page url
       menu_position     :integer        # Position in the menu
 
-      # Page Banners
+      # Banners
       banner            :boolean        # Should we display a banner?
       banner_random     :boolean        # Display a random banner
 
@@ -96,7 +96,7 @@ module Effective
     # Doesn't make sense for a top level item to have a menu group
     validates :menu_group, absence: true, if: -> { menu_root? && EffectivePages.menus.present? }
 
-    validate(if: -> { banner? && EffectivePages.page_banners? }) do
+    validate(if: -> { banner? && EffectivePages.banners? }) do
       unless (page_banner.present? ^ banner_random?) # xor
         self.errors.add(:page_banner_id, "please select a page banner or random")
         self.errors.add(:banner_random, "please select a page banner or random")

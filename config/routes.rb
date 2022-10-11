@@ -6,6 +6,7 @@ EffectivePages::Engine.routes.draw do
     resources :page_sections, only: [:index, :edit, :update]
     resources :page_banners, except: [:show]
     resources :menus, only: [:index]
+    resources :carousel_items, except: [:show]
   end
 
   scope module: 'effective' do

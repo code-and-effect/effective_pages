@@ -4,7 +4,6 @@ module Effective
     attr_accessor :current_user
 
     # Not used
-    belongs_to :owner, polymorphic: true, optional: true
     has_many_rich_texts
 
     # Can be displayed on multiple pages
@@ -27,6 +26,7 @@ module Effective
 
     scope :deep, -> { with_attached_file.includes(:rich_texts) }
     scope :sorted, -> { order(:name) }
+    scope :random, -> { order('RANDOM()') }
 
     validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
     validates :file, presence: true

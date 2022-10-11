@@ -1,11 +1,8 @@
-= effective_form_with(model: [:admin, page_section], engine: true) do |f|
-  - if f.object.new_record?
-    = f.text_field :name, hint: 'The name of this page section'
+= effective_form_with(model: [:admin, carousel_item], engine: true) do |f|
+  - if (carousels = EffectivePages.carousels).length > 1
+    = f.select :carousel, carousels, label: 'Carousel item in this carousel'
   - else
-    = f.static_field :name
-
-  - if f.object.hint.present?
-    .mb-4= f.object.hint.html_safe
+    = f.hidden_field :carousel, value: carousels.first
 
   = f.text_field :title
 
@@ -18,7 +15,7 @@
     .col= f.text_field :link_label
     .col= f.url_field :link_url
 
-  = f.file_field :file, label: 'Attachment', hint: 'Upload an image to display on this page section'
+  = f.file_field :file, label: 'Image Attachment', hint: 'The image to display on this carousel item'
   = f.text_field :caption, hint: 'Displayed alongside the image'
 
   = effective_submit(f)

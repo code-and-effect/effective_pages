@@ -2,6 +2,7 @@ EffectivePages.setup do |config|
   config.pages_table_name = :pages
   config.page_sections_table_name = :page_sections
   config.page_banners_table_name = :page_banners
+  config.carousel_items_table_name = :carousel_items
 
   # The menu names a page can belong to
   config.menus = [:main, :footer]
@@ -59,7 +60,13 @@ EffectivePages.setup do |config|
   config.max_menu_depth = 2
 
   # Page Banners
-  # Allow a page banner to be selected on the Admin::Pages#edut screen
-  config.page_banners = false
+  # Allow a page banner to be selected on the Admin::Pages#edit screen
+  # Banners can be CRUD by the admin
+  config.banners = false
+
+  # Page Carousels
+  # The menu names a page can belong to
+  config.carousels = false
+  # config.carousels = [:home, :secondary]
 
 end

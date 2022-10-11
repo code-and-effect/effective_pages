@@ -1,0 +1,7 @@
+= tabs do
+  = tab 'Carousel Item' do
+    = render '/admin/carousel_items/form_carousel_item', carousel_item: carousel_item
+
+  - if carousel_item.persisted?
+    = tab 'Logs' do
+      = render_datatable(carousel_item.log_changes_datatable, inline: true, namespace: :admin)

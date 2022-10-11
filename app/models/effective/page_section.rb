@@ -5,9 +5,6 @@ module Effective
   class PageSection < ActiveRecord::Base
     attr_accessor :current_user
 
-    # Not used
-    belongs_to :owner, polymorphic: true, optional: true
-
     has_many_rich_texts
     has_one_attached :file
 
@@ -16,15 +13,14 @@ module Effective
     self.table_name = EffectivePages.page_sections_table_name.to_s
 
     effective_resource do
-      name              :string       # Unique name of this page section
+      name              :string       # Set by developer. The unique name of this page section
+      hint              :text         # Set by developer. A hint to display to user.
 
       title             :string
       caption           :string
 
       link_label        :string
       link_url          :string
-
-      hint              :text
 
       timestamps
     end
