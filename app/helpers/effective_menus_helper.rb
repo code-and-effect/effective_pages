@@ -28,8 +28,10 @@ module EffectiveMenusHelper
       (
         [content_tag(:li, link_to(root, root_path, title: root), class: 'breadcrumb-item')] +
         parents.map do |page|
+          next if page.menu_root_with_children? # Don't show root pages becaues they have no content
+
           url = (page.menu_url.presence || effective_pages.page_path(page))
-          content_tag(:li, link_to(page, (page.menu_root_with_children? ? '#' : url), title: page.title), class: 'breadcrumb-item')
+          content_tag(:li, link_to(page, url, title: page.title), class: 'breadcrumb-item')
         end +
         [content_tag(:li, page, class: 'breadcrumb-item active', 'aria-current': 'page')]
       ).join.html_safe
