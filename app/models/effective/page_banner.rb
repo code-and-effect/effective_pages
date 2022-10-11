@@ -4,7 +4,6 @@ module Effective
     attr_accessor :current_user
 
     # Not used
-    belongs_to :owner, polymorphic: true, optional: true
     has_many_rich_texts
 
     # Can be displayed on multiple pages

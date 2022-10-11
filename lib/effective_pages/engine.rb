@@ -7,6 +7,7 @@ module EffectivePages
       app.config.to_prepare do
         ActiveSupport.on_load :action_controller_base do
           helper EffectivePagesHelper
+          helper EffectiveCarouselsHelper
           helper EffectivePageSectionsHelper
           helper EffectivePageBannersHelper
           helper EffectiveMenusHelper
