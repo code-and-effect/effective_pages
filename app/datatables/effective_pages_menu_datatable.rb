@@ -18,10 +18,10 @@ class EffectivePagesMenuDatatable < Effective::Datatable
     col :menu_children, label: 'Children' do |page|
       page.menu_children.group_by(&:menu_group).values.flatten.map do |child|
         content_tag(:div, class: 'col-resource_item') do
-          link = link_to(child.admin_menu_label, effective_pages.edit_admin_page_path(child))
+          link = link_to(child.menu_to_s, effective_pages.edit_admin_page_path(child))
 
           list = child.menu_children.group_by(&:menu_group).values.flatten.map do |child|
-            content_tag(:li, link_to(child.admin_menu_label, effective_pages.edit_admin_page_path(child)))
+            content_tag(:li, link_to(child.menu_to_s, effective_pages.edit_admin_page_path(child)))
           end
 
           link + (content_tag(:ul, list.join.html_safe) if list.present?).to_s
