@@ -33,6 +33,8 @@ class EffectivePagesDatatable < Effective::Datatable
     col :menu_parent, search: { collection: admin_menu_parent_collection(), grouped: true }
     col :menu_position, visible: false
 
+    col :page_banner
+
     col :authenticate_user, visible: false
     col :roles, visible: false
 

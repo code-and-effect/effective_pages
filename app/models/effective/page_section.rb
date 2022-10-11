@@ -1,3 +1,6 @@
+# Page sections are only created by seeds / a developer
+# They are referenced by name
+# The admin user can only edit/update content
 module Effective
   class PageSection < ActiveRecord::Base
     attr_accessor :current_user

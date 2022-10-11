@@ -3,6 +3,8 @@ module Effective
     attr_accessor :current_user
     attr_accessor :menu_root_level
 
+    belongs_to :page_banner, optional: true
+
     # These parent / children are for the menu as well
     belongs_to :menu_parent, class_name: 'Effective::Page', optional: true
 
@@ -37,6 +39,10 @@ module Effective
       menu_url          :string         # Redirect to this url instead of the page url
       menu_position     :integer        # Position in the menu
 
+      # Page Banners
+      banner            :boolean        # Should we display a banner?
+      banner_random     :boolean        # Display a random banner
+
       # Access
       roles_mask        :integer
       authenticate_user :boolean
@@ -44,31 +50,7 @@ module Effective
       timestamps
     end
 
-    before_validation(if: -> { menu? && menu_position.blank? }) do
-      self.menu_position = (self.class.where(menu_parent: menu_parent).maximum(:menu_position) || -1) + 1
-    end
-
-    validate(if: -> { menu_url.present? }) do
-      unless menu_url.start_with?('http://') || menu_url.start_with?('https://') || menu_url.start_with?('/')
-        self.errors.add(:menu_url, "must start with http(s):// or /")
-      end
-    end
-
-    validates :title, presence: true, length: { maximum: 255 }
-    validates :meta_description, presence: true, length: { maximum: 150 }
-
-    validates :layout, presence: true
-    validates :template, presence: true
-
-    validates :menu_name, presence: true, if: -> { menu_root? && EffectivePages.menus.present? }
-
-    # Doesn't make sense for a top level item to have a menu group
-    validates :menu_group, absence: true, if: -> { menu_root? && EffectivePages.menus.present? }
-
-    # validates :menu_position, if: -> { menu? },
-    #   presence: true, uniqueness: { scope: [:menu_name, :menu_parent_id] }
-
-    scope :deep, -> { includes(:menu_parent, menu_children: :menu_parent) }
+    scope :deep, -> { includes(:page_banner, :menu_parent, menu_children: :menu_parent) }
 
     scope :draft, -> { where(draft: true) }
     scope :published, -> { where(draft: false) }
@@ -92,6 +74,34 @@ module Effective
     scope :for_sitemap, -> {
       published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
     }
+
+    before_validation(if: -> { menu? && menu_position.blank? }) do
+      self.menu_position = (self.class.where(menu_parent: menu_parent).maximum(:menu_position) || -1) + 1
+    end
+
+    validate(if: -> { menu_url.present? }) do
+      unless menu_url.start_with?('http://') || menu_url.start_with?('https://') || menu_url.start_with?('/')
+        self.errors.add(:menu_url, "must start with http(s):// or /")
+      end
+    end
+
+    validates :title, presence: true, length: { maximum: 255 }
+    validates :meta_description, presence: true, length: { maximum: 150 }
+
+    validates :layout, presence: true
+    validates :template, presence: true
+
+    validates :menu_name, presence: true, if: -> { menu_root? && EffectivePages.menus.present? }
+
+    # Doesn't make sense for a top level item to have a menu group
+    validates :menu_group, absence: true, if: -> { menu_root? && EffectivePages.menus.present? }
+
+    validate(if: -> { banner? && EffectivePages.page_banners? }) do
+      unless (page_banner.present? ^ banner_random?) # xor
+        self.errors.add(:page_banner_id, "please select a page banner or random")
+        self.errors.add(:banner_random, "please select a page banner or random")
+      end
+    end
 
     def to_s
       title

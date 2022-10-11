@@ -1,6 +1,6 @@
 = effective_form_with(model: [:admin, page_section], engine: true) do |f|
   - if f.object.new_record?
-    = f.text_field :name, hint: 'The name of this region must be unique'
+    = f.text_field :name, hint: 'The name of this page section'
   - else
     = f.static_field :name
 
