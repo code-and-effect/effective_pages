@@ -13,7 +13,7 @@ class EffectivePageSectionsDatatable < Effective::Datatable
     col :title
     col :rich_text_body
 
-    col :files
+    col :file
 
     col :link_label, visible: false
     col :link_url, visible: false

@@ -8,6 +8,7 @@ module EffectivePages
         ActiveSupport.on_load :action_controller_base do
           helper EffectivePagesHelper
           helper EffectivePageSectionsHelper
+          helper EffectivePageBannersHelper
           helper EffectiveMenusHelper
         end
       end

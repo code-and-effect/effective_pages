@@ -23,6 +23,17 @@
     - current_url = (effective_pages.page_url(f.object) rescue nil)
     = f.text_field :slug, hint: "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + link_to(current_url.gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>').html_safe, current_url)) if current_url }".html_safe
 
+  - if EffectivePages.page_banners?
+    = f.check_box :banner, label: 'Yes, display a page banner on this page'
+
+    = f.show_if(:banner, true) do
+      = card('Page Banner') do
+        %p.text-muted Please visit #{link_to('Page Banners', effective_pages.admin_page_banners_path)} to add or update the page banners.
+
+        = f.select :page_banner_id, Effective::PageBanner.sorted.all, label: 'Display this page banner'
+        %p - or -
+        = f.check_box :banner_random, label: 'Display a random page banner each time the page is refreshed'
+
   = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
 
   - if f.object.persisted? && f.object.menu_root_with_children?

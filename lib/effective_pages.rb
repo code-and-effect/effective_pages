@@ -7,12 +7,12 @@ require 'effective_pages/version'
 module EffectivePages
   def self.config_keys
     [
-      :pages_table_name, :page_sections_table_name,
+      :pages_table_name, :page_sections_table_name, :page_banners_table_name,
       :pages_path, :excluded_pages, :layouts_path, :excluded_layouts,
       :site_og_image, :site_og_image_width, :site_og_image_height,
       :site_title, :site_title_suffix, :fallback_meta_description,
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
-      :use_effective_roles, :menus, :layout, :max_menu_depth
+      :use_effective_roles, :menus, :layout, :max_menu_depth, :page_banners
     ]
   end
 
@@ -48,5 +48,10 @@ module EffectivePages
     raise('only depths 2 and 3 are supported') unless [2, 3].include?(depth)
     depth
   end
+
+  def self.page_banners?
+    !!config[:page_banners]
+  end
+
 
 end

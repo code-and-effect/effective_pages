@@ -1,0 +1,7 @@
+= tabs do
+  = tab 'Page Banner' do
+    = render '/admin/page_banners/form_page_banner', page_banner: page_banner
+
+  - if page_banner.persisted?
+    = tab 'Logs' do
+      = render_datatable(page_banner.log_changes_datatable, inline: true, namespace: :admin)

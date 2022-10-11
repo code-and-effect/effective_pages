@@ -1,6 +1,7 @@
 EffectivePages.setup do |config|
   config.pages_table_name = :pages
   config.page_sections_table_name = :page_sections
+  config.page_banners_table_name = :page_banners
 
   # The menu names a page can belong to
   config.menus = [:main, :footer]
@@ -56,5 +57,9 @@ EffectivePages.setup do |config|
   # Other sites can be configured such that the depth 3 menus are displayed on a sidebar.
   # Only 2 or 3 are supported right now
   config.max_menu_depth = 2
+
+  # Page Banners
+  # Allow a page banner to be selected on the Admin::Pages#edut screen
+  config.page_banners = false
 
 end

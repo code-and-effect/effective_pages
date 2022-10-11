@@ -172,12 +172,17 @@ All authorization checks are handled via the effective_resources gem found in th
 The permissions you actually want to define are as follows (using CanCan):
 
 ```ruby
-can [:show], Effective::Page
+can :index, Effective::Page
+can(:show, Effective::Page) { |page| page.roles_permit?(user) }
 
 if user.is?(:admin)
-  can :manage, Effective::Page
-  can :manage, Effective::Menu
-  can :admin, :effective_pages # Can access the admin screens
+  can :admin, :effective_pages
+
+  can(crud, Efective::Page)
+  can(crud - [:new, :create, :destroy], Effective::PageSection)
+
+  can(crud - [:destroy], Effective::PageBanner)
+  can(:destroy, Effective::PageBanner) { |pb| pb.pages.length == 0 }
 end
 ```
 

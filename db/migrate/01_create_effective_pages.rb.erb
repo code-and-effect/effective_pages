@@ -1,6 +1,8 @@
 class CreateEffectivePages < ActiveRecord::Migration[4.2]
   def self.up
     create_table <%= @pages_table_name %> do |t|
+      t.integer :page_banner_id
+
       t.string :title
       t.string :meta_description
 
@@ -25,11 +27,23 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.string :menu_url
       t.integer :menu_position
 
+      t.boolean :banner, default: false
+      t.boolean :banner_random, default: false
+
       t.datetime :updated_at
       t.datetime :created_at
     end
 
     add_index <%= @pages_table_name %>, :slug, :unique => true
+
+    create_table <%= @page_banners_table_name %> do |t|
+      t.string :name
+      t.string :caption
+
+      t.timestamps
+    end
+
+    add_index <%= @page_banners_table_name %>, :name, :unique => true
 
     create_table <%= @page_sections_table_name %> do |t|
       t.string :owner_type
