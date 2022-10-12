@@ -5,7 +5,8 @@
     = f.static_field :name
 
   - if f.object.hint.present?
-    .mb-4= f.object.hint.html_safe
+    %h4.mt-0 Instructions
+    %p= f.object.hint.html_safe
 
   = f.text_field :title
 

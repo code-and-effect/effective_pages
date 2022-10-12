@@ -5,7 +5,7 @@
   Edit an item to reorder its children items.
 
 - EffectivePages.menus.each do |menu|
-  %h3 #{menu.to_s.titleize} Menu
-  - datatable = EffectivePagesMenuDatatable.new(menu: menu)
-  = render_datatable(datatable, simple: true, inline: true)
-  %hr.my-5
+  .bg-white.my-5.p-3
+    %h3.mb-0 #{menu.to_s.titleize} Menu
+    - datatable = EffectivePagesMenuDatatable.new(menu: menu)
+    = render_datatable(datatable, simple: true, inline: true)
