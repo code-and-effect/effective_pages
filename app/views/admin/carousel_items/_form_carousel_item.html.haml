@@ -7,15 +7,15 @@
   = f.text_field :title
 
   - if defined?(EffectiveArticleEditor)
-    = f.article_editor :rich_text_body, label: 'Body', hint: 'The main content'
+    = f.article_editor :rich_text_body, label: 'Body'
   - else
-    = f.rich_text_area :rich_text_body, label: 'Body', hint: 'The main content'
+    = f.rich_text_area :rich_text_body, label: 'Body'
 
   .row
     .col= f.text_field :link_label
     .col= f.url_field :link_url
 
-  = f.file_field :file, label: 'Image Attachment', hint: 'The image to display on this carousel item'
-  = f.text_field :caption, hint: 'Displayed alongside the image'
+  = f.file_field :file, label: 'Image attachment', hint: EffectivePages.carousels_hint_text
+  = f.text_field :caption, hint: 'Optional'
 
   = effective_submit(f)

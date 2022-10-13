@@ -8,13 +8,13 @@ class EffectivePageSectionsDatatable < Effective::Datatable
     col :updated_at, visible: false
 
     col :name
-    col :hint
 
     col :title
     col :rich_text_body
 
     col :file
 
+    col :hint, visible: false
     col :link_label, visible: false
     col :link_url, visible: false
     col :caption, visible: false

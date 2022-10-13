@@ -5,6 +5,8 @@ module Admin
 
     include Effective::CrudController
 
+    page_title 'Carousels'
+
     def permitted_params
       params.require(:effective_carousel_item).permit!
     end

@@ -3,7 +3,10 @@ module Admin
     before_action(:authenticate_user!) if defined?(Devise)
     before_action { EffectiveResources.authorize!(self, :admin, :effective_pages) }
 
+
     include Effective::CrudController
+
+    page_title 'Menus'
 
     resource_scope -> { Effective::Page.all }
 

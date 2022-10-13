@@ -63,10 +63,12 @@ EffectivePages.setup do |config|
   # Allow a page banner to be selected on the Admin::Pages#edit screen
   # Banners can be CRUD by the admin
   config.banners = false
+  config.banners_hint_text = 'Hint text that includes required image dimensions'
 
   # Page Carousels
   # The menu names a page can belong to
   config.carousels = false
   # config.carousels = [:home, :secondary]
+  config.carousels_hint_text = 'Hint text that includes required image dimensions'
 
 end

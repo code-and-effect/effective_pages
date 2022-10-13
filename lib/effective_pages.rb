@@ -12,7 +12,7 @@ module EffectivePages
       :site_og_image, :site_og_image_width, :site_og_image_height,
       :site_title, :site_title_suffix, :fallback_meta_description,
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
-      :use_effective_roles, :layout, :max_menu_depth,
+      :use_effective_roles, :layout, :max_menu_depth, :banners_hint_text, :carousels_hint_text,
 
       # Booleans
       :banners,
