@@ -24,15 +24,24 @@
     = f.text_field :slug, hint: "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + link_to(current_url.gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>').html_safe, current_url)) if current_url }".html_safe
 
   - if EffectivePages.banners?
-    = f.check_box :banner, label: 'Yes, display a page banner on this page'
+    - if EffectivePages.banners_force_randomize
+      = f.check_box :banner, label: 'Choose a page banner'
+    - else
+      = f.check_box :banner, label: 'Display a page banner on this page'
 
     = f.show_if(:banner, true) do
-      = card('Page Banner') do
-        %p.text-muted Please visit #{link_to('Page Banners', effective_pages.admin_page_banners_path)} to add or update the page banners.
+      = card do
+        %p.text-muted
+          - if EffectivePages.banners_force_randomize
+            A random banner will always be displayed, or you may choose a specific banner below.
 
-        = f.select :page_banner_id, Effective::PageBanner.sorted.all, label: 'Display this page banner'
-        %p - or -
-        = f.check_box :banner_random, label: 'Display a random page banner each time the page is refreshed'
+          Please visit #{link_to('Page Banners', effective_pages.admin_page_banners_path)} to add or update the page banners.
+
+        - if !EffectivePages.banners_force_randomize
+          = f.check_box :banner_random, label: 'Display a random page banner. Ignored if you choose a page banner below.'
+
+        = f.select :page_banner_id, Effective::PageBanner.sorted.all, label: 'Choose a page banner'
+
 
   = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
 

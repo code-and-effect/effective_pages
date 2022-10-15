@@ -97,7 +97,7 @@ module Effective
     validates :menu_group, absence: true, if: -> { menu_root? && EffectivePages.menus.present? }
 
     validate(if: -> { banner? && EffectivePages.banners? }) do
-      unless (page_banner.present? ^ banner_random?) # xor
+      unless (page_banner.present? ^ banner_random? ^ EffectivePages.banners_force_randomize) # xor
         self.errors.add(:page_banner_id, "please select a page banner or random")
         self.errors.add(:banner_random, "please select a page banner or random")
       end
