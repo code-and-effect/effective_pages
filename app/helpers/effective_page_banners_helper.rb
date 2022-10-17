@@ -5,11 +5,12 @@ module EffectivePageBannersHelper
   def render_page_banner(page, opts = {}, &block)
     raise('expected a page') unless page.kind_of?(Effective::Page)
 
-    # Do nothing if page.banner is false
-    return unless page.banner?
+    return unless page.banner? || EffectivePages.banners_force_randomize
 
-    page_banner = page.page_banner
-    page_banner ||= Effective::PageBanner.random.first if page.banner_random?
+    # Always return a random banner if config.banners_force_randomize
+    page_banner = Effective::PageBanner.random.first if EffectivePages.banners_force_randomize
+    page_banner ||= page.page_banner if page.banner? && page.page_banner.present?
+    page_banner ||= Effective::PageBanner.random.first if page.banner? && page.banner_random?
 
     raise("unable to find page banner for page #{page}") unless page_banner.present?
 
