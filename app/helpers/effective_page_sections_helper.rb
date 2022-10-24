@@ -12,7 +12,7 @@ module EffectivePageSectionsHelper
     name = name.to_s
 
     page_section = effective_page_sections.find { |ps| ps.name == name }
-    raise("unable to find page section with name #{name}") unless page_section.present?
+    return if page_section.blank?
 
     if block_given?
       yield(page_section); nil
