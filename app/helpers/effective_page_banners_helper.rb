@@ -12,7 +12,6 @@ module EffectivePageBannersHelper
     page_banner ||= page.page_banner if page.banner? && page.page_banner.present?
     page_banner ||= Effective::PageBanner.random.first if page.banner? && page.banner_random?
 
-    raise("unable to find page banner for page #{page}")
     return if page_banner.blank?
 
     if block_given?
