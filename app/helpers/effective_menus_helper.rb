@@ -77,7 +77,7 @@ module EffectiveMenusHelper
             [arrow, group, title].compact.join(' ').html_safe
           end
 
-          [child.to_s, child.to_param, { 'data-html': label }, child.menu_name]
+          [child.to_s, child.id, { 'data-html': label }, child.menu_name]
         end
       end.flatten(1).group_by(&:last)
     end
