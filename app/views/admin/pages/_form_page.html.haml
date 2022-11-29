@@ -1,4 +1,4 @@
-= effective_form_with(model: page, url: page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path) do |f|
+= effective_form_with(model: [:admin, page], engine: true) do |f|
 
   = f.text_field :title
 
