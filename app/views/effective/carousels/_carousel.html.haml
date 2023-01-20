@@ -3,25 +3,25 @@
 
 - raise('expected one or more carousel items') unless carousel_items.present?
 
-%div.carousel.slide{id: uid, 'data-ride': 'carousel', **options}
+.carousel.slide{id: uid, 'data-ride': 'carousel', **options}
   %ol.carousel-indicators
     - carousel_items.each_with_index do |item, index|
       %li{'data-target': '#' + uid, 'data-slide-to': index, class: ('active' if index == 0)}
 
-  %div.carousel-inner
+  .carousel-inner
     - carousel_items.each_with_index do |item, index|
-      %div.carousel-item{class: ('active' if index == 0)}
+      .carousel-item{class: ('active' if index == 0)}
         - if item.caption.blank?
           = image_tag(item.file, class: 'd-block w-100', alt: "Slide #{index+1}")
         - else
           = image_tag(item.file, alt: item.caption)
-          %div.carousel-caption.d-none.d-md-block
+          .carousel-caption.d-none.d-md-block
             %p= item.caption
 
-  %a.carousel-control-prev{href: '#' + uid, role: 'button', 'data-slide': 'prev'}
+  %button.carousel-control-prev{'data-target': '#' + uid, type: 'button', 'data-slide': 'prev'}
     %span.carousel-control-prev-icon{'aria-hidden': true}
     %span.sr-only Previous
 
-  %a.carousel-control-next{href: '#' + uid, role: 'button', 'data-slide': 'next'}
+  %button.carousel-control-next{'data-target': '#' + uid, type: 'button', 'data-slide': 'next'}
     %span.carousel-control-next-icon{'aria-hidden': true}
     %span.sr-only Next
