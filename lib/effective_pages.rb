@@ -60,11 +60,11 @@ module EffectivePages
   end
 
   def self.carousels?
-    carousels.kind_of?(Array)
+    carousels.kind_of?(Array) && carousels.present?
   end
 
   def self.menus?
-    menus.kind_of?(Array)
+    menus.kind_of?(Array) && menus.present?
   end
 
 end
