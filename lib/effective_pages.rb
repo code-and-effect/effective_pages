@@ -10,7 +10,7 @@ module EffectivePages
       :pages_table_name, :page_sections_table_name, :page_banners_table_name, :carousel_items_table_name,
       :pages_path, :excluded_pages, :layouts_path, :excluded_layouts,
       :site_og_image, :site_og_image_width, :site_og_image_height,
-      :site_title, :site_title_suffix, :fallback_meta_description,
+      :site_title, :site_title_suffix, :fallback_meta_description, :google_analytics_code,
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
       :use_effective_roles, :layout, :max_menu_depth, :banners_hint_text, :carousels_hint_text, :banners_force_randomize,
 

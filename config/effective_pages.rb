@@ -47,6 +47,9 @@ EffectivePages.setup do |config|
   config.silence_missing_meta_description_warnings = false
   config.silence_missing_canonical_url_warnings = false
 
+  # Google Tag / Google Analytics 4 code
+  # config.google_analytics_code = ''
+
   # Display the effective roles 'choose roles' input when an admin creates a new post
   config.use_effective_roles = false
 

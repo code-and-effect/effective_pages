@@ -88,6 +88,15 @@ module EffectivePagesHelper
     @effective_pages_og_type || 'website'
   end
 
+  def effective_pages_google_analytics
+    return unless Rails.env.production?
+
+    code = EffectivePages.google_analytics_code
+    return unless code.present?
+
+    render('layouts/google_analytics', code: code)
+  end
+
   def application_root_to_effective_pages_slug
     Rails.application.routes.routes.find { |r| r.name == 'root' && r.defaults[:controller] == 'Effective::Pages' && r.defaults[:action] == 'show' }.defaults[:id] rescue nil
   end

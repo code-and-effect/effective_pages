@@ -157,6 +157,23 @@ This provides a mechanism to easily target CSS styles for specific pages.
 
 This helper is entirely optional and in no way required for effective_pages to work.
 
+### Google Analytics GTag Script Helper
+
+Another optional helper. Add the following just after your `<body>` tag:
+
+```haml
+%body
+= effective_pages_google_analytics
+```
+
+This will render the google analytics scripts when running in production mode.
+
+Set the GA4 code in your `config/initializers/effective_pages.rb` as so:
+
+```
+config.google_analytics_code = 'G-1234567890'
+```
+
 ### Permissions
 
 When creating a Page, if you've also installed the [effective_roles](https://github.com/code-and-effect/effective_roles) gem, you will be able to configure user access on a per-page basis.
