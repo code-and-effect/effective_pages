@@ -163,7 +163,7 @@ Another optional helper. Add the following just after your `<body>` tag:
 
 ```haml
 %body
-= effective_pages_google_analytics
+  = effective_pages_google_analytics
 ```
 
 This will render the google analytics scripts when running in production mode.
