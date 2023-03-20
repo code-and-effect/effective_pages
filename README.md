@@ -167,7 +167,7 @@ Include the effective_pages.js javascript file in your asset pipeline.
 //= require effective_pages
 ```
 
-Add the following include your `<head>` tag:
+Add the following inside your `<head>` tag:
 
 ```haml
 %head
