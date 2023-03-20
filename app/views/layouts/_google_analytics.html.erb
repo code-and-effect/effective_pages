@@ -1,9 +1,7 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=<%= code %>"></script>
-<script>
+<script data-gtag-code="<%= code %>">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', '<%= code %>');
 </script>

@@ -159,20 +159,28 @@ This helper is entirely optional and in no way required for effective_pages to w
 
 ### Google Analytics GTag Script Helper
 
-Another optional helper. Add the following just after your `<body>` tag:
+Only works with Turbolinks.
 
-```haml
-%body
-  = effective_pages_google_analytics
+Include the effective_pages.js javascript file in your asset pipeline.
+
+```
+//= require effective_pages
 ```
 
-This will render the google analytics scripts when running in production mode.
+Add the following include your `<head>` tag:
+
+```haml
+%head
+  = effective_pages_google_analytics
+```
 
 Set the GA4 code in your `config/initializers/effective_pages.rb` as so:
 
 ```
 config.google_analytics_code = 'G-1234567890'
 ```
+
+This will render the google analytics script tags when running in production mode.
 
 ### Permissions
 
