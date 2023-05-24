@@ -7,7 +7,7 @@ document.addEventListener('turbolinks:load', function(event){
   if(typeof(code) == undefined) { return }
 
   gtag('config', code, {
-    'page_title' : document.title,
+    'page_title': document.title,
     'page_path': location.href.replace(location.origin, "")
   });
 })

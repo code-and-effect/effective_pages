@@ -59,8 +59,9 @@ module Effective
     scope :on_menu, -> { where(menu: true) }
     scope :except_home, -> { where.not(title: 'Home') }
 
-    scope :menuable, -> { published.where(menu: true).order(:menu_position) }
+    scope :menuable, -> { published.where(menu: true).menu_sorted }
     scope :menu_deep, -> { includes(:menu_parent, :menu_children) }
+    scope :menu_sorted, -> { order(:menu_position) }
 
     scope :for_menu, -> (name) { menuable.where(menu_name: name) }
     scope :for_menu_root, -> (name) { for_menu(name).menu_deep.root_level }
@@ -68,8 +69,8 @@ module Effective
 
     scope :menu_root_with_children, -> { menu_parents.where(menu_parent_id: nil) }
     scope :menu_roots, -> { where(menu: true).where(menu_parent_id: nil) }
-    scope :menu_parents, -> { where(menu: true).where(id: Effective::Page.select('menu_parent_id')) }
-    scope :menu_children, -> { where(menu: true).where.not(menu_parent_id: nil) }
+    scope :menu_parents, -> { where(menu: true).where(id: Effective::Page.select('menu_parent_id')).menu_sorted }
+    scope :menu_children, -> { where(menu: true).where.not(menu_parent_id: nil).menu_sorted }
 
     scope :for_sitemap, -> {
       published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
@@ -140,6 +141,10 @@ module Effective
 
     def duplicate!
       duplicate.tap { |page| page.save! }
+    end
+
+    def menu_group
+      (menu_group ||= '')
     end
 
     # When true, this should not appear in sitemap.xml and should return 404 if visited

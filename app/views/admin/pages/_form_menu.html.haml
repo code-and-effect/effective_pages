@@ -1,4 +1,7 @@
 = effective_form_with(model: [:admin, page], engine: true) do |f|
+
+  = f.text_field :title, hint: "Page title"
+
   = f.check_box :menu, label: 'Yes, display this page in a menu'
 
   = f.show_if :menu, true do
