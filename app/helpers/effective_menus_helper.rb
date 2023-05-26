@@ -3,7 +3,7 @@ module EffectiveMenusHelper
     menu = Effective::Menu.find_by_title(menu.to_s) if menu.kind_of?(String) || menu.kind_of?(Symbol)
     return "<ul class='nav navbar-nav'><li>Menu '#{menu}' does not exist</li></ul>".html_safe if !menu.present?
 
-    if (effectively_editting? && EffectivePages.authorized?(controller, :edit, menu) rescue false)
+    if effectively_editting? && EffectiveResources.authorized?(controller, :edit, menu)
       options[:menu_id] = menu.id
       form_for(menu, :url => '/') { |form| options[:form] = form }
     end
