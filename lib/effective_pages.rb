@@ -1,3 +1,4 @@
+require 'effective_resources'
 require 'effective_datatables'
 require 'effective_regions'
 require 'effective_roles'
@@ -6,39 +7,18 @@ require 'effective_pages/engine'
 require 'effective_pages/version'
 
 module EffectivePages
-  mattr_accessor :pages_table_name
-  mattr_accessor :menus_table_name
-  mattr_accessor :menu_items_table_name
 
-  mattr_accessor :pages_path
-  mattr_accessor :excluded_pages
-  mattr_accessor :excluded_layouts
-
-  mattr_accessor :site_og_image
-  mattr_accessor :site_title
-  mattr_accessor :site_title_suffix
-  mattr_accessor :fallback_meta_description
-
-  mattr_accessor :silence_missing_page_title_warnings
-  mattr_accessor :silence_missing_meta_description_warnings
-
-  mattr_accessor :authorization_method
-  mattr_accessor :simple_form_options
-  mattr_accessor :layout
-  mattr_accessor :menu
-
-  mattr_accessor :acts_as_asset_box
-
-  def self.setup
-    yield self
+  def self.config_keys
+    [
+      :pages_table_name, :menus_table_name, :menu_items_table_name,
+      :pages_path, :excluded_pages, :excluded_layouts,
+      :site_og_image, :site_title, :site_title_suffix, :fallback_meta_description,
+      :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings,
+      :simple_form_options, :layout, :menu, :acts_as_asset_box
+    ]
   end
 
-  def self.authorized?(controller, action, resource)
-    if authorization_method.respond_to?(:call) || authorization_method.kind_of?(Symbol)
-      raise Effective::AccessDenied.new() unless (controller || self).instance_exec(controller, action, resource, &authorization_method)
-    end
-    true
-  end
+  include EffectiveGem
 
   def self.templates
     ApplicationController.view_paths.map { |path| Dir["#{path}/#{pages_path}/**"] }.flatten.reverse.map do |file|
@@ -65,10 +45,6 @@ module EffectivePages
     filepath = filepath.to_s
     filepath = filepath[1..-1] if filepath.starts_with?('/')
     @@pages_path = filepath.chomp('/')
-  end
-
-  def self.permitted_params
-    @@permitted_params ||= [:title, :meta_description, :draft, :layout, :template, :slug, (EffectiveAssets.permitted_params if EffectivePages.acts_as_asset_box), roles: []].compact
   end
 
 end

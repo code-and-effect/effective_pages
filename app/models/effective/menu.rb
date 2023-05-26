@@ -5,7 +5,6 @@ module Effective
     acts_as_role_restricted
 
     self.table_name = EffectivePages.menus_table_name.to_s
-    attr_protected() if Rails::VERSION::MAJOR == 3
 
     # structure do
     #   title           :string

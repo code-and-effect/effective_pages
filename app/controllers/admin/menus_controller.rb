@@ -1,18 +1,13 @@
 module Admin
   class MenusController < ApplicationController
-    respond_to?(:before_action) ? before_action(:authenticate_user!) : before_filter(:authenticate_user!) # Devise
+    before_action(:authenticate_user!)
 
     helper EffectiveMenusAdminHelper
 
     layout (EffectivePages.layout.kind_of?(Hash) ? EffectivePages.layout[:admin] : EffectivePages.layout)
 
     def index
-      if Gem::Version.new(EffectiveDatatables::VERSION) < Gem::Version.new('3.0')
-        @datatable = Effective::Datatables::Menus.new()
-      else
-        @datatable = EffectiveMenusDatatable.new(self)
-      end
-
+      @datatable = EffectiveMenusDatatable.new(self)
       @page_title = 'Menus'
 
       authorize_effective_menus!
@@ -50,12 +45,12 @@ module Admin
     private
 
     def authorize_effective_menus!
-      EffectivePages.authorized?(self, :admin, :effective_pages)
-      EffectivePages.authorized?(self, action_name.to_sym, @menu || Effective::Menu)
+      EffectiveResources.authorize!(self, :admin, :effective_pages)
+      EffectiveResources.authorize!(self, action_name.to_sym, @menu || Effective::Menu)
     end
 
     def menu_params
-      params.require(:effective_menu).permit(:title)
+      params.require(:effective_menu).permit!
     end
 
   end

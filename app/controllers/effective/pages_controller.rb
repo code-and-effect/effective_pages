@@ -1,7 +1,7 @@
 module Effective
   class PagesController < ApplicationController
     def show
-      @pages = (Rails::VERSION::MAJOR > 3 ? Effective::Page.all : Effective::Page.scoped)
+      @pages = Effective::Page.all
       @pages = @pages.published unless (params[:edit] || params[:preview])
 
       @page = @pages.find(params[:id])
