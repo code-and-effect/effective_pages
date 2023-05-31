@@ -16,11 +16,11 @@ class EffectivePagesMenuDatatable < Effective::Datatable
 
     # We only support depth 2 and 3.
     col :menu_children, label: 'Children' do |page|
-      page.menu_children.group_by(&:menu_group).values.flatten.map do |child|
+      page.menu_children.group_by { |child| child.menu_group.presence }.values.flatten.map do |child|
         content_tag(:div, class: 'col-resource_item') do
           link = link_to(child.menu_to_s, effective_pages.edit_admin_page_path(child))
 
-          list = child.menu_children.group_by(&:menu_group).values.flatten.map do |child|
+          list = child.menu_children.group_by { |child| child.menu_group.presence }.values.flatten.map do |child|
             content_tag(:li, link_to(child.menu_to_s, effective_pages.edit_admin_page_path(child)))
           end
 

@@ -14,8 +14,8 @@
 
   - if menu_children.present?
     = nav_dropdown(page.menu_to_s, groups: true) do
-      - menu_children.group_by(&:menu_group).each do |menu_group, pages|
-        = nav_dropdown_group(menu_group) do
+      - menu_children.group_by { |menu| menu.menu_group.presence }.each do |menu_group, pages|
+        = nav_dropdown_group(menu_group || '') do
           - pages.each do |page|
             - next unless EffectiveResources.authorized?(self, :show, page)
             - next if (page.authenticate_user || page.roles.present?) && current_user.blank?
