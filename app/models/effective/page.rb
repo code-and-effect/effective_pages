@@ -143,10 +143,6 @@ module Effective
       duplicate.tap { |page| page.save! }
     end
 
-    def menu_group
-      (menu_group ||= '')
-    end
-
     # When true, this should not appear in sitemap.xml and should return 404 if visited
     def menu_root_with_children?
       menu_root? && menu_parent?
