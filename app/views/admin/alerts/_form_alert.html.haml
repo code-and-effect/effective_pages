@@ -1,0 +1,9 @@
+= effective_form_with(model: [:admin, alert], engine: true) do |f|
+  = f.check_box :enabled, hint: 'Toggle activation of this alert'
+
+  - if defined?(EffectiveArticleEditor)
+    = f.article_editor :body, label: 'Content', hint: 'Content to be displayed'
+  - else
+    = f.rich_text_area :body, label: 'Content', hint: 'Content to be displayed'
+
+  = effective_submit(f)

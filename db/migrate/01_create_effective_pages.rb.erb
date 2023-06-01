@@ -75,6 +75,12 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
+    create_table <%= @alerts_table_name %>, if_not_exists: true do |t|
+      t.boolean :enabled
+
+      t.timestamps
+    end
+
   end
 
   def self.down
@@ -82,6 +88,7 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
     drop_table <%= @page_banners_table_name %>
     drop_table <%= @page_sections_table_name %>
     drop_table <%= @carousel_items_table_name %>
+    drop_table <%= @alerts_table_name %>
   end
 
 end
