@@ -1,0 +1,7 @@
+= tabs do
+  = tab 'Alert' do
+    = render '/admin/alerts/form_alert', alert: alert
+
+  - if alert.persisted?
+    = tab 'Logs' do
+      = render_datatable(alert.log_changes_datatable, inline: true, namespace: :admin)
