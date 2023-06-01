@@ -3,6 +3,7 @@ EffectivePages.setup do |config|
   config.page_sections_table_name = :page_sections
   config.page_banners_table_name = :page_banners
   config.carousel_items_table_name = :carousel_items
+  config.alerts_table_name = :alerts
 
   # The menu names a page can belong to
   config.menus = [:main, :footer]
