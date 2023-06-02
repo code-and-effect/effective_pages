@@ -81,6 +81,17 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
+    create_table <%= @permalinks_table_name %>, if_not_exists: true do |t|
+      t.string :title
+      t.string :slug
+      t.string :url
+      t.text   :summary
+
+      t.timestamps
+    end
+
+    add_index <%= @permalinks_table_name %>, :slug, :unique => true
+
   end
 
   def self.down
@@ -89,6 +100,7 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
     drop_table <%= @page_sections_table_name %>
     drop_table <%= @carousel_items_table_name %>
     drop_table <%= @alerts_table_name %>
+    drop_table <%= @permalinks_table_name %>
   end
 
 end
