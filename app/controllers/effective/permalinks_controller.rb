@@ -1,27 +1,17 @@
 module Effective
   class PermalinksController < ApplicationController
-    skip_authorization_check # Public access for permalinks
-
-    before_action :set_permalink
-
-    delegate :target, :attachment, :url, to: :@permalink
-
     def redirect
-      redirect_to target_url, allow_other_host: other_host?
+      @permalink = Effective::Permalink.find_by! slug: params[:slug]
+
+      authorize! :redirect, @permalink
+
+      redirect_to redirect_path_for(@permalink), allow_other_host: (@permalink.target == :url)
     end
 
     private
 
-    def set_permalink
-      @permalink = Effective::Permalink.find_by! slug: params[:slug]
-    end
-
-    def target_url
-      target == :attachment ? attachment_url(attachment) : url
-    end
-
-    def other_host?
-      target == :url
+    def redirect_path_for(permalink)
+      permalink.target == :attachment ? attachment_url(permalink.attachment) : permalink.url
     end
 
     def attachment_url(permalink)

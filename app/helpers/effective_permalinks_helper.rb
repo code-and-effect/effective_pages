@@ -14,7 +14,7 @@ module EffectivePermalinksHelper
         permalink_or_slug
       end
 
-    link_to permalink, permalink.redirect_url, options
+    link_to permalink, permalink.redirect_path, options
   end
 
 end

@@ -90,8 +90,6 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    add_index <%= @permalinks_table_name %>, :slug, :unique => true
-
   end
 
   def self.down

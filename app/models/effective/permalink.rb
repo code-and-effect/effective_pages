@@ -3,6 +3,7 @@ module Effective
     self.table_name = (EffectivePages.permalinks_table_name || :permalinks).to_s
 
     has_one_attached :attachment
+    has_one_purgable :attachment
 
     acts_as_slugged
 
@@ -30,10 +31,10 @@ module Effective
     public
 
     def to_s
-      title
+      title.presence || model_name.human
     end
 
-    def redirect_url
+    def redirect_path
       "/permalinks/#{slug}"
     end
 
@@ -44,7 +45,7 @@ module Effective
     private
 
     def attachment_and_url_cannot_both_be_present
-      if attachment.attached? && url.present?
+      if url.present? && (attachment.attached? && !attachment.marked_for_destruction?)
         self.errors.add(:base, 'Attachment and URL cannot both be present')
       end
     end
