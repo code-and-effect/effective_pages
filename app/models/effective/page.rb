@@ -10,6 +10,9 @@ module Effective
                         :meta_description,
                         :slug,
                       ],
+                      associated_against: {
+                        rich_texts: [:body],
+                      },
                       using: { tsearch: { highlight: true }, trigram: { word_similarity: true } }
 
       multisearchable against: [
@@ -18,6 +21,9 @@ module Effective
                         :meta_description,
                         :slug,
                       ],
+                      associated_against: {
+                        rich_texts: [:body],
+                      },
                       using: {
                         trigram: {},
                         tsearch: {
