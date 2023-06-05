@@ -1,5 +1,33 @@
 module Effective
   class Page < ActiveRecord::Base
+    if defined?(PgSearch)
+      include PgSearch::Model
+
+      pg_search_scope :search,
+                      against: [
+                        :title,
+                        :menu_title,
+                        :meta_description,
+                        :slug,
+                      ],
+                      using: { tsearch: { highlight: true }, trigram: { word_similarity: true } }
+
+      multisearchable against: [
+                        :title,
+                        :menu_title,
+                        :meta_description,
+                        :slug,
+                      ],
+                      using: {
+                        trigram: {},
+                        tsearch: {
+                          highlight: true,
+                        }
+                      },
+                      ranked_by: ":trigram", # Could rank by any column/expression, e.g.: (books.num_pages * :trigram) + (:tsearch / 2.0)
+                      if: -> (page) { page.published? }
+    end
+
     attr_accessor :current_user
     attr_accessor :menu_root_level
 
@@ -74,6 +102,14 @@ module Effective
 
     scope :for_sitemap, -> {
       published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
+    }
+
+    # Maybe change paginate to be an isolated function instead of a scope, so we can use it with PgSearch::Document when doing a whole app search?
+    scope :paginate, -> (page: nil, per_page: nil) {
+      page = (page || 1).to_i
+      offset = [(page - 1), 0].max * per_page
+
+      limit(per_page).offset(offset)
     }
 
     before_validation(if: -> { menu? && menu_position.blank? }) do
