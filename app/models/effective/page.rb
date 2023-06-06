@@ -30,8 +30,7 @@ module Effective
                           highlight: true,
                         }
                       },
-                      ranked_by: ":trigram", # Could rank by any column/expression, e.g.: (books.num_pages * :trigram) + (:tsearch / 2.0)
-                      if: -> (page) { page.published? }
+                      ranked_by: ":trigram" # Could rank by any column/expression, e.g.: (books.num_pages * :trigram) + (:tsearch / 2.0)
     end
 
     attr_accessor :current_user
