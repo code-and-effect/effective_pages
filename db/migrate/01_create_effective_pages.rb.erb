@@ -90,6 +90,20 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
+    create_table <%= @tags_table_name %>, if_not_exists: true do |t|
+      t.string :name
+
+      t.timestamps
+    end
+
+    create_table <%= @taggings_table_name %>, if_not_exists: true do |t|
+      t.bigint :tag_id
+      t.bigint :taggable_id
+      t.string :taggable_type
+
+      t.timestamps
+    end
+
   end
 
   def self.down
@@ -99,6 +113,8 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
     drop_table <%= @carousel_items_table_name %>
     drop_table <%= @alerts_table_name %>
     drop_table <%= @permalinks_table_name %>
+    drop_table <%= @tags_table_name %>
+    drop_table <%= @taggings_table_name %>
   end
 
 end
