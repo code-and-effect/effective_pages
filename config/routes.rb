@@ -9,9 +9,13 @@ EffectivePages::Engine.routes.draw do
     resources :carousel_items,  except: [:show]
     resources :alerts,          except: [:show]
     resources :permalinks,      except: [:show]
+    resources :tags,            except: [:show]
+    resources :taggings,        only:   [:index]
   end
 
   scope module: 'effective' do
+    resources :taggings, except: [:update]
+
     get '/permalinks/:slug', to: 'permalinks#redirect', as: :permalink_redirect
 
     match '*id', to: 'pages#show', via: :get, as: :page, constraints: lambda { |req|
