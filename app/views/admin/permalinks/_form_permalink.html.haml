@@ -1,0 +1,8 @@
+= effective_form_with(model: [:admin, permalink], engine: true) do |f|
+  = f.text_field  :title,      required: true,  hint: 'Title of the permalink to be displayed'
+  = f.text_field  :slug,       required: true,  hint: 'Slug for link of the permalink'
+  = f.text_field  :summary,    required: true,  hint: 'Summary explanation of the permalink not displayed'
+  = f.url_field   :url,        required: false, hint: 'The link if redirecting to a website or specific page'
+  = f.file_field  :attachment, required: false, hint: 'The attachment of the permalink if redirecting to a document, image or other file'
+
+  = effective_submit(f)
