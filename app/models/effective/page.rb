@@ -13,6 +13,7 @@ module Effective
 
     acts_as_role_restricted
     acts_as_slugged
+    acts_as_tagged
     has_many_rich_texts
 
     log_changes if respond_to?(:log_changes)
