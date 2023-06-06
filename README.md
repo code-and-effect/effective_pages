@@ -211,6 +211,10 @@ if user.is?(:admin)
 end
 ```
 
+## Search
+
+If you use `pg_search` then `Effective::Pages` will be also included on its `multisearch` by default, allowing you to search across all pages.
+
 ## License
 
 MIT License.  Copyright [Code and Effect Inc.](http://www.codeandeffect.com/)
