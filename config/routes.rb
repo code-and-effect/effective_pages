@@ -14,8 +14,6 @@ EffectivePages::Engine.routes.draw do
   end
 
   scope module: 'effective' do
-    resources :taggings, except: [:update]
-
     get '/permalinks/:slug', to: 'permalinks#redirect', as: :permalink_redirect
 
     match '*id', to: 'pages#show', via: :get, as: :page, constraints: lambda { |req|

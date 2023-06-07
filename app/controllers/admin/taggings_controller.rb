@@ -4,7 +4,5 @@ module Admin
     before_action { EffectiveResources.authorize!(self, :admin, :effective_pages) }
 
     include Effective::CrudController
-
-    page_title 'Tagged content'
   end
 end

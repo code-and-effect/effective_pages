@@ -16,11 +16,12 @@ module Effective
     end
 
     validates :name, presence: true
+    validates :name, uniqueness: true
 
     public
 
     def to_s
-      name
+      name.presence || model_name.human
     end
   end
 end

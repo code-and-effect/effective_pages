@@ -5,9 +5,6 @@ module Effective
     belongs_to :tag, class_name: 'Effective::Tag'
     belongs_to :taggable, polymorphic: true
 
-    validates :tag,      presence: true
-    validates :taggable, presence: true
-
     scope :deep, -> { all }
 
     effective_resource do
@@ -18,24 +15,12 @@ module Effective
       timestamps
     end
 
-    validates :name, presence: true
+    validates :tag_id, uniqueness: { scope: [:taggable_type, :taggable_id] }
 
     public
 
-    def name
-      tag.name
-    end
-
     def to_s
       name
-    end
-
-    def tag_name
-      tag.name
-    end
-
-    def tagged_on
-      taggable_type.split('::').last
     end
   end
 end

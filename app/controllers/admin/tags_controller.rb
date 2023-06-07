@@ -5,8 +5,6 @@ module Admin
 
     include Effective::CrudController
 
-    page_title 'Tags'
-
     def permitted_params
       params.require(:effective_tag).permit!
     end

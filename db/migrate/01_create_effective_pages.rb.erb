@@ -97,8 +97,8 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
     end
 
     create_table <%= @taggings_table_name %>, if_not_exists: true do |t|
-      t.bigint :tag_id
-      t.bigint :taggable_id
+      t.integer :tag_id
+      t.integer :taggable_id
       t.string :taggable_type
 
       t.timestamps

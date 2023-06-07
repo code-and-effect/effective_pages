@@ -1,4 +1,4 @@
-class EffectiveTagsDatatable < Effective::Datatable
+class Admin::EffectiveTagsDatatable < Effective::Datatable
 
   datatable do
     col :id, visible: false

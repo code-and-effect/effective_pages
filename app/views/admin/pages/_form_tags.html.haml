@@ -1,4 +1,4 @@
 = effective_form_with(model: [:admin, page], engine: true) do |f|
-  = tags_input(f, page)
+  = render 'effective/tags/fields', f: f
 
   = f.submit
