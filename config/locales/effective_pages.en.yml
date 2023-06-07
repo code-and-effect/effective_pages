@@ -2,3 +2,7 @@ en:
   effective_pages:
     name: 'Effective Pages'
     acronym: 'Pages'
+
+  activerecord:
+    models:
+      effective/tagging: 'Tagged content'

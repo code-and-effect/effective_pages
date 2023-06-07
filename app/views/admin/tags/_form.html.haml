@@ -1,0 +1,7 @@
+= tabs do
+  = tab 'Tag' do
+    = render '/admin/tags/form_tag', tag: tag
+
+  - if tag.persisted?
+    = tab 'Logs' do
+      = render_datatable(tag.log_changes_datatable, inline: true, namespace: :admin)

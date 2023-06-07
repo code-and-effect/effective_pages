@@ -16,3 +16,6 @@
 
       = tab 'Logs' do
         = render_datatable(page.log_changes_datatable, inline: true, namespace: :admin)
+
+      = tab 'Tags' do
+        = render '/admin/pages/form_tags', page: page

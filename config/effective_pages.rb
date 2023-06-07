@@ -5,6 +5,8 @@ EffectivePages.setup do |config|
   config.carousel_items_table_name = :carousel_items
   config.alerts_table_name = :alerts
   config.permalinks_table_name = :permalinks
+  config.tags_table_name = :tags
+  config.taggings_table_name = :taggings
 
   # The menu names a page can belong to
   config.menus = [:main, :footer]

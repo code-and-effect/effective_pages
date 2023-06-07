@@ -9,6 +9,8 @@ EffectivePages::Engine.routes.draw do
     resources :carousel_items,  except: [:show]
     resources :alerts,          except: [:show]
     resources :permalinks,      except: [:show]
+    resources :tags,            except: [:show]
+    resources :taggings,        only:   [:index]
   end
 
   scope module: 'effective' do
