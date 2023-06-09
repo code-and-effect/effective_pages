@@ -110,14 +110,6 @@ module Effective
       published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
     }
 
-    # Maybe change paginate to be an isolated function instead of a scope, so we can use it with PgSearch::Document when doing a whole app search?
-    scope :paginate, -> (page: nil, per_page: nil) {
-      page = (page || 1).to_i
-      offset = [(page - 1), 0].max * per_page
-
-      limit(per_page).offset(offset)
-    }
-
     before_validation(if: -> { menu? && menu_position.blank? }) do
       self.menu_position = (self.class.where(menu_parent: menu_parent).maximum(:menu_position) || -1) + 1
     end
