@@ -46,6 +46,7 @@ module Effective
       foreign_key: :menu_parent_id, inverse_of: :menu_parent
 
     acts_as_role_restricted
+    acts_as_paginable if respond_to?(:acts_as_paginable) # Effective Resources
     acts_as_slugged
     has_many_rich_texts
 
