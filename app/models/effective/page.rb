@@ -45,6 +45,7 @@ module Effective
       foreign_key: :menu_parent_id, inverse_of: :menu_parent
 
     acts_as_role_restricted
+    acts_as_paginable if respond_to?(:acts_as_paginable) # Effective Resources
     acts_as_slugged
     acts_as_tagged
     has_many_rich_texts
@@ -108,14 +109,6 @@ module Effective
 
     scope :for_sitemap, -> {
       published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
-    }
-
-    # Maybe change paginate to be an isolated function instead of a scope, so we can use it with PgSearch::Document when doing a whole app search?
-    scope :paginate, -> (page: nil, per_page: nil) {
-      page = (page || 1).to_i
-      offset = [(page - 1), 0].max * per_page
-
-      limit(per_page).offset(offset)
     }
 
     before_validation(if: -> { menu? && menu_position.blank? }) do
