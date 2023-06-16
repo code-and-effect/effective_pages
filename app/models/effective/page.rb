@@ -3,18 +3,6 @@ module Effective
     if defined?(PgSearch)
       include PgSearch::Model
 
-      pg_search_scope :search,
-                      against: [
-                        :title,
-                        :menu_title,
-                        :meta_description,
-                        :slug,
-                      ],
-                      associated_against: {
-                        rich_texts: [:body],
-                      },
-                      using: { tsearch: { highlight: true }, trigram: { word_similarity: true } }
-
       multisearchable against: [
                         :title,
                         :menu_title,
@@ -30,8 +18,8 @@ module Effective
                           highlight: true,
                         }
                       },
-                      ranked_by: ":trigram", # Could rank by any column/expression, e.g.: (books.num_pages * :trigram) + (:tsearch / 2.0)
-                      if: -> (page) { page.published? }
+                      if: -> (page) { !page.draft }
+
     end
 
     attr_accessor :current_user
