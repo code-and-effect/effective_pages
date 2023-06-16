@@ -18,7 +18,8 @@ module Effective
                           highlight: true,
                         }
                       },
-                      if: -> (page) { !page.draft }
+                      if: -> (page) { page.published? }
+
     end
 
     attr_accessor :current_user
