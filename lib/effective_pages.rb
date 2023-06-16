@@ -7,7 +7,7 @@ require 'effective_pages/version'
 module EffectivePages
   def self.config_keys
     [
-      :pages_table_name, :page_sections_table_name, :page_banners_table_name, :carousel_items_table_name, :alerts_table_name,
+      :pages_table_name, :page_sections_table_name, :page_banners_table_name, :carousel_items_table_name, :alerts_table_name, :permalinks_table_name, :tags_table_name, :taggings_table_name,
       :pages_path, :excluded_pages, :layouts_path, :excluded_layouts,
       :site_og_image, :site_og_image_width, :site_og_image_height,
       :site_title, :site_title_suffix, :fallback_meta_description, :google_analytics_code,
