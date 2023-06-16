@@ -17,8 +17,7 @@ module Effective
                         tsearch: {
                           highlight: true,
                         }
-                      },
-                      if: -> (page) { page.published? }
+                      }
 
     end
 
