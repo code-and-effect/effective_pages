@@ -3,22 +3,7 @@ module Effective
     if defined?(PgSearch)
       include PgSearch::Model
 
-      multisearchable against: [
-                        :title,
-                        :menu_title,
-                        :meta_description,
-                        :slug,
-                      ],
-                      associated_against: {
-                        rich_texts: [:body],
-                      },
-                      using: {
-                        trigram: {},
-                        tsearch: {
-                          highlight: true,
-                        }
-                      }
-
+      multisearchable against: [:title, :menu_title, :meta_description, :slug]
     end
 
     attr_accessor :current_user
@@ -97,6 +82,22 @@ module Effective
 
     scope :for_sitemap, -> {
       published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
+    }
+
+    scope :pages, -> (user: nil, unpublished: false) {
+      scope = all.deep.sorted
+
+      if defined?(EffectiveRoles) && EffectivePages.use_effective_roles
+        if user.present? && user.respond_to?(:roles)
+          scope = scope.for_role(user.roles)
+        end
+      end
+
+      unless unpublished
+        scope = scope.published
+      end
+
+      scope
     }
 
     before_validation(if: -> { menu? && menu_position.blank? }) do
