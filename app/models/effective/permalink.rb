@@ -3,7 +3,7 @@ module Effective
     if defined?(PgSearch)
       include PgSearch::Model
 
-      multisearchable against: [:title, :url, :slug]
+      multisearchable against: [:title, :summary]
     end
 
     self.table_name = (EffectivePages.permalinks_table_name || :permalinks).to_s
