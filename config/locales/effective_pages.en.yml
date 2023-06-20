@@ -5,4 +5,4 @@ en:
 
   activerecord:
     models:
-      effective/tagging: 'Tagged content'
+      effective/tagging: 'Taggings'
