@@ -18,11 +18,11 @@ module ActsAsTagged
     #
     # Create or assign tags based on the input
     #
-    # @param [Array<String, Integer>] input An array of tag names and/or tag ids, with a possible blank string
+    # @param [Array<String, Integer>] input An array of tag names and/or tag ids, with possible blank strings
     #
     # @return [void]
     #
-    def tags=(input)
+    def tag_ids=(input) # named after the field name in `effective_pages/app/views/effective/tags/_fields.html.haml`
       input = (input - ['']).group_by { |value| value.gsub(/\D/, '').to_i > 0 }
 
       ids = (input[true] || []).map(&:to_i)
@@ -33,7 +33,7 @@ module ActsAsTagged
 
       # Create any new Tags
       ids.each do |tag_id|
-        taggings.find { |tagging| tagging.tag_id == tag_id } || self.tags << Effective::Tag.where(id: tag_id).first!
+        taggings.find { |tagging| tagging.tag_id == tag_id } || self.tags << Effective::Tag.find(tag_id)
       end
 
       names.each { |name| self.tags.build(name: name) }
