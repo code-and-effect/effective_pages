@@ -3,11 +3,7 @@ module Effective
     if defined?(PgSearch)
       include PgSearch::Model
 
-      multisearchable against: [:search_content]
-
-      def search_content
-        title + '|' + body.to_plain_text
-      end
+      multisearchable against: [:body]
     end
 
     attr_accessor :current_user
