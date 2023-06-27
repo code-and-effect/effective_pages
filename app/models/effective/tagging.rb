@@ -20,7 +20,7 @@ module Effective
     public
 
     def to_s
-      name
+      model_name.human
     end
   end
 end
