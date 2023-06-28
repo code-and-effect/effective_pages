@@ -11,6 +11,7 @@ module Effective
     has_one_attached :attachment
     has_one_purgable :attachment
 
+    acts_as_tagged
     acts_as_slugged
 
     log_changes if respond_to?(:log_changes)
@@ -41,7 +42,7 @@ module Effective
     end
 
     def redirect_path
-      "/permalinks/#{slug}"
+      "/link/#{slug}"
     end
 
     def target

@@ -5,4 +5,6 @@
   = f.url_field   :url,        required: false, hint: 'The link if redirecting to a website or specific page'
   = f.file_field  :attachment, required: false, hint: 'The attachment of the permalink if redirecting to a document, image or other file'
 
+  = render 'effective/tags/fields', f: f
+
   = effective_submit(f)
