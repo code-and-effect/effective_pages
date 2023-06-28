@@ -14,7 +14,7 @@ EffectivePages::Engine.routes.draw do
   end
 
   scope module: 'effective' do
-    get '/permalinks/:slug', to: 'permalinks#redirect', as: :permalink_redirect
+    get '/link/:slug', to: 'permalinks#redirect', as: :permalink_redirect
 
     match '*id', to: 'pages#show', via: :get, as: :page, constraints: lambda { |req|
       Effective::Page.find_by_slug_or_id(req.path_parameters[:id] || '/').present?
