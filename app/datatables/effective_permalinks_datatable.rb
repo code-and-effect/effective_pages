@@ -7,6 +7,7 @@ class EffectivePermalinksDatatable < Effective::Datatable
     col :title
     col :slug
     col :summary
+    col :tags
 
     actions_col
   end
