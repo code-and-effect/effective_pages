@@ -25,7 +25,7 @@ module Effective
         flash.now[:warning] = [
           'Hi Admin!',
           ('You are viewing a draft page.' unless @page.published?),
-          ("<a href='#{effective_pages.edit_admin_page_path(@page)}' class='alert-link'>Click here to edit this page</a>.")
+          ("<a href='#{effective_pages.edit_admin_page_path(@page)}' class='alert-link' data-turbolinks='false'>Click here to edit this page</a>.")
         ].compact.join(' ')
       end
 
