@@ -32,7 +32,9 @@ module Effective
       template = File.join(EffectivePages.pages_path, @page.template)
       layout = File.join(EffectivePages.layouts_path, @page.layout)
 
-      render(template, layout: layout, locals: { page: @page })
+      respond_to do |format|
+        format.html { render(template, layout: layout, locals: { page: @page }) }
+      end
     end
 
     private
