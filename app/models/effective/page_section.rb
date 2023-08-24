@@ -3,6 +3,8 @@
 # The admin user can only edit/update content
 module Effective
   class PageSection < ActiveRecord::Base
+    self.table_name = (EffectivePages.page_sections_table_name || :page_sections).to_s
+
     attr_accessor :current_user
 
     has_many_rich_texts
@@ -10,7 +12,6 @@ module Effective
 
     log_changes if respond_to?(:log_changes)
 
-    self.table_name = EffectivePages.page_sections_table_name.to_s
 
     effective_resource do
       name              :string       # Set by developer. The unique name of this page section

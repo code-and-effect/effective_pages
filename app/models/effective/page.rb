@@ -1,5 +1,7 @@
 module Effective
   class Page < ActiveRecord::Base
+    self.table_name = (EffectivePages.pages_table_name || :pages).to_s
+
     if defined?(PgSearch)
       include PgSearch::Model
 
@@ -24,8 +26,6 @@ module Effective
     has_many_rich_texts
 
     log_changes if respond_to?(:log_changes)
-
-    self.table_name = EffectivePages.pages_table_name.to_s
 
     effective_resource do
       title             :string

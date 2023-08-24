@@ -1,6 +1,8 @@
 # Banners can be
 module Effective
   class PageBanner < ActiveRecord::Base
+    self.table_name = (EffectivePages.page_banners_table_name || :page_banners).to_s
+
     attr_accessor :current_user
 
     # Not used
@@ -14,7 +16,6 @@ module Effective
 
     log_changes if respond_to?(:log_changes)
 
-    self.table_name = EffectivePages.page_banners_table_name.to_s
 
     effective_resource do
       name              :string       # Unique name of this page banner. Just used for reference.
