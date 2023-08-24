@@ -1,12 +1,12 @@
 module Effective
   class Permalink < ApplicationRecord
+    self.table_name = (EffectivePages.permalinks_table_name || :permalinks).to_s
+
     if defined?(PgSearch)
       include PgSearch::Model
 
       multisearchable against: [:title, :summary]
     end
-
-    self.table_name = (EffectivePages.permalinks_table_name || :permalinks).to_s
 
     has_one_attached :attachment
     has_one_purgable :attachment

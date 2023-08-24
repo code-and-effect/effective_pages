@@ -3,6 +3,8 @@
 # The carousel items belong to a carousel through the string field
 module Effective
   class CarouselItem < ActiveRecord::Base
+    self.table_name = (EffectivePages.carousel_items_table_name || :carousel_items).to_s
+
     attr_accessor :current_user
 
     # For the body

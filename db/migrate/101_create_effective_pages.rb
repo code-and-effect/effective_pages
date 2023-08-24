@@ -1,6 +1,6 @@
-class CreateEffectivePages < ActiveRecord::Migration[4.2]
-  def self.up
-    create_table <%= @pages_table_name %> do |t|
+class CreateEffectivePages < ActiveRecord::Migration[6.0]
+  def change
+    create_table :pages do |t|
       t.integer :page_banner_id
 
       t.string :title
@@ -34,18 +34,18 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.datetime :created_at
     end
 
-    add_index <%= @pages_table_name %>, :slug, :unique => true
+    add_index :pages, :slug, :unique => true
 
-    create_table <%= @page_banners_table_name %> do |t|
+    create_table :page_banners do |t|
       t.string :name
       t.string :caption
 
       t.timestamps
     end
 
-    add_index <%= @page_banners_table_name %>, :name, :unique => true
+    add_index :page_banners, :name, :unique => true
 
-    create_table <%= @page_sections_table_name %> do |t|
+    create_table :page_sections do |t|
       t.string :name
       t.text :hint
 
@@ -59,9 +59,9 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.datetime :created_at
     end
 
-    add_index <%= @page_sections_table_name %>, :name, :unique => true
+    add_index :page_sections, :name, :unique => true
 
-    create_table <%= @carousel_items_table_name %> do |t|
+    create_table :carousel_items do |t|
       t.string :carousel
 
       t.string :title
@@ -75,13 +75,13 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    create_table <%= @alerts_table_name %>, if_not_exists: true do |t|
+    create_table :alerts, if_not_exists: true do |t|
       t.boolean :enabled
 
       t.timestamps
     end
 
-    create_table <%= @permalinks_table_name %>, if_not_exists: true do |t|
+    create_table :permalinks, if_not_exists: true do |t|
       t.string :title
       t.string :slug
       t.string :url
@@ -90,31 +90,19 @@ class CreateEffectivePages < ActiveRecord::Migration[4.2]
       t.timestamps
     end
 
-    create_table <%= @tags_table_name %>, if_not_exists: true do |t|
+    create_table :tags, if_not_exists: true do |t|
       t.string :name
 
       t.timestamps
     end
 
-    create_table <%= @taggings_table_name %>, if_not_exists: true do |t|
+    create_table :taggings, if_not_exists: true do |t|
       t.integer :tag_id
       t.integer :taggable_id
       t.string :taggable_type
 
       t.timestamps
     end
-
-  end
-
-  def self.down
-    drop_table <%= @pages_table_name %>
-    drop_table <%= @page_banners_table_name %>
-    drop_table <%= @page_sections_table_name %>
-    drop_table <%= @carousel_items_table_name %>
-    drop_table <%= @alerts_table_name %>
-    drop_table <%= @permalinks_table_name %>
-    drop_table <%= @tags_table_name %>
-    drop_table <%= @taggings_table_name %>
   end
 
 end
