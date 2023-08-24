@@ -16,7 +16,6 @@ module Effective
 
     log_changes if respond_to?(:log_changes)
 
-
     effective_resource do
       name              :string       # Unique name of this page banner. Just used for reference.
 

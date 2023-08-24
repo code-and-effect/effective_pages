@@ -15,8 +15,6 @@ module Effective
 
     log_changes if respond_to?(:log_changes)
 
-    self.table_name = EffectivePages.carousel_items_table_name.to_s
-
     effective_resource do
       carousel          :string  # The hardcoded carousel I render underneath
 

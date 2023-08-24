@@ -12,7 +12,6 @@ module Effective
 
     log_changes if respond_to?(:log_changes)
 
-
     effective_resource do
       name              :string       # Set by developer. The unique name of this page section
       hint              :text         # Set by developer. A hint to display to user.
