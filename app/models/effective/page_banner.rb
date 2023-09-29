@@ -29,7 +29,7 @@ module Effective
     scope :random, -> { order('RANDOM()') }
 
     validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
-    validates :file, presence: true
+    validates :file, presence: true, content_type: :image, size: { less_than: 1.megabyte }
 
     validate(if: -> { file.attached? }) do
       self.errors.add(:file, 'must be an image') unless file.image?
