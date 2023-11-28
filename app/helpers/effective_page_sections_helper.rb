@@ -3,7 +3,7 @@
 module EffectivePageSectionsHelper
 
   def effective_page_sections
-    @_effective_page_sections ||= Effective::PageSection.all
+    @_effective_page_sections ||= Effective::PageSection.deep.all
   end
 
   def render_page_section(name, &block)

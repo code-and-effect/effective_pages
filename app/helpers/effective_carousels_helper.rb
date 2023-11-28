@@ -9,7 +9,7 @@ module EffectiveCarouselsHelper
       raise("unable to find carousel #{name}. Please add it to config/initializers/effective_pages.rb")
     end
 
-    carousel_items = Effective::CarouselItem.sorted.where(carousel: carousel)
+    carousel_items = Effective::CarouselItem.sorted.deep.where(carousel: carousel)
     return if carousel_items.blank?
 
     if block_given?
