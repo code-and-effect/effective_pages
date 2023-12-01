@@ -3,7 +3,7 @@ module Effective
     include Effective::CrudController
 
     def show
-      @pages = Effective::Page.all
+      @pages = Effective::Page.deep.all
       @pages = @pages.published unless EffectiveResources.authorized?(self, :admin, :effective_pages)
 
       @page = @pages.find(params[:id])

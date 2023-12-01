@@ -58,7 +58,11 @@ module Effective
       timestamps
     end
 
-    scope :deep, -> { includes(:page_banner, :menu_parent, menu_children: :menu_parent) }
+    scope :deep, -> { 
+      base = includes(:page_banner, :tags, :rich_texts, :menu_parent, menu_children: [:menu_parent, :menu_children]) 
+      base = base.includes(:pg_search_document) if defined?(PgSearch)
+      base
+    }
 
     scope :draft, -> { where(draft: true) }
     scope :published, -> { where(draft: false) }

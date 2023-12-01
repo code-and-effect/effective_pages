@@ -16,7 +16,11 @@ module Effective
 
     log_changes if respond_to?(:log_changes)
 
-    scope :deep, -> { with_attached_attachment }
+    scope :deep, -> { 
+      base = with_attached_attachment
+      base = base.includes(:pg_search_document) if defined?(PgSearch)
+      base
+    }
 
     effective_resource do
       title        :string
