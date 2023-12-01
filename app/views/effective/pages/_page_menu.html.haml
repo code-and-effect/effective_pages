@@ -1,15 +1,15 @@
 - raise('expected a page') unless page.present?
 
-- children = page.menu_children
+- children = []
 
-- if page.menu_children.present?
+- if page.menu_children_present?
+  - children = page.menu_children
   = nav_link_to(page.menu_to_s, (page.menu_url.presence || effective_pages.page_path(page)))
 
 - # if this is a third depth page, show the parent and siblings
-- if page.menu_children.blank? && page.menu_parent.try(:menu_parent_id).present?
-  - page.menu_parent.try(:strict_loading!, false)
-
-  - if page.menu_parent.menu_children.present?
+- if page.menu_children_blank? && page.menu_parent.try(:menu_parent_id).present?
+  - if page.menu_parent.menu_children_present?
+    - page.menu_parent.try(:strict_loading!, false)
     - children = page.menu_parent.menu_children
     = nav_link_to(page.menu_parent.menu_to_s, (page.menu_parent.menu_url.presence || effective_pages.page_path(page.menu_parent)))
 

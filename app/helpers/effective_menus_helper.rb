@@ -28,8 +28,6 @@ module EffectiveMenusHelper
       (
         [content_tag(:li, link_to(root, root_path, title: root), class: 'breadcrumb-item')] +
         parents.map do |page|
-          page.try(:strict_loading!, false)
-
           next if page.menu_root_with_children? # Don't show root pages because they have no content
 
           url = (page.menu_url.presence || effective_pages.page_path(page))
@@ -62,7 +60,7 @@ module EffectiveMenusHelper
   def admin_menu_parent_collection(page = nil)
     raise('expected a page') if page.present? && !page.kind_of?(Effective::Page)
 
-    pages = Effective::Page.deep.menuable.root_level.where.not(id: page)
+    pages = Effective::Page.deep_menuable.menuable.root_level.where.not(id: page)
 
     if EffectivePages.max_menu_depth == 2
       # You can only select root level pages
