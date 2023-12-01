@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    effective_pages (3.8.2)
+    effective_pages (3.8.3)
       effective_datatables (>= 4.0.0)
       effective_resources
       effective_roles
