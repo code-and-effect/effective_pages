@@ -14,6 +14,8 @@ class EffectivePagesMenuDatatable < Effective::Datatable
     col :menu_url, label: 'Redirect Url'
     col :menu_position, label: 'Position', visible: false
 
+    col :menu_children_count, label: 'Children Count', visible: false
+
     # We only support depth 2 and 3.
     col :menu_children, label: 'Children' do |page|
       page.menu_children.group_by { |child| child.menu_group.presence }.values.flatten.map do |child|

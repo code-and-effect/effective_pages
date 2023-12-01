@@ -27,6 +27,8 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
       t.string :menu_url
       t.integer :menu_position
 
+      t.integer :menu_children_count, default: 0
+
       t.boolean :banner, default: false
       t.boolean :banner_random, default: false
 

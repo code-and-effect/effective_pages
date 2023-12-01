@@ -6,6 +6,33 @@ Create content pages ontop of one or more templates -- just regular Rails views 
 
 Use this gem to create a fully-functional CMS that provides full or restricted editing for your end users.
 
+## Upgrading to 3.9.0
+
+Add a migration
+
+```
+class UpgradeEffectivePagesThreeNine < ActiveRecord::Migration[7.0]
+  def change
+    # Add a counter cache
+    add_column :pages, :menu_children_count, :integer, default: 0
+  end
+end
+```
+
+Run a one time script
+
+```
+# rake upgrade_effective_pages_to_three_nine
+task upgrade_effective_pages_to_three_nine: :environment do
+  puts "Starting effective pages 3.9.0 upgrade"
+
+  Effective::Page.where(menu_children_count: 0).find_each do |page|
+    Effective::Page.reset_counters(page.slug, :menu_children)
+  end
+
+  puts 'All done'
+end
+```
 
 ## effective_pages 3.0
 

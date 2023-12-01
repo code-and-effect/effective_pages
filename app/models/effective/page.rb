@@ -14,7 +14,7 @@ module Effective
     belongs_to :page_banner, optional: true
 
     # These parent / children are for the menu as well
-    belongs_to :menu_parent, class_name: 'Effective::Page', optional: true
+    belongs_to :menu_parent, class_name: 'Effective::Page', optional: true, touch: true, counter_cache: :menu_children_count
 
     has_many :menu_children, -> { Effective::Page.menuable }, class_name: 'Effective::Page',
       foreign_key: :menu_parent_id, inverse_of: :menu_parent
@@ -47,6 +47,8 @@ module Effective
       menu_url          :string         # Redirect to this url instead of the page url
       menu_position     :integer        # Position in the menu
 
+      menu_children_count :integer      # Counter cache
+
       # Banners
       banner            :boolean        # Should we display a banner?
       banner_random     :boolean        # Display a random banner
@@ -59,10 +61,13 @@ module Effective
     end
 
     scope :deep, -> { 
-      base = includes(:page_banner, :tags, :rich_texts, :menu_parent, menu_children: [:menu_parent, :menu_children]) 
+      base = includes(:page_banner, :tags, :rich_texts) 
+      base = base.deep_menuable
       base = base.includes(:pg_search_document) if defined?(PgSearch)
       base
     }
+
+    scope :deep_menuable, -> { includes(:menu_parent, menu_children: [:menu_parent, :menu_children]) }
 
     scope :draft, -> { where(draft: true) }
     scope :published, -> { where(draft: false) }
@@ -186,11 +191,19 @@ module Effective
     end
 
     def menu_parent?
-      menu? && menu_children.to_a.present?
+      menu? && menu_children_present?
     end
 
     def menu_child?
       menu? && menu_parent_id.present?
+    end
+
+    def menu_children_present?
+      menu_children_count > 0
+    end
+
+    def menu_children_blank?
+      menu_children_count <= 0
     end
 
   end
