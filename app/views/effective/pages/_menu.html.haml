@@ -1,7 +1,7 @@
 - raise('expected a menu') unless menu.present?
 - menu = menu.to_s
 
-= cache([menu, current_user, Effective::Page.for_menu(menu).maximum(:updated_at)]) do
+= cache([menu, current_user, Effective::Page.maximum(:updated_at)]) do
   - # Renders menu_root? level pages and their immediate children
   - Effective::Page.for_menu_root(menu).each do |page|
     - next unless EffectiveResources.authorized?(self, :show, page)
