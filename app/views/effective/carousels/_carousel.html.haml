@@ -1,4 +1,4 @@
-= cache([carousel, Effective::CarouselItem.all.cache_key]) do
+= cache(EffectiveResources.cache_key(carousel, Effective::CarouselItem.all.cache_key_with_version)) do
   - carousel_items = Effective::CarouselItem.sorted.deep.where(carousel: carousel).to_a
   - uid = "effective-carousel-#{carousel}-#{Time.zone.now.to_i}"
 
