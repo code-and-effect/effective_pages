@@ -1,9 +1,11 @@
 module Effective
   class PermalinksController < ApplicationController
-    def redirect
+    include Effective::CrudController
+
+    def show
       @permalink = Effective::Permalink.find_by! slug: params[:slug]
 
-      authorize! :redirect, @permalink
+      authorize! :show, @permalink
 
       redirect_to redirect_path_for(@permalink), allow_other_host: (@permalink.target == :url)
     end
