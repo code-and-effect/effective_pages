@@ -3,5 +3,11 @@
     = render '/admin/permalinks/form_permalink', permalink: permalink
 
   - if permalink.persisted?
-    = tab 'Logs' do
-      = render_datatable(permalink.log_changes_datatable, inline: true, namespace: :admin)
+    - if permalink.class.respond_to?(:acts_as_trackable?)
+      = tab 'Tracks' do
+        - datatable = Admin::EffectiveTracksDatatable.new(owner: permalink)
+        = render_datatable(datatable, inline: true, namespace: :admin)
+
+    - if permalink.respond_to?(:log_changes_datatable)
+      = tab 'Logs' do
+        = render_datatable(permalink.log_changes_datatable, inline: true, namespace: :admin)

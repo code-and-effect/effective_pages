@@ -14,6 +14,7 @@ module Effective
     acts_as_tagged
     acts_as_slugged
 
+    acts_as_trackable if respond_to?(:acts_as_trackable)
     log_changes if respond_to?(:log_changes)
 
     scope :deep, -> { 

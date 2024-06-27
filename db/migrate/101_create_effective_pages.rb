@@ -88,6 +88,7 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
       t.string :slug
       t.string :url
       t.text   :summary
+      t.integer :tracks_count, default: 0
 
       t.timestamps
     end
