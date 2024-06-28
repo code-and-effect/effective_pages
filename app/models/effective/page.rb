@@ -19,19 +19,21 @@ module Effective
     has_many :menu_children, -> { Effective::Page.menuable }, class_name: 'Effective::Page',
       foreign_key: :menu_parent_id, inverse_of: :menu_parent
 
-    acts_as_role_restricted
-    acts_as_paginable if respond_to?(:acts_as_paginable) # Effective Resources
+    acts_as_role_restricted if respond_to?(:acts_as_role_restricted)
+    acts_as_paginable
+    acts_as_published
     acts_as_slugged
     acts_as_tagged
     has_many_rich_texts
-
     log_changes if respond_to?(:log_changes)
 
     effective_resource do
       title             :string
       meta_description  :string
 
-      draft             :boolean
+      published_start_at       :datetime
+      published_end_at         :datetime
+      legacy_draft             :boolean       # No longer used. To be removed.
 
       layout            :string
       template          :string
@@ -68,9 +70,6 @@ module Effective
     }
 
     scope :deep_menuable, -> { includes(:menu_parent, menu_children: [:menu_parent, :menu_children]) }
-
-    scope :draft, -> { where(draft: true) }
-    scope :published, -> { where(draft: false) }
     scope :sorted, -> { order(:title) }
 
     scope :on_menu, -> { where(menu: true) }
@@ -154,10 +153,6 @@ module Effective
       rich_text_sidebar
     end
 
-    def published?
-      !draft?
-    end
-
     # Returns a duplicated post object, or throws an exception
     def duplicate
       Page.new(attributes.except('id', 'updated_at', 'created_at')).tap do |page|
@@ -168,7 +163,7 @@ module Effective
           page.send("rich_text_#{rt.name}=", rt.body)
         end
 
-        page.draft = true
+        page.assign_attributes(published_start_at: nil, published_end_at: nil)
       end
     end
 

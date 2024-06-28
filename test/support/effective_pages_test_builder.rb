@@ -10,7 +10,8 @@ module EffectivePagesTestBuilder
       layout: layout,
       template: template,
       rich_text_body: '<p>great body</p>',
-      rich_text_sidebar: '<p>great sidebar</p>'
+      rich_text_sidebar: '<p>great sidebar</p>',
+      published_start_at: Time.zone.now
     )
   end
 end

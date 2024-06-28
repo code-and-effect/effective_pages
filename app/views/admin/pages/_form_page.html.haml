@@ -2,8 +2,15 @@
 
   = f.text_field :title
 
-  = f.check_box :draft,
-    label: 'Save this page as a draft. It will not appear in a menu and can only be accessed by admin users.'
+  -# acts_as_published
+  = f.hide_if(:save_as_draft, true) do
+    .row
+      .col-md-6
+        = f.datetime_field :published_start_at, hint: 'The page will be available starting on this date and time.'
+      .col-md-6
+        = f.datetime_field :published_end_at, hint: 'The page will no longer be available after this date and time. Leave blank for no end date.', date_linked: false
+
+  = f.check_box :save_as_draft, label: "Save as a draft. It will not appear in a menu and can only be accessed by admin users."
 
   = f.text_field :meta_description,
     hint: "150 character summary. Appears on Google search results underneath the page title. ",

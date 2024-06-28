@@ -20,7 +20,10 @@ class EffectivePagesDatatable < Effective::Datatable
       link_to(page.slug, effective_pages.page_path(page), target: '_blank')
     end
 
-    col :draft
+    col :draft?, as: :boolean, visible: false
+    col :published?, as: :boolean
+    col :published_start_at
+    col :published_end_at
 
     col :layout, visible: false
     col :tempate, visible: false
