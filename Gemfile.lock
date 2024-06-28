@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    effective_pages (3.10.3)
+    effective_pages (3.11.0)
       effective_datatables (>= 4.0.0)
       effective_resources
       effective_roles
@@ -122,10 +122,10 @@ GEM
       effective_resources
       rails (>= 3.2.0)
       sassc
-    effective_developer (0.7.6)
+    effective_developer (0.8.2)
       effective_resources
       rails (>= 3.2.0)
-    effective_resources (2.18.0)
+    effective_resources (2.25.3)
       rails
       sprockets-rails
     effective_roles (2.4.0)

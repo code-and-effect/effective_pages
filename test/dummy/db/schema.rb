@@ -91,7 +91,9 @@ ActiveRecord::Schema.define(version: 101) do
     t.integer "page_banner_id"
     t.string "title"
     t.string "meta_description"
-    t.boolean "draft", default: false
+    t.datetime "published_start_at"
+    t.datetime "published_end_at"
+    t.boolean "legacy_draft", default: false
     t.string "layout", default: "application"
     t.string "template"
     t.string "slug"
@@ -104,6 +106,7 @@ ActiveRecord::Schema.define(version: 101) do
     t.string "menu_title"
     t.string "menu_url"
     t.integer "menu_position"
+    t.integer "menu_children_count", default: 0
     t.boolean "banner", default: false
     t.boolean "banner_random", default: false
     t.datetime "updated_at"
@@ -116,6 +119,7 @@ ActiveRecord::Schema.define(version: 101) do
     t.string "slug"
     t.string "url"
     t.text "summary"
+    t.integer "tracks_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

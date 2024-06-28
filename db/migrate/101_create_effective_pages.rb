@@ -6,7 +6,9 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
       t.string :title
       t.string :meta_description
 
-      t.boolean :draft, default: false
+      t.datetime :published_start_at
+      t.datetime :published_end_at
+      t.boolean :legacy_draft, default: false
 
       t.string :layout, default: 'application'
       t.string :template
