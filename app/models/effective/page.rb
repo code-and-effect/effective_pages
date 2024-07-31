@@ -19,6 +19,9 @@ module Effective
     has_many :menu_children, -> { Effective::Page.menuable }, class_name: 'Effective::Page',
       foreign_key: :menu_parent_id, inverse_of: :menu_parent
 
+    has_many :page_segments, -> { Effective::PageSegment.sorted }, class_name: 'Effective::PageSegment', inverse_of: :page, dependent: :destroy
+    accepts_nested_attributes_for :page_segments, allow_destroy: true
+
     acts_as_role_restricted if respond_to?(:acts_as_role_restricted)
     acts_as_paginable
     acts_as_published
@@ -137,7 +140,7 @@ module Effective
     end
 
     def to_s
-      title
+      title.presence || model_name.human
     end
 
     def menu_to_s
@@ -201,6 +204,9 @@ module Effective
       menu_children_count <= 0
     end
 
+    # Checked by render_page_segments_menu() to see if this page should render the page_segments menu
+    def template_page_segments?
+      template == 'page_segments'
+    end
   end
-
 end

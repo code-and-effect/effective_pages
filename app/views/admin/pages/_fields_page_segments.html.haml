@@ -1,0 +1,10 @@
+%p Please add one or more page segments. Each segment will be displayed on the in-page menu.
+
+= f.has_many :page_segments, f.object.page_segments do |fps|
+  = card do
+    = fps.text_field :title
+
+    - if defined?(EffectiveArticleEditor)
+      = fps.article_editor :rich_text_body, label: 'Body'
+    - else
+      = fps.rich_text_area :rich_text_body, label: 'Body'

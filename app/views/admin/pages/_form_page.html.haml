@@ -1,12 +1,11 @@
 = effective_form_with(model: [:admin, page], engine: true) do |f|
-
   = f.text_field :title
 
   -# acts_as_published
   = f.hide_if(:save_as_draft, true) do
     .row
       .col-md-6
-        = f.datetime_field :published_start_at, hint: 'The page will be available starting on this date and time.'
+        = f.datetime_field :published_start_at, hint: 'The page will be available starting on this date and time. Leave blank to publish immediately.'
       .col-md-6
         = f.datetime_field :published_end_at, hint: 'The page will no longer be available after this date and time. Leave blank for no end date.', date_linked: false
 
@@ -49,7 +48,6 @@
 
         = f.select :page_banner_id, Effective::PageBanner.sorted.all, label: 'Choose a page banner'
 
-
   = render partial: '/admin/pages/additional_fields', locals: { page: page, form: f, f: f }
 
   - if f.object.persisted? && f.object.menu_root_with_children?
@@ -67,5 +65,9 @@
   -# This is for duplicate
   - if f.object.new_record? && f.object.rich_texts.present?
     = render '/admin/pages/rich_text_areas', page: page, f: f
+
+  -# For use with the render_page_segments_menu() helper. Used to render the page_segments / scrollspy menu.
+  = f.show_if(:template, :page_segments) do
+    = render '/admin/pages/fields_page_segments', page: page, f: f
 
   = effective_submit(f)
