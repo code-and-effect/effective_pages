@@ -36,7 +36,7 @@ module Effective
     end
 
     def to_s
-      name.presence || 'page banner'
+      name.presence || model_name.human
     end
 
     # As per has_many_rich_texts

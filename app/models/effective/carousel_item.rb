@@ -56,7 +56,7 @@ module Effective
     end
 
     def to_s
-      persisted? ? [carousel, number].join(' ') : 'carousel item'
+      persisted? ? [carousel, number].join(' ') : model_name.human
     end
 
     # As per has_many_rich_texts

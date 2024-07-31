@@ -18,7 +18,7 @@ module Effective
     validates :body, presence: true
 
     def to_s
-      'alert'
+      model_name.human
     end
 
   end

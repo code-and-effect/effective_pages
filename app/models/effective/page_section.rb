@@ -35,7 +35,7 @@ module Effective
     scope :sorted, -> { order(:name) }
 
     def to_s
-      name.presence || 'page section'
+      name.presence || model_name.human
     end
 
     # As per has_many_rich_texts
