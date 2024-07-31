@@ -5,7 +5,7 @@ module Effective
   class PageSegment < ActiveRecord::Base
     self.table_name = (EffectivePages.page_segments_table_name || :page_segments).to_s
 
-    belongs_to :page
+    belongs_to :page, touch: true
 
     has_many_rich_texts
     log_changes(to: :page) if respond_to?(:log_changes)
