@@ -1,6 +1,8 @@
 - if defined?(EffectiveArticleEditor)
   = f.article_editor :rich_text_body, label: 'Body', hint: 'The main body of your page'
-  = f.article_editor :rich_text_sidebar, label: 'Sidebar', hint: 'The sidebar content of your page'
+  - if EffectivePages.sidebars?
+    = f.article_editor :rich_text_sidebar, label: 'Sidebar', hint: 'The sidebar content of your page'
 - else
   = f.rich_text_area :rich_text_body, label: 'Body', hint: 'The main body of your page'
-  = f.rich_text_area :rich_text_sidebar, label: 'Sidebar', hint: 'The sidebar content of your page'
+  - if EffectivePages.sidebars?
+    = f.rich_text_area :rich_text_sidebar, label: 'Sidebar', hint: 'The sidebar content of your page'

@@ -1,0 +1,5 @@
+-# %div.effective-page-segments{'data-spy': 'scroll', 'data-target': "#effective-page-segments-menu", style: 'position: relative; height: 500px; overflow: auto;'}
+
+- page.page_segments.each do |segment|
+  %div{id: segment.uid}
+    = segment.body

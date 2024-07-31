@@ -65,6 +65,16 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
 
     add_index :page_sections, :name, :unique => true
 
+    create_table :page_segments do |t|
+      t.integer :page_id
+
+      t.string :title
+      t.integer :position
+
+      t.datetime :updated_at
+      t.datetime :created_at
+    end
+
     create_table :carousel_items do |t|
       t.string :carousel
 

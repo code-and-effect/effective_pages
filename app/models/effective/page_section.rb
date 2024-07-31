@@ -42,7 +42,5 @@ module Effective
     def body
       rich_text_body
     end
-
   end
-
 end

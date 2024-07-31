@@ -18,6 +18,7 @@ module EffectivePages
           helper EffectivePagesHelper
           helper EffectiveCarouselsHelper
           helper EffectivePageSectionsHelper
+          helper EffectivePageSegmentsHelper
           helper EffectivePageBannersHelper
           helper EffectiveMenusHelper
           helper EffectiveAlertsHelper

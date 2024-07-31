@@ -70,4 +70,7 @@ EffectivePages.setup do |config|
   # config.carousels = [:home, :secondary]
   config.carousels_hint_text = 'Hint text that includes required image dimensions'
 
+  # Page Sidebars
+  # Set to true if your any of your pages use the sidebar content
+  config.sidebars = false
 end

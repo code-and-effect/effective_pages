@@ -1,0 +1,4 @@
+%nav#effective-page-segments-menu{local_assigns[:html_options]}
+  %ul.nav
+    - page.page_segments.each do |segment|
+      = nav_link_to(segment.to_s, "#" + segment.uid)
