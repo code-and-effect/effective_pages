@@ -1,15 +1,8 @@
 = effective_form_with(model: [:admin, page], engine: true) do |f|
   = f.text_field :title
 
-  -# acts_as_published
-  = f.hide_if(:save_as_draft, true) do
-    .row
-      .col-md-6
-        = f.datetime_field :published_start_at, hint: 'The page will be available starting on this date and time. Leave blank to publish immediately.'
-      .col-md-6
-        = f.datetime_field :published_end_at, hint: 'The page will no longer be available after this date and time. Leave blank for no end date.', date_linked: false
-
-  = f.check_box :save_as_draft, label: "Save as a draft. It will not appear in a menu and can only be accessed by admin users."
+  = acts_as_published_fields(f)
+  = acts_as_slugged_fields(f, url: (effective_pages.page_url(f.object) rescue nil))
 
   = f.text_field :meta_description,
     hint: "150 character summary. Appears on Google search results underneath the page title. ",
@@ -24,10 +17,6 @@
     = f.select :template, templates
   - else
     = f.hidden_field :template, value: templates.first
-
-  - if f.object.persisted? || f.object.errors.include?(:slug)
-    - current_url = (effective_pages.page_url(f.object) rescue nil)
-    = f.text_field :slug, hint: "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + link_to(current_url.gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>').html_safe, current_url)) if current_url }".html_safe
 
   - if EffectivePages.banners?
     - if EffectivePages.banners_force_randomize
