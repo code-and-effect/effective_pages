@@ -1,3 +1,3 @@
 module EffectivePages
-  VERSION = '3.13.3'.freeze
+  VERSION = '3.13.4'.freeze
 end
