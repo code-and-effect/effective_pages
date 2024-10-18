@@ -4,8 +4,10 @@
 
   = f.check_box :menu, label: 'Yes, display this page in a menu'
 
-  = f.show_if :menu, true do
+  = f.hide_if(:menu, true) do
+    = f.hidden_field :menu_parent_id, value: nil
 
+  = f.show_if(:menu, true) do
     = f.check_box :menu_root_level, label: "This is a top level menu item. It has no content and cannot be viewed, but can have children pages"
 
     = f.show_if :menu_root_level, true do
