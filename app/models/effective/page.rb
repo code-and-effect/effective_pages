@@ -99,9 +99,7 @@ module Effective
       scope = all.deep.sorted
 
       if defined?(EffectiveRoles) && EffectivePages.use_effective_roles
-        if user.present? && user.respond_to?(:roles)
-          scope = scope.for_role(user.roles)
-        end
+        scope = scope.for_role(user&.roles)
       end
 
       unless unpublished
