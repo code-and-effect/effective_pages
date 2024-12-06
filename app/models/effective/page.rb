@@ -5,7 +5,7 @@ module Effective
     if defined?(PgSearch)
       include PgSearch::Model
 
-      multisearchable against: [:body]
+      multisearchable against: [:title, :body]
     end
 
     attr_accessor :current_user
