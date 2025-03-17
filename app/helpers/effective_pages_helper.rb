@@ -61,7 +61,11 @@ module EffectivePagesHelper
       Rails.logger.error("WARNING: (effective_pages) Expected @page_title to be present. Please assign a @page_title variable in your controller action.")
     end
 
-    (@page_title || "#{params[:controller].try(:titleize)} #{params[:action].try(:titleize)}")
+    if @page_title.present?
+      strip_tags(@page_title).html_safe
+    else
+      "#{params[:controller].try(:titleize)} #{params[:action].try(:titleize)}".html_safe
+    end
   end
 
   def effective_pages_site_title
