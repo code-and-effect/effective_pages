@@ -66,13 +66,13 @@ module Effective
     end
 
     scope :deep, -> { 
-      base = includes(:page_banner, :tags, :rich_texts) 
+      base = includes(:page_banner, :page_segments, :tags, :rich_texts) 
       base = base.deep_menuable
       base = base.includes(:pg_search_document) if defined?(PgSearch)
       base
     }
 
-    scope :deep_menuable, -> { includes(:menu_parent, menu_children: [:menu_parent, :menu_children]) }
+    scope :deep_menuable, -> { includes(menu_parent: :menu_parent, menu_children: [:menu_parent, :menu_children]) }
     scope :sorted, -> { order(:title) }
 
     scope :on_menu, -> { where(menu: true) }
