@@ -39,6 +39,10 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
     end
 
     add_index :pages, :slug, :unique => true
+    add_index :pages, [:published_start_at, :published_end_at], if_not_exists: true
+    add_index :pages, :menu, if_not_exists: true
+    add_index :pages, :menu_parent_id, if_not_exists: true
+    add_index :pages, :menu_position, if_not_exists: true
 
     create_table :page_banners do |t|
       t.string :name
@@ -89,6 +93,9 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
+    add_index :carousel_items, :carousel, if_not_exists: true
+    add_index :carousel_items, :position, if_not_exists: true
+
     create_table :alerts, if_not_exists: true do |t|
       t.boolean :enabled
 
@@ -118,6 +125,9 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
+
+    add_index :taggings, [:taggable_type, :taggable_id], if_not_exists: true
+    add_index :taggings, :tag_id, if_not_exists: true
   end
 
 end
