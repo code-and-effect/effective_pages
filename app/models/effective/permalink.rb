@@ -50,6 +50,10 @@ module Effective
       "/link/#{slug}"
     end
 
+    def published?
+      true
+    end
+
     def target
       url.present? ? :url : :attachment
     end
