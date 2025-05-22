@@ -32,7 +32,7 @@ module Effective
     validates :file, presence: true, content_type: :image, size: { less_than: 1.megabyte }
 
     validate(if: -> { file.attached? }) do
-      self.errors.add(:file, 'must be an image') unless file.image?
+      errors.add(:file, 'must be an image') unless file.image?
     end
 
     def to_s

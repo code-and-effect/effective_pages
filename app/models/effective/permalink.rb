@@ -62,7 +62,7 @@ module Effective
 
     def attachment_and_url_cannot_both_be_present
       if url.present? && (attachment.attached? && !attachment.marked_for_destruction?)
-        self.errors.add(:base, 'Attachment and URL cannot both be present')
+        errors.add(:base, 'Attachment and URL cannot both be present')
       end
     end
   end

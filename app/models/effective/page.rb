@@ -115,7 +115,7 @@ module Effective
 
     validate(if: -> { menu_url.present? }) do
       unless menu_url.start_with?('http://') || menu_url.start_with?('https://') || menu_url.start_with?('/')
-        self.errors.add(:menu_url, "must start with http(s):// or /")
+        errors.add(:menu_url, "must start with http(s):// or /")
       end
     end
 
@@ -132,8 +132,8 @@ module Effective
 
     validate(if: -> { banner? && EffectivePages.banners? }) do
       unless (page_banner.present? ^ banner_random? ^ EffectivePages.banners_force_randomize) # xor
-        self.errors.add(:page_banner_id, "please select a page banner or random")
-        self.errors.add(:banner_random, "please select a page banner or random")
+        errors.add(:page_banner_id, "please select a page banner or random")
+        errors.add(:banner_random, "please select a page banner or random")
       end
     end
 

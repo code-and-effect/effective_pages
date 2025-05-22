@@ -47,12 +47,12 @@ module Effective
 
     validate(if: -> { carousel.present? && EffectivePages.carousels? }) do
       unless (carousels = EffectivePages.carousels).find { |c| c.to_s == carousel.to_s }.present?
-        self.errors.add(:carousel, "must be one of #{carousels.to_sentence}")
+        errors.add(:carousel, "must be one of #{carousels.to_sentence}")
       end
     end
 
     validate(if: -> { file.attached? }) do
-      self.errors.add(:file, 'must be an image') unless file.image?
+      errors.add(:file, 'must be an image') unless file.image?
     end
 
     def to_s

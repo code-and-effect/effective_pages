@@ -27,7 +27,10 @@
     = f.text_field :menu_url, label: "Redirect to path or url instead of displaying page",
       hint: "Must start with http(s):// or /"
 
-  = effective_submit(f)
+  - if inline_datatable?
+    = f.submit 'Save'
+  - else
+    = effective_submit(f)
 
 - if page.menu_parent.present?
   .mb-4

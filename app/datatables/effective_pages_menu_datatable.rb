@@ -8,7 +8,7 @@ class EffectivePagesMenuDatatable < Effective::Datatable
     end
 
     col :title do |page|
-      link_to(page, effective_pages.edit_admin_page_path(page))
+      link_to(page.menu_to_s, effective_pages.edit_admin_page_path(page))
     end
 
     col :menu_url, label: 'Redirect Url'
