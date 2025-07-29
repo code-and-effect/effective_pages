@@ -20,7 +20,12 @@ module Admin
       col :location, search: EffectivePages.banner_ads
       col :name
 
-      col :file, label: 'Image'
+      col :file, label: 'Image' do |banner_ad|
+        if banner_ad.file.attached?
+          image_tag(url_for(banner_ad.file), style: 'max-width: 200px;')
+        end
+      end
+
       col :caption, visible: false
 
       col(:path) do |banner_ad|
