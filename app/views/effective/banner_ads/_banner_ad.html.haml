@@ -1,0 +1,6 @@
+.effective-banner-ad{banner_ad_opts}
+  - if banner_ad.redirect_path.present?
+    = link_to(banner_ad.redirect_path) do
+      = image_tag(banner_ad.file, alt: banner_ad.caption)
+  - else
+    = image_tag(banner_ad.file, alt: banner_ad.caption)

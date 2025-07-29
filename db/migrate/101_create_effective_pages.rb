@@ -128,6 +128,26 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
 
     add_index :taggings, [:taggable_type, :taggable_id], if_not_exists: true
     add_index :taggings, :tag_id, if_not_exists: true
+
+    create_table :banner_ads, if_not_exists: true do |t|
+      t.string :name
+      t.string :location
+
+      t.datetime :published_start_at
+      t.datetime :published_end_at
+
+      t.string :caption
+      t.string :url
+
+      t.string :slug
+      t.integer :tracks_count, default: 0
+
+      t.timestamps
+    end
+
+    add_index :banner_ads, :name, :unique => true
+    add_index :banner_ads, :location, if_not_exists: true
+    add_index :banner_ads, [:published_start_at, :published_end_at], if_not_exists: true
   end
 
 end

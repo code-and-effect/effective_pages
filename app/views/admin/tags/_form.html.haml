@@ -1,5 +1,5 @@
 = tabs do
-  = tab 'Tag' do
+  = tab(tag) do
     = render '/admin/tags/form_tag', tag: tag
 
   - if tag.persisted?

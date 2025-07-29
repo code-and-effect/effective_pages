@@ -1,5 +1,5 @@
 = tabs do
-  = tab 'Page Banner' do
+  = tab(page_banner) do
     = render '/admin/page_banners/form_page_banner', page_banner: page_banner
 
   - if page_banner.persisted?

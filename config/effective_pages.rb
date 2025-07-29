@@ -57,6 +57,11 @@ EffectivePages.setup do |config|
   # Only 2 or 3 are supported right now
   config.max_menu_depth = 2
 
+  # Banner Ads
+  config.banner_ads = false
+  # config.banner_ads = [:home, :secondary]
+  config.banner_ads_hint_text = 'Hint text that includes required image dimensions'
+
   # Page Banners
   # Allow a page banner to be selected on the Admin::Pages#edit screen
   # Banners can be CRUD by the admin

@@ -1,5 +1,5 @@
 = tabs do
-  = tab 'Alert' do
+  = tab(alert) do
     = render '/admin/alerts/form_alert', alert: alert
 
   - if alert.persisted?

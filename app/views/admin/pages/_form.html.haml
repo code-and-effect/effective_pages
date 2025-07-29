@@ -3,7 +3,7 @@
 
 - else
   = tabs do
-    = tab 'Page' do
+    = tab(page) do
       = render '/admin/pages/form_page', page: page
 
     - if page.persisted?

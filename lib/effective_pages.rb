@@ -7,19 +7,19 @@ require 'effective_pages/version'
 module EffectivePages
   def self.config_keys
     [
-      :pages_table_name, :page_banners_table_name, :page_sections_table_name, :page_segments_table_name, 
+      :pages_table_name, :page_banners_table_name, :page_sections_table_name, :page_segments_table_name, :banner_ads_table_name,
       :alerts_table_name, :carousel_items_table_name, :permalinks_table_name, :tags_table_name, :taggings_table_name,
       :pages_path, :excluded_pages, :layouts_path, :excluded_layouts,
       :site_og_image, :site_og_image_width, :site_og_image_height,
       :site_title, :site_title_suffix, :fallback_meta_description, :google_analytics_code,
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
-      :use_effective_roles, :layout, :max_menu_depth, :banners_hint_text, :carousels_hint_text, :banners_force_randomize,
+      :use_effective_roles, :layout, :max_menu_depth, :banner_ads_hint_text, :banners_hint_text, :carousels_hint_text, :banners_force_randomize,
 
       # Booleans
       :banners, :sidebars,
 
       # Hashes
-      :menus, :carousels
+      :menus, :carousels, :banner_ads
     ]
   end
 
@@ -58,6 +58,10 @@ module EffectivePages
 
   def self.banners?
     !!banners
+  end
+
+  def self.banner_ads?
+    banner_ads.kind_of?(Array) && banner_ads.present?
   end
 
   def self.carousels?

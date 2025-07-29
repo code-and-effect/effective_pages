@@ -1,5 +1,5 @@
 = tabs do
-  = tab 'Page Section' do
+  = tab(page_section) do
     = render '/admin/page_sections/form_page_section', page_section: page_section
 
   - if page_section.persisted?

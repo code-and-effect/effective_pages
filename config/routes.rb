@@ -5,9 +5,11 @@ EffectivePages::Engine.routes.draw do
     resources :pages,           except: [:show]
     resources :page_sections,   only:   [:index, :edit, :update]
     resources :page_banners,    except: [:show]
+
     resources :menus,           only:   [:index]
-    resources :carousel_items,  except: [:show]
     resources :alerts,          except: [:show]
+    resources :banner_ads,      except: [:show]
+    resources :carousel_items,  except: [:show]
     resources :permalinks,      except: [:show]
     resources :tags,            except: [:show]
     resources :taggings,        only:   [:index]
@@ -15,6 +17,7 @@ EffectivePages::Engine.routes.draw do
 
   scope module: 'effective' do
     get '/link/:slug', to: 'permalinks#show', as: :permalink_redirect
+    get '/ad/:slug', to: 'banner_ads#show', as: :banner_ad
 
     match '*id', to: 'pages#show', via: :get, as: :page, constraints: lambda { |req|
       Effective::Page.find_by_slug_or_id(req.path_parameters[:id] || '/').present?

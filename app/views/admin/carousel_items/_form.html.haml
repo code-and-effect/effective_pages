@@ -1,5 +1,5 @@
 = tabs do
-  = tab 'Carousel Item' do
+  = tab(carousel_item) do
     = render '/admin/carousel_items/form_carousel_item', carousel_item: carousel_item
 
   - if carousel_item.persisted?
