@@ -25,11 +25,14 @@ module Effective
 
     effective_resource do
       title        :string
+      url          :string
+      summary      :text
+
+      # acts_as_slugged
       slug         :string
 
-      url          :string
-
-      summary      :text
+      # acts_as_trackable
+      tracks_count :integer
 
       timestamps
     end

@@ -1,5 +1,5 @@
 = tabs do
-  = tab 'Permalink' do
+  = tab(permalink) do
     = render '/admin/permalinks/form_permalink', permalink: permalink
 
   - if permalink.persisted?

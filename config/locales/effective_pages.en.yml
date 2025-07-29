@@ -6,5 +6,6 @@ en:
   activerecord:
     models:
       effective/tagging: 'Taggings'
+      effective/banner_ad: 'Banner Ad'
       effective/page_banner: 'Page Banner'
       effective/page_section: 'Page Section'

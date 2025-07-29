@@ -1,0 +1,14 @@
+= effective_form_with(model: [:admin, banner_ad], engine: true) do |f|
+  = f.text_field :name
+  = acts_as_slugged_fields(f, url: (effective_pages.banner_ad_url(f.object) rescue nil))
+
+  = f.select :location, EffectivePages.banner_ads, label: 'Location', hint: 'Each location will display one random banner ad. Please contact us to add more locations.'
+  = acts_as_published_fields(f)
+
+  = f.file_field :file, label: 'Image attachment', hint: EffectivePages.banner_ads_hint_text
+  = f.text_field :caption, hint: 'Optional. Displayed alongside the image'
+
+  .row
+    .col-md-6= f.url_field :url, label: 'Redirect url', hint: 'Optional. When present clicking the banner ad will redirect to this url and track clicks.'
+
+  = effective_submit(f)

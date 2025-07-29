@@ -1,0 +1,12 @@
+= tabs do
+  = tab(banner_ad) do
+    = render '/admin/banner_ads/form_banner_ad', banner_ad: banner_ad
+
+  - if banner_ad.persisted?
+    - if banner_ad.class.respond_to?(:acts_as_trackable?)
+      = tab 'Tracks' do
+        - datatable = Admin::EffectiveTracksDatatable.new(owner: banner_ad)
+        = render_datatable(datatable, inline: true, namespace: :admin)
+
+    = tab 'Logs' do
+      = render_datatable(banner_ad.log_changes_datatable, inline: true, namespace: :admin)
