@@ -11,6 +11,9 @@ module EffectiveBannerAdsHelper
     raise("unknown banner ad location: #{location.presence || 'nil'}. Please add it to EffectivePages.banner_ads config option") if location.blank?
 
     banner_ads = effective_banner_ads.select { |ba| ba.location == location }
+    return if banner_ads.blank?
+
+    # Choose a random banner ad
     banner_ad = banner_ads.sample
 
     if block_given?
