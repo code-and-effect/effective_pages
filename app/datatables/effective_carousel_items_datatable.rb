@@ -6,15 +6,14 @@ class EffectiveCarouselItemsDatatable < Effective::Datatable
     col :id, visible: false
     col :updated_at, visible: false
 
-    col :carousel
-    col :title
-
-    col :title
-    col :rich_text_body, label: 'Content'
+    col :carousel, visible: false
 
     col :file, label: 'Image' do |carousel_item|
       image_tag(carousel_item.file, style: 'max-height: 100px;')
     end
+
+    col :title
+    col :rich_text_body, label: 'Content'
 
     col :link_label, visible: false
     col :link_url, visible: false

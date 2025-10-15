@@ -33,7 +33,12 @@ module Effective
     scope :sorted, -> { order(:position, :id) }
 
     before_validation(if: -> { carousel.present? }) do
-      self.position ||= (self.class.where(carousel: carousel).pluck(:position).compact.max || -1) + 1
+      self.position ||= 0
+    end
+
+    # Insert at top of the list
+    before_save(if: -> { new_record? }) do
+      self.class.where(carousel: carousel).where.not(id: id).update_all("position = position + 1")
     end
 
     validates :carousel, presence: true
