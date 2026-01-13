@@ -1,5 +1,6 @@
 = tabs do
-  = tab(banner_ad) do
+  - # Dont name this Banner Ad or ad blocker blocks the form
+  = tab('Banner') do
     = render '/admin/banner_ads/form_banner_ad', banner_ad: banner_ad
 
   - if banner_ad.persisted?
