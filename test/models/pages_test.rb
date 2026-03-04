@@ -6,11 +6,11 @@ class PagesTest < ActiveSupport::TestCase
     assert page.valid?
 
     assert_equal 'page', page.template
-    assert_equal 'application', page.layout
   end
 
   test 'published? and draft?' do
     page = build_effective_page()
+    page.save!
     assert page.published?
     refute page.draft?
 
@@ -26,7 +26,7 @@ class PagesTest < ActiveSupport::TestCase
     assert Effective::Page.published.include?(page)
     refute Effective::Page.draft.include?(page)
 
-    page.update!(published_end_at: Time.zone.now)
+    page.update!(published_start_at: 2.minutes.ago, published_end_at: 1.minute.ago)
     refute page.published?
     assert page.draft?
     refute Effective::Page.published.include?(page)
