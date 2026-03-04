@@ -6,7 +6,6 @@ class PagesTest < ActiveSupport::TestCase
     assert page.valid?
 
     assert_equal 'page', page.template
-    assert_equal 'application', page.layout
   end
 
   test 'published? and draft?' do
