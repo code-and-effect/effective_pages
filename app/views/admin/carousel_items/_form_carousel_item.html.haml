@@ -15,6 +15,8 @@
     .col= f.text_field :link_label
     .col= f.url_field :link_url
 
+  = f.check_box :new_window, label: 'Open link in a new window'
+
   = f.file_field :file, label: 'Image attachment', hint: EffectivePages.carousels_hint_text
   = f.text_field :caption, hint: 'Optional'
 

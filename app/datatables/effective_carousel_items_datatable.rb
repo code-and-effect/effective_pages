@@ -17,6 +17,7 @@ class EffectiveCarouselItemsDatatable < Effective::Datatable
 
     col :link_label, visible: false
     col :link_url, visible: false
+    col :new_window, label: 'New window', visible: false
     col :caption, visible: false
 
     actions_col
