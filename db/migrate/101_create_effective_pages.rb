@@ -87,6 +87,7 @@ class CreateEffectivePages < ActiveRecord::Migration[6.0]
 
       t.string :link_label
       t.string :link_url
+      t.boolean :new_window, default: false
 
       t.integer :position
 

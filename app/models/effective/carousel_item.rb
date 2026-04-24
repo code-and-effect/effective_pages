@@ -23,6 +23,7 @@ module Effective
 
       link_label        :string
       link_url          :string
+      new_window        :boolean
 
       position          :integer
 
