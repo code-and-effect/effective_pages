@@ -11,12 +11,22 @@
       .carousel-inner
         - carousel_items.each_with_index do |item, index|
           .carousel-item{class: ('active' if index == 0)}
-            - if item.caption.blank?
-            = image_tag(item.file, class: 'd-block w-100', alt: "Slide #{index+1}")
+            - if item.link_url.present?
+              - link_options = item.new_window? ? { target: '_blank' } : {}
+              = link_to item.link_url, **link_options do
+                - if item.caption.blank?
+                  = image_tag(item.file, class: 'd-block w-100', alt: "Slide #{index+1}")
+                - else
+                  = image_tag(item.file, alt: item.caption)
+                  .carousel-caption.d-none.d-md-block
+                    %p= item.caption
             - else
-              = image_tag(item.file, alt: item.caption)
-              .carousel-caption.d-none.d-md-block
-                %p= item.caption
+              - if item.caption.blank?
+                = image_tag(item.file, class: 'd-block w-100', alt: "Slide #{index+1}")
+              - else
+                = image_tag(item.file, alt: item.caption)
+                .carousel-caption.d-none.d-md-block
+                  %p= item.caption
 
       %button.carousel-control-prev{'data-target': '#' + uid, type: 'button', 'data-slide': 'prev'}
         %span.carousel-control-prev-icon{'aria-hidden': true}
