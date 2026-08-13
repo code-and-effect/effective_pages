@@ -28,8 +28,8 @@ EffectivePages.setup do |config|
 
   # This site_og_image is the filename for an image placed in /assets/images and will be used to populate the og:image tag
   config.site_og_image = ''
-  config.site_og_image_width = ''  # Just 1024, no units
-  config.site_og_image_height = ''
+  config.site_og_image_width = nil  # Just 1024, no units
+  config.site_og_image_height = nil
 
   # When using the effective_pages_header_tags() helper in <head> to set the <meta name='description'>
   # The value will be populated from an Effective::Page's .meta_description field,
@@ -58,22 +58,22 @@ EffectivePages.setup do |config|
   config.max_menu_depth = 2
 
   # Banner Ads
-  config.banner_ads = false
+  config.banner_ads = []
   # config.banner_ads = [:home, :secondary]
-  config.banner_ads_hint_text = 'Hint text that includes required image dimensions'
+  config.banner_ads_hint_text = nil
 
   # Page Banners
   # Allow a page banner to be selected on the Admin::Pages#edit screen
   # Banners can be CRUD by the admin
   config.banners = false
   config.banners_force_randomize = false # at least return a random banner with render_page_banner()
-  config.banners_hint_text = 'Hint text that includes required image dimensions'
+  config.banners_hint_text = nil
 
   # Page Carousels
   # The menu names a page can belong to
-  config.carousels = false
+  config.carousels = []
   # config.carousels = [:home, :secondary]
-  config.carousels_hint_text = 'Hint text that includes required image dimensions'
+  config.carousels_hint_text = nil
 
   # Page Sidebars
   # Set to true if your any of your pages use the sidebar content

@@ -15,10 +15,10 @@ module EffectivePages
       :silence_missing_page_title_warnings, :silence_missing_meta_description_warnings, :silence_missing_canonical_url_warnings,
       :use_effective_roles, :layout, :max_menu_depth, :banner_ads_hint_text, :banners_hint_text, :carousels_hint_text, :banners_force_randomize,
 
-      # Booleans
+      # Feature flags
       :banners, :sidebars,
 
-      # Hashes
+      # Collections
       :menus, :carousels, :banner_ads
     ]
   end
@@ -57,7 +57,7 @@ module EffectivePages
   end
 
   def self.banners?
-    !!banners
+    banners == true
   end
 
   def self.banner_ads?
@@ -73,6 +73,6 @@ module EffectivePages
   end
 
   def self.sidebars?
-    !!sidebars
+    sidebars == true
   end
 end
