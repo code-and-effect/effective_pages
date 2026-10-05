@@ -33,4 +33,26 @@ class PagesTest < ActiveSupport::TestCase
     assert Effective::Page.draft.include?(page)
   end
 
+  test 'sitemap includes public pages and excludes restricted pages on and off the menu' do
+    [false, true].each do |menu|
+      [nil, 0].each do |roles_mask|
+        [nil, false].each do |authenticate_user|
+          page = build_effective_page()
+          page.assign_attributes(menu: menu, menu_name: EffectivePages.menus.first, roles_mask: roles_mask, authenticate_user: authenticate_user)
+          page.save!
+
+          assert Effective::Page.for_sitemap.exists?(page.id), 'Public pages should appear in the sitemap'
+        end
+      end
+
+      [{ roles_mask: 1 }, { authenticate_user: true }].each do |restriction|
+        page = build_effective_page()
+        page.assign_attributes({ menu: menu, menu_name: EffectivePages.menus.first }.merge(restriction))
+        page.save!
+
+        refute Effective::Page.for_sitemap.exists?(page.id), 'Restricted pages should not appear in the sitemap'
+      end
+    end
+  end
+
 end

@@ -93,6 +93,7 @@ module Effective
 
     scope :for_sitemap, -> {
       published.where(menu: false).or(published.where(menu: true).where.not(id: menu_root_with_children))
+        .for_role(nil).where(authenticate_user: [false, nil])
     }
 
     scope :pages, -> (user: nil, unpublished: false) {

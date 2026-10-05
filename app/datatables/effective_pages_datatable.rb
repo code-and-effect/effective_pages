@@ -40,7 +40,7 @@ class EffectivePagesDatatable < Effective::Datatable
     col :page_banner, visible: false
 
     col :authenticate_user, visible: false
-    col :roles, visible: false
+    col :roles
 
     actions_col do |page|
       dropdown_link_to('View', effective_pages.page_path(page), target: '_blank')
